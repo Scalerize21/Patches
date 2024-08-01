@@ -1,6 +1,3 @@
-
-#Fully use character:
-
 SLUS-21462
 #Fully use character:
 patch=1,EE,004E2DF0,word,00000002
