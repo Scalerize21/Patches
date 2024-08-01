@@ -2,19 +2,25 @@
 #Fully use character:
 
 SLUS-21462
+#Fully use character:
 patch=1,EE,004E2DF0,word,00000002
-
-SLUS-21726
-patch=1,EE,004E32F8,word,00000002
-
-#Use character model only (Works only if the character you're choosing exists in this map):
-
-SLUS-21462
+#Use full character model only (Works only if the character you're choosing exists in this map):
 patch=1,EE,00484468,word,00000002
 
-SLUS-21726
-patch=1,EE,00480128,word,00000002
+#Model
+patch=1,EE,01F146F2,extended,02
+#Movesets and Animations
+patch=1,EE,01F146F3,extended,02
 
+SLUS-21726
+#Fully use character:
+patch=1,EE,004E32F8,word,00000002
+#Use full character model only (Works only if the character you're choosing exists in this map):
+patch=1,EE,00480128,word,00000002
+#Model
+patch=1,EE,01F6C852,extended,02
+#Movesets and Animations
+patch=1,EE,01F6C853,extended,02
 
 
 Replace last 2 numbers of "00000002" with the character you like.
