@@ -12,7 +12,6 @@ eeObj.WriteMem32(0x000FFA00, 0x241B0060) --Todo: lower wasters to something opti
 eeObj.WriteMem32(0x000FFA04, 0x4A000038)
 eeObj.WriteMem32(0x000FFA08, 0x277BFFFF)
 eeObj.WriteMem32(0x000FFA0C, 0x1760FFFE)
-eeObj.WriteMem32(0x000FFA14, 0x27FFFFFC)
 eeObj.WriteMem32(0x000FFA18, 0x03E00008)
 eeObj.WriteMem32(0x000FFA1C, 0x241F0000)
 --vi01 first cycle waster
@@ -24,7 +23,6 @@ eeObj.WriteMem32(0x000FFA34, 0x48C00800)
 eeObj.WriteMem32(0x000FFA38, 0x241B0100)
 eeObj.WriteMem32(0x000FFA3C, 0x277BFFFF)
 eeObj.WriteMem32(0x000FFA40, 0x1760FFFE)
-eeObj.WriteMem32(0x000FFA48, 0x27FFFFFC)
 eeObj.WriteMem32(0x000FFA4C, 0x03E00008)
 eeObj.WriteMem32(0x000FFA50, 0x241F0000)
 --vi02 first cycle waster
@@ -36,7 +34,6 @@ eeObj.WriteMem32(0x000FFA68, 0x48C01000)
 eeObj.WriteMem32(0x000FFA6C, 0x241B0100)
 eeObj.WriteMem32(0x000FFA70, 0x277BFFFF)
 eeObj.WriteMem32(0x000FFA74, 0x1760FFFE)
-eeObj.WriteMem32(0x000FFA7C, 0x27FFFFFC)
 eeObj.WriteMem32(0x000FFA80, 0x03E00008)
 eeObj.WriteMem32(0x000FFA84, 0x241F0000)
 --patcher
