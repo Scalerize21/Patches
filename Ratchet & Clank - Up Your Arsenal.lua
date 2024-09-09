@@ -7,7 +7,7 @@ local emuObj = getEmuObject()
 local patcher = function()
 --jmp
 eeObj.WriteMem32(0x0011F38C, 0x0803FFC8)
---vcallms
+--vcallms cycle waster
 eeObj.WriteMem32(0x000FFA00, 0x241B0100) --Todo: change 241B0300 to something less than 300
 eeObj.WriteMem32(0x000FFA04, 0x4A000038)
 eeObj.WriteMem32(0x000FFA08, 0x277BFFFF)
