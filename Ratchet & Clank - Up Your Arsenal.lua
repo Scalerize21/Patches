@@ -15,7 +15,7 @@ eeObj.WriteMem32(0x000FFA0C, 0x1760FFFE)
 eeObj.WriteMem32(0x000FFA18, 0x03E00008)
 eeObj.WriteMem32(0x000FFA1C, 0x241F0000)
 --vi01 first cycle waster
-eeObj.WriteMem32(0x000FFA24, 0x241B0001) --Todo: Create better jumps for VI01 and VI02 to prevent SPS. (ra is important)
+eeObj.WriteMem32(0x000FFA24, 0x241B0001)
 eeObj.WriteMem32(0x000FFA28, 0x277BFFFF)
 eeObj.WriteMem32(0x000FFA2C, 0x1760FFFE)
 eeObj.WriteMem32(0x000FFA34, 0x48C00800)
