@@ -8,7 +8,7 @@ local patcher = function()
 --jmp
 eeObj.WriteMem32(0x0011F38C, 0x0803FFC8)
 --vcallms cycle waster
-eeObj.WriteMem32(0x000FFA00, 0x241B0100) --Todo: change 241B0300 to something less than 300
+eeObj.WriteMem32(0x000FFA00, 0x241B0100) --Todo: lower burners to something optimal
 eeObj.WriteMem32(0x000FFA04, 0x4A000038)
 eeObj.WriteMem32(0x000FFA08, 0x277BFFFF)
 eeObj.WriteMem32(0x000FFA0C, 0x1760FFFE)
@@ -16,7 +16,7 @@ eeObj.WriteMem32(0x000FFA14, 0x27FFFFFC)
 eeObj.WriteMem32(0x000FFA18, 0x03E00008)
 eeObj.WriteMem32(0x000FFA1C, 0x241F0000)
 --vi01 first cycle waster
-eeObj.WriteMem32(0x000FFA24, 0x241B0100)
+eeObj.WriteMem32(0x000FFA24, 0x241B0001)
 eeObj.WriteMem32(0x000FFA28, 0x277BFFFF)
 eeObj.WriteMem32(0x000FFA2C, 0x1760FFFE)
 eeObj.WriteMem32(0x000FFA34, 0x48C00800)
@@ -28,7 +28,7 @@ eeObj.WriteMem32(0x000FFA48, 0x27FFFFFC)
 eeObj.WriteMem32(0x000FFA4C, 0x03E00008)
 eeObj.WriteMem32(0x000FFA50, 0x241F0000)
 --vi02 first cycle waster
-eeObj.WriteMem32(0x000FFA58, 0x241B0100)
+eeObj.WriteMem32(0x000FFA58, 0x241B0001)
 eeObj.WriteMem32(0x000FFA5C, 0x277BFFFF)
 eeObj.WriteMem32(0x000FFA60, 0x1760FFFE)
 eeObj.WriteMem32(0x000FFA68, 0x48C01000)
