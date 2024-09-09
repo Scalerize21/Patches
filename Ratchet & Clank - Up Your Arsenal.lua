@@ -97,7 +97,7 @@ local patcher = function()
 --jmp
 eeObj.WriteMem32(0x0011F38C, 0x0803FFC8)
 --vcallms cycle waster
-eeObj.WriteMem32(0x000FFA00, 0x241B0020) --Todo: lower wasters to something optimal
+eeObj.WriteMem32(0x000FFA00, 0x241B0016) --Todo: lower wasters to something optimal
 eeObj.WriteMem32(0x000FFA04, 0x4A000038)
 eeObj.WriteMem32(0x000FFA08, 0x277BFFFF)
 eeObj.WriteMem32(0x000FFA0C, 0x1760FFFE)
