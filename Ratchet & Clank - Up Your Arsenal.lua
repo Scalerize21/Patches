@@ -174,4 +174,6 @@ eeObj.WriteMem32(0x000FFFB8, 0x08047CE4)
 end
 emuObj.AddVsyncHook(patcher)
 
+emuObj.AddVsyncHook(patcher)
+
 
