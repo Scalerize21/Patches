@@ -96,7 +96,7 @@ local patcher = function()
 --jmp
 eeObj.WriteMem32(0x0011F38C, 0x0803FFE6)
 --vcallms
-eeObj.WriteMem32(0x000FFA00, 0x241B0060)
+eeObj.WriteMem32(0x000FFA00, 0x241B0016)
 eeObj.WriteMem32(0x000FFA04, 0x4A000038)
 eeObj.WriteMem32(0x000FFA08, 0x277BFFFF)
 eeObj.WriteMem32(0x000FFA0C, 0x1760FFFE)
@@ -104,7 +104,7 @@ eeObj.WriteMem32(0x000FFA18, 0x03E00008)
 eeObj.WriteMem32(0x000FFA1C, 0x241F0000)
 --VI01
 eeObj.WriteMem32(0x000FFA34, 0x48C00800)
-eeObj.WriteMem32(0x000FFA38, 0x241B0100)
+eeObj.WriteMem32(0x000FFA38, 0x241B0080)
 eeObj.WriteMem32(0x000FFA3C, 0x277BFFFF)
 eeObj.WriteMem32(0x000FFA40, 0x1760FFFE)
 eeObj.WriteMem32(0x000FFA4C, 0x03E00008)
@@ -173,3 +173,4 @@ eeObj.WriteMem32(0x000FFFB4, 0x241B0000)
 eeObj.WriteMem32(0x000FFFB8, 0x08047CE4)
 end
 emuObj.AddVsyncHook(patcher)
+
