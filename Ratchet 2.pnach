@@ -1,0 +1,32 @@
+//Ratchet & Clank 2 - Locked and Loaded
+//SCES-51607
+//Megaturret Glove patch
+//Author= Scalerize
+
+//Jmp
+patch=1,EE,0011B18C,word,0803FE80
+//Create a pointer and check if patcher's needed
+patch=1,EE,000FFA00,word,3C1B1082
+patch=1,EE,000FFA04,word,377B0078
+patch=1,EE,000FFA08,word,3C02000F
+patch=1,EE,000FFA10,word,AC44FFF4
+patch=1,EE,000FFA0C,word,3442FA00
+patch=1,EE,000FFA18,word,8C44FFFC
+patch=1,EE,000FFA1C,word,8C840000
+patch=1,EE,000FFA20,word,149B0003
+patch=1,EE,000FFA28,word,08046C64
+patch=1,EE,000FFA2C,word,241B0000
+//Patcher
+patch=1,EE,000FFA48,word,AC43FFF8
+patch=1,EE,000FFA4C,word,3C040010
+patch=1,EE,000FFA50,word,24840004
+patch=1,EE,000FFA54,word,8C830000
+patch=1,EE,000FFA58,word,107B0003
+patch=1,EE,000FFA60,word,1000FFFB
+patch=1,EE,000FFA68,word,AC44FFFC
+patch=1,EE,000FFA6C,word,3C033C01
+patch=1,EE,000FFA70,word,34633F80
+patch=1,EE,000FFA74,word,AC83020C
+patch=1,EE,000FFA78,word,8C44FFF4
+patch=1,EE,000FFA80,word,8C43FFF8
+patch=1,EE,000FFA84,word,08046C64
