@@ -1,0 +1,5416 @@
+Configuration files created by users, to improve PS2 emulator compatibility on PS4.
+
+* Describing the purpose of each command in your configuration is recommended.
+* On cli you can do it with <code>#</code> and on a lua you can do it with <code>--</code>
+
+
+{{ambox
+| type = content
+| text = Editor's note
+While there are many [https://www.psx-place.com/threads/research-ps2-emulator-configuration-on-ps4.16131/ sources] describing [[Custom Configuration Files]], you are welcome to test these and cross-post them here or elsewhere
+If doing so, please be aware that there is no "copyright" per se but you are of course welcome to credit yourself or another person if you can confirm your testing results (as describing above, you can do so by the description of what Your configuration is actually doing)
+Please post only custom configurations which you have actually tested and don't post any based on speculation only because the same code is working on a <span class="plainlinks">[{{ps3wikiurl}}PS2_Emulation PS3]</span> {{InvertibleImage|Icon_ps3.png|24px|This Article leads towards PS3 Developer Wiki}} or on a PC using [https://wiki.pcsx2.net/Main_Page PCSX2] (only because Sony decided to sell a non-upgradable x86/x64 "box" doesn't mean that it's equal to a PC). Thank you.
+}}
+
+
+=Custom Configuration Files=
+====18 Wheeler - American Pro Trucker====
+<br>NTSC
+<br>LUA
+<pre>-- boot fix by Kozarovv
+-- widescreen by Stayhye(ported from PAL version by El_Patas)
+-- ported to PS4 lua
+-- emu used=psycho v2
+
+local gpr = require("ee-gpr-alias")
+
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+--16:9
+eeObj.WriteMem32(0x001d4c3c, 0x3c013f40) -- 0x3c013f80
+-- Skip debugger hook.
+eeObj.WriteMem32(0x001EB2A0, 0x00000000)
+eeObj.WriteMem32(0x001EB2A8, 0x10000003)
+
+emuObj.ThrottleMax()
+end
+
+emuObj.AddVsyncHook(patcher)
+
+--math.random() + math.random(1, 99)
+</pre>
+
+====24 The Game====
+'''''CLI'''''
+<pre>
+--gs-uprender=2x2
+--gs-upscale=edgesmooth
+
+--host-display-mode=16:9
+
+--ee-kernel-hle=1
+--ee-injection-kernel=1
+--ee-injection-title=1
+--ee-cycle-scalar=1.9
+--safe-area-min=1.0
+--vu0-no-clamping=0
+--vu0-clamp-operands=1
+--vu0-clamp-results=1
+--vu1-no-clamping=0
+--vu1-clamp-operands=1
+--vu1-clamp-results=1
+--cop2-no-clamping=0
+--cop2-clamp-operands=1
+--cop2-clamp-results=1
+
+
+# Fixed lags issue.
+# <emu used=psychonauts v2>
+</pre>
+<br>LUA
+<br>SLUS_212.68
+<pre>
+-- 24 The Game NTSC
+-- performace fix by kozarovv
+-- ported to PS4
+-- emu used=psychonauts v2
+
+local gpr = require("ee-gpr-alias")
+
+apiRequest(1.0)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+
+--Widescreen hack 16:9
+
+--Force turn on the native widescreen
+eeObj.WriteMem32(0x205FBD2C,0x00000001)
+
+--Zoom Fix
+--6000023c 2cbd428c 
+eeObj.WriteMem32(0x002fbea0,0x3c020000)  --3c020060
+eeObj.WriteMem32(0x002fbea4,0x34420000)
+
+eeObj.WriteMem32(0x00139e2c,0x3c020000) --3c020060
+eeObj.WriteMem32(0x00139e30,0x34420000) --8c42bd2c
+
+--X-Fov (4:3)
+--aa3f013c a8aa2134
+--2a8e2134 e33f013c
+--eeObj.WriteMem32(0x00460364,0x3c013fe3) --3c013faa
+--eeObj.WriteMem32(0x00460368,0x34218e2a) --3421aaa8
+
+--Fix slow and choppy gameplay
+eeObj.WriteMem32(0x004155a8,0x48a44800)
+eeObj.WriteMem32(0x004155ac,0x48c02800)
+eeObj.WriteMem32(0x004155b0,0x4a00d839)
+
+eeObj.WriteMem32(0x00415660,0x48a44800)
+eeObj.WriteMem32(0x00415664,0x48c02800)
+eeObj.WriteMem32(0x00415668,0x4a00d839)
+
+end
+
+emuObj.AddVsyncHook(patcher)
+
+</pre>
+
+====10000 Bullets====
+'''''CLI'''''
+<pre>
+--vu1=jit-sync
+
+# Fixes Blackscreen after PS2 Logo.
+# Jak v1 used
+</pre>
+
+====Ace Combat 4====
+'''''CLI'''''
+<br>
+<pre>--gs-kernel-cl="mipmap"
+--gs-kernel-cl-up="mipmap2x2"
+--gs-use-mipmap=1
+
+#Fix for terrain textures</pre>
+
+====Ace Combat 5====
+'''''CLI'''''
+
+<br>All versions
+<pre>--gs-kernel-cl="mipmap"
+--gs-kernel-cl-up="mipmap2x2"
+--gs-use-mipmap=1
+
+#Same fix for terrain textures</pre>
+
+<br>'''''LUA file'''''
+
+<br>SLUS_208.51
+<pre>apiRequest(0.1)	-- request version 0.1 API. Calling apiRequest() is mandatory.
+
+-- Collision detection fix for Stage 3 onwards // Rearranging COP2 instructions that use old results
+
+eeInsnReplace(0x1A3B94, 0x4B00682C, 0x48498800)
+eeInsnReplace(0x1A3B98, 0x4B0C682C, 0x4B00682C)
+eeInsnReplace(0x1A3BA4, 0x48498800, 0x484A8800)
+eeInsnReplace(0x1A3BA8, 0x484A8800, 0x4B0C682C)
+</pre>
+
+<br>'''''LUA file'''''
+
+<br>SCES_504.10
+<pre>apiRequest(2.2)	-- request version 0.1 API. Calling apiRequest() is mandatory.
+
+-- Wrong sky shader
+
+local emuObj 	= getEmuObject()
+
+-- Fix for wrong sky shader
+
+emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", { texMode=1 } )
+emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", { texMode=2 } )</pre>
+
+====Ace Combat Zero: The Belkan War====
+'''''CLI'''''
+<br>All Versions
+<pre>--gs-kernel-cl="mipmap"
+--gs-kernel-cl-up="mipmap2x2"
+--gs-use-mipmap=1
+#Once again, same fix for terrain textures.</pre>
+
+<br>'''''LUA file'''''
+
+<br>SLUS_213.46
+
+<pre>apiRequest(0.1)	-- request version 0.1 API. Calling apiRequest() is mandatory.
+
+-- Collision detection fix.
+
+eeInsnReplace(0x131EBC, 0x4B00682C, 0x48498800)
+eeInsnReplace(0x131EC0, 0x4B0C682C, 0x4B00682C)
+eeInsnReplace(0x131ECC, 0x48498800, 0x484A8800)
+eeInsnReplace(0x131ED0, 0x484A8800, 0x4B0C682C)</pre>
+
+<br>'''''LUA file'''''
+
+<br>SCES_540.41
+
+<pre>apiRequest(2.2)	-- request version 0.1 API. Calling apiRequest() is mandatory.
+
+-- Wrong sky shader
+
+local emuObj 	= getEmuObject()
+
+-- Fix for wrong sky shader
+
+emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", { texMode=1 } )
+emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", { texMode=2 } )
+
+-- Collision detection fix.
+
+eeInsnReplace(0x131EB8, 0x4B00682C, 0x48498800)
+eeInsnReplace(0x131EC8, 0x4B0C682C, 0x4B00682C)
+eeInsnReplace(0x131FB8, 0x48498800, 0x484A8800)
+eeInsnReplace(0x131EC4, 0x484A8800, 0x4B0C682C)</pre>
+
+====AirBlade====
+'''''CLI'''''
+
+<br>All versions
+
+<pre>--vu0-no-clamping=0
+--vu1-no-clamping=0
+
+#emu used=GTA 3 v1
+#Fix for flickering models and textures</pre>
+
+====Ape Escape 2====
+'''''CLI'''''
+
+<br>All versions
+
+<pre>--gs-use-mipmap=1
+--gs-kernel-cl="mipmap"
+--gs-kernel-cl-up="mipmap2x2"
+
+#Fix for flickering textures</pre>
+
+====Ape Escape: Pumped & Primed====
+'''''CLI'''''
+
+<br>All versions
+
+<pre>--ee-jit-pagefault-threshold=30
+--gs-frontend-opt-mode=1
+--gs-use-mipmap=1
+--gs-kernel-cl="mipmap"
+--gs-kernel-cl-up="mipmap2x2"
+--cop2-no-clamping=1
+--vu1-mpg-cycles=250
+#Fix for flickering textures</pre>
+'''''LUA'''''
+
+<pre>--emu used=jakx v2
+apiRequest(1.0)
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+local patcher = function()
+
+--Fix game frame rate
+eeObj.WriteMem32(0x3816e0,0x10000025) -- NTSC ONLY!!
+end
+
+emuObj.AddVsyncHook(patcher)</pre>
+
+====Avatar The last airbender====
+<br> All Versions
+<br>LUA
+<pre>
+-- emu used=psychonauts v2, Fix For Freeze when starting new game
+
+local gpr = require("ee-gpr-alias")
+
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+
+eeObj.SchedulerDelayEvent("vif1.dma", 0x6500) -- "--vif1-instant-xfer=0" replacement
+emuObj.ThrottleMax()
+end
+
+emuObj.AddVsyncHook(patcher)
+</pre>
+
+====Battle Engine Aquila====
+<pre>
+#Graphical corruption fix
+--vu1-no-clamping=1
+#Performance boost
+--ee-cycle-scalar=1.5
+--vu1-mpg-cycles=1000
+--vu1-di-bits=0
+--vu1-const-prop=1
+--gs-adaptive-frameskip=1
+#Jakv2
+</pre>
+
+====Baldur's Gate: Dark Alliance II====
+'''CLI'''
+<br>All Versions
+<pre>
+--gs-uprender=2x2
+--gs-upscale=EdgeSmooth
+
+--host-display-mode=16:9
+
+--vif1-instant-xfer=0
+
+--vu0-no-clamping=0
+--vu0-clamp-results=1
+--vu1-no-clamping=0
+--vu1-clamp-results=1
+</pre>
+
+====Bard's tale, the====
+'''CLI'''
+<br>All versions
+<br>War of the monsters v1 fixes the crash.
+<pre>
+#Speedhacks
+--ee-cycle-scalar=1.1
+--vu1-di-bits=0
+#Missing graphics fix
+--vif1-instant-xfer=0
+--vu1-no-clamping=0
+</pre>
+
+====Bloody Roar 4====
+'''''CLI'''''
+
+<br>All Versions
+
+<pre>--vu0-no-clamping=0
+--vu0-clamp-results=1
+--vu1-no-clamping=0
+--vu1-clamp-results=1
+--cop2-no-clamping=0
+--cop2-clamp-results=1
+
+#SPS Fix</pre>
+
+====Burnout 2: POI====
+<br>'''''LUA file'''''
+
+<br>SLES_510.44 / SLES_529.68
+
+<pre>apiRequest(0.1)    -- request version 0.1 API. Calling apiRequest() is mandatory.
+
+-- SLES-51044 / SLES-52968 - Fix white parts
+-- Major thanks to Maori-Jigglypuff for reversing that
+
+eeInsnReplace(0x2485B8, 0xC6800D18, 0x3C014316)
+eeInsnReplace(0x2485CC, 0xE4400000, 0xAC410000)
+eeInsnReplace(0x262604, 0xC7809780, 0x3C014316)
+eeInsnReplace(0x262618, 0xE4400000, 0xAC410000)
+eeInsnReplace(0x2564B8, 0x8F829764, 0x24020000)</pre>
+
+<br>'''''LUA file'''''
+
+<br>SLUS_204.97
+
+<pre>apiRequest(0.1)    -- request version 0.1 API. Calling apiRequest() is mandatory.
+
+-- SLUS_204.97 - Fix white parts
+-- Major thanks to Maori-Jigglypuff for reversing that
+
+eeInsnReplace(0x2485A8, 0xC6800D18, 0x3C014316)
+eeInsnReplace(0x2485BC, 0xE4400000, 0xAC410000)
+eeInsnReplace(0x2625F4, 0xC7809780, 0x3C014316)
+eeInsnReplace(0x262608, 0xE4400000, 0xAC410000)
+eeInsnReplace(0x2564A8, 0x8F829764, 0x24020000)</pre>
+
+====Castlevania: Curse of Darkness====
+<br>SLUS-21168
+<br>LUA
+<pre>
+-- Widescreen hack by nemesis2000
+-- new graphics fix by kozarovv
+-- emu used=
+
+local gpr = require("ee-gpr-alias")
+
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+--gameplay
+eeObj.WriteMem32(0x00751384,0x3c013f40) --hor value
+eeObj.WriteMem32(0x00751388,0x44810000)
+eeObj.WriteMem32(0x00751390,0x4600c602)
+
+--FMV's fix
+eeObj.WriteMem32(0x00443eb8,0x00000000)
+eeObj.WriteMem32(0x00775398,0x24056e40)
+eeObj.WriteMem32(0x007753a4,0x24072380)
+
+-- Clamp value manually. Clamping from emulator change value to FLT_MIN
+-- While we need correct lower bits + 1 due to x86 rounding...
+eeObj.WriteMem32(0x92FD50, 0xFF7F8001)
+
+emuObj.ThrottleMax()
+end
+
+emuObj.AddVsyncHook(patcher)
+
+</pre>
+LUA
+<br>SLES_537.55
+<pre>
+-- Widescreen hack by nemesis2000
+-- new graphics fix by kozarovv
+-- emu used=
+
+local gpr = require("ee-gpr-alias")
+
+apiRequest(0.1)
+
+local eeObj  = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+
+--Widescreen
+--gameplay
+eeObj.WriteMem32(0x007526fc,0x3c013f40) --hor value
+eeObj.WriteMem32(0x00752700,0x44810000)
+eeObj.WriteMem32(0x00752708,0x4600c602)
+
+--FMV's fix
+eeObj.WriteMem32(0x004448d0,0x00000000)
+eeObj.WriteMem32(0x00776718,0x24056d80)
+eeObj.WriteMem32(0x00776724,0x24072380)
+
+-- Clamp value manually. Clamping from emulator change value to FLT_MIN
+-- While we need correct lower bits + 1 due to x86 rounding...
+eeObj.WriteMem32(0x00931280, 0xFF7F8001)
+
+emuObj.ThrottleMax()
+
+end
+
+emuObj.AddVsyncHook(patcher)
+</pre>
+
+==== Call of Duty: World at War - Final Fronts ====
+<pre>
+--ee-kernel-hle=1
+--ee-injection-kernel=1
+--ee-injection-title=1
+--ee-cycle-scalar=1.9
+--safe-area-min=1.0
+--vu0-no-clamping=0
+--vu0-clamp-operands=1
+--vu0-clamp-results=1
+--vu1-no-clamping=0
+--vu1-clamp-operands=1
+--vu1-clamp-results=1
+--cop2-no-clamping=0
+--cop2-clamp-operands=1
+--cop2-clamp-results=1
+# Fixed low framrate issue, !!!JAK EMULATOR Used!!!
+</pre>
+====Cold Winter====
+'''''CLI'''''
+
+<br>All Versions
+
+<pre>--vu0-no-clamping=0
+--vu1-no-clamping=0
+--vu0-clamp-operands=1
+--vu0-clamp-results=1
+--vu1-clamp-operands=1
+--vu1-clamp-results=1
+
+# fix graphic and physics, there are still issue with fmv, and minor stering issue.</pre>
+
+====Crash Bandicoot - Wrath of Cortex====
+'''''CLI'''''
+<br>SLUS20238 
+'''SLUS-20238_cli.conf'''
+<pre>
+--host-display-mode=16:9
+--force-frame-blend=1
+--gs-kernel-cl="h2lpool"  
+--gs-kernel-cl-up="h2lpool2x2"
+#Speedhacks
+--vu1-di-bits=0
+</pre>
+'''SLUS-20238_config.lua'''
+<pre>
+-- Crash Bandicoot The Wrath of Cortex [SLUS-20238] (U)
+-- emu used=KOF 98
+
+apiRequest(1.0)   
+
+local gpr = require("ee-gpr-alias")
+
+local eeObj  = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+
+--16:9 hack
+eeObj.WriteMem32(0x001138B8,0x3c013f11) --vertical fov
+eeObj.WriteMem32(0x001127A0,0x3c013f2a) --zoom value
+eeObj.WriteMem32(0x0011287C,0x3c013f2a) --render value
+
+--No interlace
+eeObj.WriteMem32(0x2016A048,0xAF80E750) 
+eeObj.WriteMem32(0x2016A054,0xAF80E750)
+
+--Underwater FX Fix
+eeObj.WriteMem32(0x202438AC,0x0000182D) 
+
+--Mech FX Fix
+eeObj.WriteMem32(0x20257CF0,0x0000182D) 
+
+--Cortex Vortex FX Fix
+eeObj.WriteMem32(0x20242894,0x100000BC) 
+
+--Disable Dark Effect
+eeObj.WriteMem32(0x20258588,0x44801000) 
+
+emuObj.ThrottleMax()
+end
+
+emuObj.AddVsyncHook(patcher)
+
+emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", { texMode=1 } ) --texMode=1
+</pre>
+<br>SLES50386
+'''SLES-50386_cli.conf'''
+<pre>
+--host-display-mode=16:9
+--gs-progressive=1
+</pre>
+'''SLES-50386_config.lua'''
+<pre>
+-- Crash Bandicoot The Wrath of Cortex [SLES-50386] (E)
+-- emu used=KOF 2000
+
+apiRequest(1.0)   
+
+local gpr = require("ee-gpr-alias")
+
+local eeObj  = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+
+--16:9 hack
+eeObj.WriteMem32(0x21D43044,0x3F100000) --3F400000
+
+emuObj.ThrottleMax()
+end
+
+emuObj.AddVsyncHook(patcher)
+
+emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", { texMode=1 } ) --texMode=1
+</pre>
+'''Crash Bandicoot 4: Sakuretsu! Majin Power'''
+'''クラッシュ・バンディクー４　～さくれつ！魔神・パワー～'''
+<br>SLPM62114
+'''SLPM-62114_cli.conf'''
+<pre>
+--gs-uprender=2x2
+--gs-upscale=edgesmooth
+--host-display-mode=16:9
+--force-frame-blend=1
+--gs-kernel-cl="h2lpool"
+--gs-kernel-cl-up="h2lpool2x2"
+#Speedhacks
+--vu1-di-bits=0
+
+#emu used=KOF 98
+</pre>
+'''SLPM-62114_config.lua'''
+<pre>
+-- Crash Bandicoot 4: Sakuretsu! Majin Power [SLPM-62114] (NTSC-J)
+-- emu used=KOF 98
+
+apiRequest(1.0)
+
+local gpr = require("ee-gpr-alias")
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+
+--16:9 hack
+eeObj.WriteMem32(0x00113990,0x3C013F11) --vertical fov
+eeObj.WriteMem32(0x0011250C,0x3C013F2A) --zoom value
+eeObj.WriteMem32(0x00112958,0x3C013F2A) --render value
+
+--No interlace
+eeObj.WriteMem32(0x2016A2F8,0xAF80E750)
+eeObj.WriteMem32(0x2016A304,0xAF80E750)
+
+--Underwater FX Fix
+eeObj.WriteMem32(0x2024D534,0x0000182D)
+
+--Mech FX Fix
+eeObj.WriteMem32(0x20261D78,0x0000182D)
+
+--Cortex Vortex FX Fix
+eeObj.WriteMem32(0x2024CBA4,0x100000BC)
+
+--Disable Dark Effect
+eeObj.WriteMem32(0x20262658,0x44801000)
+
+emuObj.ThrottleMax()
+end
+
+emuObj.AddVsyncHook(patcher)
+
+emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", { texMode=1 } ) --texMode=1
+</pre>
+
+====Crash Tag Team Racing====
+'''''CLI'''''
+<br>'''Pal'''
+<pre>
+#Fix For Extreme slowdowns, 
+#This game is known for being EXTREMELY VU1 hungry.
+--vu1-mpg-cycles=1200
+--vu1-di-bits=0
+--vu1-const-prop=1
+--ee-cycle-scalar=1.3
+</pre>
+
+'''CLI'''
+<br>'''SLUS_211.91 only'''
+<pre>
+--vu1-di-bits=0
+--vu1-mpg-cycles=250
+--ee-cycle-scalar=1.2
+--ee-hook=0x0034C098,AdvanceClock,,500
+#This will cause stuttering during car transformation animation
+#But it is better than having slowdowns
+--ee-hook=0x003547C8,AdvanceClock,,9000
+</pre>
+
+'''LUA'''
+<br>'''SLUS_211.91 only'''
+<pre>
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+
+--Author: MrJaredBeta
+--Fixes: Stuttering during coin animations
+eeObj.WriteMem32(0x0022e3e4, 0x1000000c)
+
+end
+emuObj.AddVsyncHook(patcher)
+</pre>
+
+====Crash Twinsanity====
+'''''CLI'''''
+
+'''KOF2000 EMU USED'''
+<br>All Versions
+
+<pre>
+#Speedhacks
+--ee-cycle-scalar=1.6
+--vu1-mpg-cycles=400
+--vu1-di-bits=0
+#Graphical glitches fixes
+--vu-xgkick-delay=5
+--gs-use-clut-merge=1
+--gs-kernel-cl="clutmerge"
+--gs-kernel-cl-up="clutmerge2x2"
+</pre>
+'''''LUA'''''
+<br>SLES-52568
+<pre>
+apiRequest(0.1)    -- request version 0.1 API. Calling apiRequest() is mandatory.
+
+-- Fix random crashes
+eeInsnReplace(0x1923E8,0x5440FFFB,0x00000000)
+eeInsnReplace(0x1923EC,0x0071182F,0x00000000)
+eeInsnReplace(0x1923F0,0x0223102F,0x00000000)
+
+-- Eliminate color scan lines
+local emuObj = getEmuObject()
+
+emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", { texMode=1 } )</pre>
+'''''LUA'''''
+<br>SLUS-20909
+<pre>
+apiRequest(0.1)    -- request version 0.1 API. Calling apiRequest() is mandatory.
+
+-- Fix random crashes
+eeInsnReplace(0x191C58,0x5440FFFB,0x00000000)
+eeInsnReplace(0x191C5C,0x0071182F,0x00000000)
+eeInsnReplace(0x191C60,0x0223102F,0x00000000)
+
+-- Eliminate color scan lines
+local emuObj = getEmuObject()
+
+emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", { texMode=1 } )</pre>
+
+====Crash Nitro Kart====
+
+
+<br>All Versions
+<br>'''''CLI'''''
+<pre>
+--gs-uprender=2x2
+--gs-upscale=edgesmooth
+--gs-adaptive-frameskip=1
+--force-frame-blend=1
+
+--vu0-no-clamping=0
+--vu1-no-clamping=0
+--vu1-di-bits=0
+--vu1=jit-sync
+
+--vu1-mpg-cycles=2200
+--vu1-jalr-cache-policy=newprog
+--vu0-jr-cache-policy=sameprog
+
+--ee-hook=0x005dbc38,AdvanceClock,,21000
+</pre>
+<br>'''''LUA (NTSC ONLY!)'''''
+<pre>
+-- Crash Nitro Kart NTSC
+-- Widescreen by Stayhye
+-- ported to PS4 by Stayhye
+-- emu used=jakx v2
+
+local gpr = require("ee-gpr-alias")
+
+apiRequest(2.0)
+
+local emuObj 		= getEmuObject()
+local eeObj			= getEEObject()
+local gsObj			= getGsObject()
+local eeOverlay 	= eeObj.getOverlayObject()
+local iopObj        = getIOPObject()
+
+emuObj.PadSetLightBar(0, 255,0,255)
+emuObj.SetDisplayAspectWide()
+gsObj.SetDeinterlaceShift(1) 
+gsObj.SetUprenderMode(1) -- 0=none <> 1=2x2
+emuObj.SetDeinterlace(true)
+
+local patcher = function()
+--freeze fix
+eeObj.WriteMem32(0x003e8170,0)
+--16:9
+eeObj.WriteMem32(0x0058bcf8,0x3c023f40) -- 0x3c023f00 - hor. axis
+eeObj.WriteMem32(0x0058bd0c,0x3c023f40) -- 0x3c023f00 -- zoom
+
+--eeObj.WriteMem32(0x005dbc18,0x24030001)
+eeObj.SchedulerDelayEvent("vif1.dma",0x5000)
+emuObj.ThrottleMax() -- No negative.  
+end
+
+emuObj.AddVsyncHook(patcher)
+</pre>
+
+====Dead or Alive 2: Hardcore====
+<br>'''''LUA file'''''
+
+<br>SLUS_200.71
+
+<pre>apiRequest(0.1)
+
+-- Fix hang, fix music, and sounds effects
+
+emuMediaPatch(0x186A71, 12 + 0x7e4, { 0x2404002b }, { 0x27c40010 })
+emuMediaPatch(0x186A71, 12 + 0x7e8, { 0x0c0032b3 }, { 0x0c0032b7 })
+emuMediaPatch(0x186A71, 12 + 0x7ec, { 0x27c50010 }, { 0x00000000 })
+emuMediaPatch(0x186A71, 12 + 0x5e8, { 0x27bdfff0 }, { 0x03e00008 })
+emuMediaPatch(0x186A71, 12 + 0x5ec, { 0xafbe0008 }, { 0x00000000 })
+emuMediaPatch(0x186A7B, 12 + 0x6fc, { 0x27bdfff0 }, { 0x03e00008 })
+emuMediaPatch(0x186A7B, 12 + 0x700, { 0xafbe0008 }, { 0x00000000 })
+emuMediaPatch(0x186A85, 12 + 0x164, { 0x27bdfff0 }, { 0x03e00008 })
+emuMediaPatch(0x186A85, 12 + 0x168, { 0xafbe0008 }, { 0x00000000 })
+emuMediaPatch(0x186A85, 12 + 0x10c, { 0x27bdfff0 }, { 0x03e00008 })
+emuMediaPatch(0x186A85, 12 + 0x110, { 0xafbe0008 }, { 0x00000000 })
+emuMediaPatch(0x186A85, 12 + 0x1bc, { 0x27bdfff0 }, { 0x03e00008 })
+emuMediaPatch(0x186A85, 12 + 0x1c0, { 0xafbe0008 }, { 0x00000000 })
+emuMediaPatch(0x186A86, 12 + 0x7f0, { 0x27bdfff0 }, { 0x03e00008 })
+emuMediaPatch(0x186A86, 12 + 0x7f4, { 0xafbe0008 }, { 0x00000000 })
+emuMediaPatch(0x186C38, 12 + 0x6ec, { 0x24060001 }, { 0x24060000 })</pre>
+
+For the Japanese version (SLPS-25026) you can also use config files from PS3's PS2 emu with
+<pre>--lopnor-config=1</pre>
+in config.
+
+Place config file named as "SLPS-25026_lopnor.cfgbin" in /patches/SLPS-25026/
+
+
+'''''*Alternate fix Jak emus'''''
+
+<br>'''''LUA file'''''
+
+
+<pre>
+--DOA 2 Hardcore NTSC US
+
+apiRequest(2.2)
+
+local gpr       = require("ee-gpr-alias")
+local emuObj      = getEmuObject()
+local eeObj       = getEEObject()
+local gsObj       = getGsObject()
+local eeOverlay    = eeObj.getOverlayObject()
+local iopObj  = getIOPObject()
+
+local patcher = function()
+
+eeObj.WriteMem32(0x0021b63c,0x3c014534) -- Widescreen
+eeObj.WriteMem32(0x002b06ec,0x24060000) -- Fixes game hanging on boot.
+ 
+iopObj.WriteMem32(0x001D77E4,0x27C40010) --fixes music/sound effects
+iopObj.WriteMem32(0x001D77E8,0x0C0032B7) --fixes music/sound effects  
+iopObj.WriteMem32(0x001D77EC,0x00000000) --fixes music/sound effects 
+
+end
+
+emuObj.AddVsyncHook(patcher)
+
+emuObj.PadSetLightBar(0,255,200,250)
+emuObj.SetDisplayAspectWide()
+
+</pre>
+
+====Devil Kings====
+All versions
+<br>CLI
+<pre>
+#Fix For Graphical Glitches (SPS)
+--vu1-no-clamping=0
+</pre>
+
+====Disgaea 2: Cursed Memories====
+'''''CLI'''''
+
+<br>SLUS-21397
+
+<pre>#Fix for lines in terrain textures and flickering textures
+--gs-kernel-cl="mipmap"
+--gs-kernel-cl-up="mipmap2x2"
+--gs-use-mipmap=1</pre>
+
+====Digimon Rumble Arena 2====
+'''''CLI'''''
+
+<br>ALL
+
+<pre>
+#Fix for game being stuck at main menu with selections moving very fast
+--fpu-no-clamping=1
+#Speedhack
+--vu1-di-bits=0
+</pre>
+
+====Digimon World 4====
+'''''CLI'''''
+
+<br>All Versions
+
+<pre>
+#Fixes slowdowns in The game
+--vu1-di-bits=0
+--vu1-const-prop=1
+--vu1-mpg-cycles=700
+--ee-cycle-scalar=1.2
+#Fixes black screen caused by MTVU
+--vu1=jit-sync
+#Jakv2
+</pre>
+
+====Disney Golf====
+'''''CLI'''''
+
+<br>All Versions
+
+<pre>
+#Fixes graphical glitches
+--gs-use-clut-merge=1
+--gs-kernel-cl="clutmerge"
+--gs-kernel-cl-up="clutmerge2x2"
+--force-frame-blend=1
+#Other
+--cdvd-sector-read-cycles=5000
+#Speedhacks
+--vu1-mpg-cycles=1000
+--vu1-jr-cache-policy=newprog
+
+#aofa
+</pre>
+
+====Dokapon Kingdom====
+'''''CLI'''''
+<br>All Versions
+<pre>
+#Fixes black screen freeze.
+--vu1=jit-sync
+</pre>
+
+====Dragon Ball Z: Budokai Tenkaichi 2====
+'''''CLI'''''
+
+<br>All Versions
+
+<pre>#Fix for missing life bars and other UI elements.
+--gs-use-clut-merge=1
+--gs-kernel-cl="clutmerge"
+--gs-kernel-cl-up="clutmerge2x2"
+</pre>
+
+====Dragon Ball Z: Budokai Tenkaichi 3====
+'''''CLI'''''
+
+<br>All Versions
+
+<pre>#Fix for missing life bars and other UI elements
+--gs-use-clut-merge=1
+#Fix for mis-aligned glow caused by upscaling
+--gs-kernel-cl-up="up2x2simple"
+#Fix for Performance
+--vu1-mpg-cycles=200
+--vu1-di-bits=0
+--ee-cycle-scalar=1.2
+</pre>
+
+====Dragon Quest VIII: Journey of the Cursed King====
+'''''CLI'''''
+
+<br>All Versions
+
+<pre>--gs-kernel-cl-up="up2x2skipinterp"
+--gs-optimize-30fps=1
+
+#Fix lines in shadows</pre>
+
+====Dragon Quest V: Tenkuu no Hanayome====
+'''CLI'''
+<pre>
+#Speedhacks
+--ee-cycle-scalar=1.2
+--vu1-di-bits=0
+#Fix for being stuck in Faerie land.
+--fpu-accurate-range=0x00693f88,0x00693f88
+</pre>
+
+====Dreamworks: Shrek the third====
+<br>All Versions
+<br>'''CLI'''
+<pre>
+#Slowdown fixes
+--vu1-di-bits=0
+--vu1-mpg-cycles=600
+--ee-cycle-scalar=1.2
+
+#Disable try to fix graphics if creating using ps2fpkg v0.6
+</pre>
+
+====DreamWorks Madagascar====
+'''CLI'''
+<br>All versions
+<pre>
+#Game hates upscaling, so this will be enough to fix all upscaling problems.
+--gs-kernel-cl-up="up2x2simple"
+#Speedhacks
+--vu1-mpg-cycles=300
+--ee-cycle-scalar=1.2
+--vu1-di-bits=0
+</pre>
+
+'''LUA'''
+<br>SLES-53225
+<br>This patch fixes this [https://github.com/PCSX2/pcsx2/issues/7866 issue]
+<pre>
+apiRequest(0.1)
+
+--Fix for graphical problems, Game needs vu1 nearest rounding.
+--Credit goes to Goatman13, Untested on ps4.
+--Add one bit in LOI 8388609.0
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+local patcher = function()
+eeobj.writemem8(0x0034BA40,0x01)
+eeobj.writemem8(0x0034BDE0,0x01)
+eeobj.writemem8(0x0034C100,0x01)
+eeobj.writemem8(0x0034C490,0x01)
+eeobj.writemem8(0x0034C810,0x01)
+end
+emuObj.AddVsyncHook(patcher)
+
+</pre>
+
+====DreamWorks Bee Movie Game====
+'''CLI'''
+<br>All versions
+<pre>
+--ee-cycle-scalar=4.0 #fix pass fmv 
+--vu0-di-bits=0
+--vu1-di-bits=0
+--vu1-jr-cache-policy=newprog #fix random crash?
+--gs-uprender=1
+--gs-upscale=edgesmooth
+--host-display-mode=full
+
+# Emu used = Primal
+</pre>
+
+====Driv3r====
+'''CLI'''
+<br>SLUS-20587
+<pre>
+#Fix for AI cop car
+--cop2-accurate-addsub-range=0x4b8108,0x4b8408
+#Speedhacks
+--vu1-di-bits=0
+--vu1-mpg-cycles=2700
+--ee-cycle-scalar=1.1
+#Graphical fixes
+--gs-flush-ad-xyz=always
+--gs-use-mipmap=1
+--gs-use-clut-merge=1
+--gs-kernel-cl-up="up2x2simple"
+</pre>
+
+====Ephemeral Fantasia™ ====
+'''''CLI'''''
+
+<br>All Versions
+
+<pre>--gs-uprender=2x2
+--gs-upscale=EdgeSmooth
+
+--host-display-mode=16:9
+--framelimit-mode=normal
+#Fix for missing character/world parts
+--vu1-no-clamping=0
+</pre>
+
+====Everblue 2====
+'''''LUA file'''''
+
+<br>SLES_513.81
+
+<pre>apiRequest(0.1)
+
+eeInsnReplace(0x230b68, 0x4be503bc, 0x4b0c211c)
+eeInsnReplace(0x230b6c, 0x4b0c211c, 0x4be503bc)
+eeInsnReplace(0x230b84, 0x4be603bc, 0x4bc0295c)
+eeInsnReplace(0x230b88, 0x4bc0295c, 0x4be603bc)
+eeInsnReplace(0x230ba0, 0x4be703bc, 0x4bc0319c)
+eeInsnReplace(0x230ba4, 0x4bc0319c, 0x4be703bc)
+eeInsnReplace(0x230bbc, 0x4be803bc, 0x4bc039dc)
+eeInsnReplace(0x230bc0, 0x4bc039dc, 0x4be803bc)
+eeInsnReplace(0x230bd8, 0x4be903bc, 0x4bc0421c)
+eeInsnReplace(0x230bdc, 0x4bc0421c, 0x4be903bc)
+eeInsnReplace(0x230bf4, 0x4bea03bc, 0x4bc04a5c)
+eeInsnReplace(0x230bf8, 0x4bc04a5c, 0x4bea03bc)
+eeInsnReplace(0x230c10, 0x4beb03bc, 0x4bc0529c)
+eeInsnReplace(0x230c14, 0x4bc0529c, 0x4beb03bc)
+
+#Missing textures fix</pre>
+
+====Fifa 2011====
+<br>CLI
+<br>PAL
+<pre>
+#Performance & crash fix
+--ee-cycle-scalar=2.5
+#More performance
+--vu1-mpg-cycles=6000
+--vu1-di-bits=0
+#Screen roughness fix
+--gs-fieldswap-delay=254
+#Vertical bars upscaling graphical glitch fix
+--gs-kernel-cl-up="fantavision"
+#RECVX emu was used.
+</pre>
+
+====Fire Pro Wrestling Z™®====
+'''LUA'''
+<pre>
+-- Fire Pro Wrestling Z™® (English v0.5b)
+-- boot fix
+-- needs graphics fix
+-- emu used=aofa
+
+local gpr = require("ee-gpr-alias")
+
+apiRequest(0.1)
+
+local eeObj  = getEEObject()
+local emuObj  = getEmuObject()
+
+local patcher = function()
+-- black screen after spike logo fix
+eeObj.WriteMem32(0x001eaa14,0x0) --0x1440fffa >> bne v0, zero, $001eaa00
+emuObj.ThrottleMax()
+end
+
+emuObj.AddVsyncHook(patcher)
+
+</pre>
+
+====Flatout 2====
+'''LUA'''
+<br>SLUS212.51
+<pre>
+apiRequest(0.1)
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+
+----Disable graphics overlay to fix all slowdown + widescreen code
+eeObj.WriteMem32(0x3a0498,0x3c013f14)
+eeObj.WriteMem32(0x2d4b40,0x3c014010)
+eeObj.WriteMem32(0x22e768,0x3C013F8A)
+eeObj.WriteMem32(0x2d5B30,0x00000000)
+end
+
+emuObj.AddVsyncHook(patcher)
+</pre>
+'''LUA'''
+<br>SLES540.02
+<pre>
+apiRequest(0.1)
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+
+--Disable graphics overlay to fix all slowdown + widescreen code
+eeObj.WriteMem32(0x3A1F28,0x3c013f14)
+eeObj.WriteMem32(0x2D6650,0x3c014010)
+eeObj.WriteMem32(0x234F18,0x3C013F8A)
+eeObj.WriteMem32(0x2d7640,0x00000000)
+end
+
+emuObj.AddVsyncHook(patcher)
+</pre>
+
+====Frogger: Ancient Shadow====
+'''''CLI'''''
+
+<br>SLUS_210.98
+
+<pre>
+#This one might be the only one you need
+--vu1-no-clamping=0
+#use the rest just in case
+--vu0-no-clamping=0
+--vu0-clamp-operands=1
+--vu0-clamp-results=1
+--vu1-clamp-operands=1
+--vu1-clamp-results=1
+--cop2-no-clamping=0
+--cop2-clamp-operands=1
+--cop2-clamp-results=1 
+#Fixes disappearing models during cutscenes and during gameplay</pre>
+
+====Galactic Wrestling Featuring Ultimate Muscle====
+NTSC/U
+<br>CLI
+<pre>--fpu-no-clamping=0
+--fpu-clamp-results=1
+--vu0-no-clamping=0
+--vu0-clamp-results=1
+--vu1-no-clamping=0
+--vu1-clamp-results=1
+--cop2-no-clamping=0
+--cop2-clamp-results=1
+#fix for missing character models
+--vu-xgkick-delay=0.58
+#KOF98Emu used</pre>
+
+====Galarians: Ash====
+'''''CLI'''''
+<pre>--gs-uprender=2x2
+--gs-upscale=EdgeSmooth
+--gs-adaptive-frameskip=1
+
+--vif-ignore-invalid-cmd=0
+--vif1-ignore-cmd-ints=1
+--vif1-instant-xfer=0
+
+--ee-jit-pagefault-threshold=30
+
+--lopnor-config=1 #found here http://ps3.aldostools.org/ps2config.html
+
+--ee-cycle-scalar=2.0
+
+</pre>
+'''''LUA file'''''
+<pre>
+-- Galarians Ash NTSC
+-- emu used=jakx v2
+
+local gpr = require("ee-gpr-alias")
+
+apiRequest(2.2)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+
+eeObj.WriteMem32(0x001e0100,0x3c013f40) -- 16:9
+emuObj.ThrottleMax() -- Drastically reduces loading screens duration on most games
+
+end
+
+emuObj.AddVsyncHook(patcher)
+</pre>
+
+====Ghost in the Shell: Stand Alone Complex====
+<br>'''''LUA file'''''
+
+<br>SLES_530.20
+
+<pre>apiRequest(0.1) -- request version 0.1 API. Calling apiRequest() is mandatory.
+
+eeInsnReplace(0x10BC88, 0x4BEC682C, 0x48468800)
+eeInsnReplace(0x10BC8C, 0x4B8D617D, 0x4bec682c)
+eeInsnReplace(0x10BC90, 0x4A6D617C, 0x4b8d617d)
+eeInsnReplace(0x10BC98, 0x48468800, 0x4a6d617c)
+eeInsnReplace(0x12B2CC, 0x4BEC682C, 0x48468800)
+eeInsnReplace(0x12B2D0, 0x4B8D617D, 0x4bec682c)
+eeInsnReplace(0x12B2D4, 0x4A6D617C, 0x4b8d617d)
+eeInsnReplace(0x12B2DC, 0x48468800, 0x4a6d617c)
+eeInsnReplace(0x12B5F4, 0x4BEC682C, 0x48468800)
+eeInsnReplace(0x12B5F8, 0x4B8D617D, 0x4bec682c)
+eeInsnReplace(0x12B5FC, 0x4A6D617C, 0x4b8d617d)
+eeInsnReplace(0x12B604, 0x48468800, 0x4a6d617c)
+eeInsnReplace(0x1B0B58, 0x4BEC682C, 0x48468800)
+eeInsnReplace(0x1B0B5C, 0x4BED617D, 0x4bec682c)
+eeInsnReplace(0x1B0B68, 0x48468800, 0x4b8d617d)
+eeInsnReplace(0x1BF5FC, 0x4A0002FF, 0x48588800)
+eeInsnReplace(0x1BF60C, 0x48588800, 0x4a0002ff)
+eeInsnReplace(0x1BFBB8, 0x4A0002FF, 0x48588800)
+eeInsnReplace(0x1BFBC8, 0x48588800, 0x4a0002ff)
+eeInsnReplace(0x1BF818, 0x4A0002FF, 0x48588800)
+eeInsnReplace(0x1BF828, 0x48588800, 0x4a0002ff)
+eeInsnReplace(0x1C017C, 0x4A0002FF, 0x48588800)
+eeInsnReplace(0x1C018C, 0x48588800, 0x4a0002ff)
+
+-- Potential fix for broken interactive door // Rearranging COP2 ops so as to avoid macflag bad stuff</pre>
+
+====Gran turismo 4====
+'''CLI'''
+<br>All
+<br>Forbidden siren v2 emu only
+<pre>
+#Fix incomplete letters in menu
+--vu0-no-clamping=0
+--vu1-no-clamping=0
+#Speedhacks
+--ee-cycle-scalar=1.2
+--vu1-di-bits=0
+--vu1-mpg-cycles=700
+#Fix video anticipated race license
+--fpu-accurate-muldiv-range=0x00579EB8,0x00579EB8
+--fpu-accurate-muldiv-range=0x00579EDC,0x00579EDC
+--fpu-accurate-muldiv-range=0x0057A008,0x0057A008
+--fpu-accurate-muldiv-range=0x0057A030,0x0057A030
+#Gfx fix
+--vif1-instant-xfer=0
+--gs-use-mipmap=1
+--gs-kernel-cl="mipmap"
+--gs-kernel-cl-up="mipmap2x2"
+</pre>
+
+'''CLI'''
+<br>SCPS-17001
+<br>Forbidden siren v2 emu only
+<pre>
+#Fix incomplete letters in menu
+--vu0-no-clamping=0
+--vu1-no-clamping=0
+#Speedhacks
+--ee-cycle-scalar=1.2
+--vu1-di-bits=0
+--vu1-mpg-cycles=700
+#Fix video anticipated race license
+--fpu-accurate-muldiv-range=0x00571A92,0x00571A92
+--fpu-accurate-muldiv-range=0x00571AB4,0x00571AB4
+--fpu-accurate-muldiv-range=0x00571BE0,0x00571BE0
+--fpu-accurate-muldiv-range=0x00571C08,0x00571C08
+#Gfx fix
+--vif1-instant-xfer=0
+--gs-use-mipmap=1
+--gs-kernel-cl="mipmap"
+--gs-kernel-cl-up="mipmap2x2"
+</pre>
+
+'''LUA'''
+<br>SCES-51719 only
+<pre>
+--gametitle=Gran Turismo 4 [SCES-51719] (E)
+--emu=siren v2
+
+apiRequest(0.1)
+
+local eeObj     = getEEObject()
+local emuObj = getEmuObject()
+local gsObj     = getGsObject()
+
+local widescreen = function()
+
+-- force progressive scan
+eeObj.WriteMem32(0x20A57E70,0x00000001)
+eeObj.WriteMem32(0x201074A0,0x24050003) --8E050004
+eeObj.WriteMem32(0x2061868C,0x00000001) --00000000
+eeObj.WriteMem32(0x20618694,0x00000000) --00000001
+
+-- Autoboot in 480p
+eeObj.WriteMem32(0x20436820,0xAE0516B0) --AE0010E8
+eeObj.WriteMem16(0x20436910,0x10E8) --
+
+--Field of View
+
+-- Screen Width   (mm)
+eeObj.WriteMem32(0x20A567F0,0x446E0000) -- 952mm in my case
+
+-- Screen Height (mm)
+eeObj.WriteMem32(0x20A567F4,0x4405C000) -- 535mm in my case
+
+-- Eye Distance to Screen (mm)
+eeObj.WriteMem32(0x20A567EC,0x44610000) -- 900mm in my case
+
+-- Zoom Level (-2.0 to 2.0)
+eeObj.WriteMem32(0x20A567E8,0x3f800000) -- 1.0, we already have the right FoV Better don't touch this
+
+
+--Aspect Ratio
+
+--   Single Screen Aspect Ratios
+--    1 x 16:9  3f800000
+--    1 x 21:9  3FAAAAAB
+--    1 x 32:9  40000000
+
+--   Triple Screen Aspect Ratios
+--    3 x 16:9  40400000
+
+eeObj.WriteMem32(0x20A567F8,0x3f800000) -- 16:9 in my case
+
+-- disable colour correction channel shuffle effect
+eeObj.WriteMem32(0x0033F8B8,0x1000000B) --5440000B
+
+-- disable rendering of light sources
+eeObj.WriteMem32(0x0033F6B0,0x10000031) --10400031
+
+-- Fix shadows
+eeObj.WriteMem32(0x001D6598,0x00000000) --0C075A6A
+
+-- Added GT4 First Preview camera mode (far chase camera)
+eeObj.WriteMem32(0x2037AFAC,0x84E30000)
+eeObj.WriteMem16(0x2037AFB0,0x0002)
+eeObj.WriteMem16(0x2037AFC0,0x0004)
+eeObj.WriteMem32(0x2037AFD0,0x84E30000)
+
+eeObj.WriteMem16(0x2037AFE0,0x0004)
+eeObj.WriteMem8(0x0037AFF8,0x40)
+eeObj.WriteMem16(0x2037B00A,0x8442)
+
+eeObj.WriteMem32(0x206211E8,0x00010000)
+eeObj.WriteMem32(0x206211EC,0x00060014)
+
+end
+
+emuObj.AddVsyncHook(widescreen)
+</pre>
+
+====Gran Turismo 4 - Prologue====
+<br>PBPX-95524
+<br>LUA
+<pre>
+local gpr = require("ee-gpr-alias")
+
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+
+--fix IPU DMA 
+eeObj.WriteMem32(0x166814,0x0)
+eeObj.WriteMem32(0x3a36b8,0x0)
+eeObj.WriteMem32(0x3a36f4,0x0)
+
+emuObj.ThrottleMax()
+end
+
+emuObj.AddVsyncHook(patcher)
+</pre>
+
+====Grand Theft Auto: Vice City Stories====
+SLUS_215.90
+<br>CLI
+<pre>
+--gs-uprender=2x2
+--gs-upscale=edgesmooth
+--gs-kernel-cl="h2lpool"
+--gs-kernel-cl-up="h2lpool2x2"
+
+--host-display-mode=16:9
+#emu used=psychonauts v2
+</pre>
+<br>LUA
+<pre>
+-- emu used=psychonauts v2
+local gpr = require("ee-gpr-alias")
+
+apiRequest(1.0)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+
+--widescreen fix
+eeObj.WriteMem32(0x002653d8,0x3c013f9d)
+eeObj.WriteMem32(0x002653dc,0x44810000)
+eeObj.WriteMem32(0x002653e0,0x46006302)
+eeObj.WriteMem32(0x002653e4,0x3c020048)
+eeObj.WriteMem32(0x002653e8,0x03e00008)
+eeObj.WriteMem32(0x002653ec,0xe44c7484)
+
+eeObj.WriteMem32(0x0037add4,0x0c0994f6)
+eeObj.WriteMem32(0x003b9d14,0x0c0994f9)
+eeObj.WriteMem32(0x003ba1b0,0x0c0994f9)
+
+eeObj.WriteMem32(0x20370314,0x10820019)--60fps
+
+--eeObj.WriteMem32(0x20447EDC,0x00000000)--no interlace
+
+end
+
+emuObj.AddVsyncHook(patcher)
+
+-- Bug#9174 - 
+emuObj.SetGsTitleFix( "ignoreSubBuffCov", "reserved", { } )
+
+-- Bug#9240 (Light maps uprender)
+-- Copy z-buffer for future use with light maps. psm = SCE_GS_PSMZ24 (49)
+emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", {tw=9, th=9, psm=49, zmsk=1 } )
+
+-- Apply light maps texMode=2 (bilinear)   psm= SCE_GS_PSMCT32 (0)
+emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", {tw=8, th=8, psm=0, ztst=1, texMode=2 } )
+</pre>
+
+====Grand Theft Auto: Liberty City Stories====
+SLUS_214.23
+<br>CLI
+<pre>
+--gs-uprender=2x2
+--gs-upscale=edgesmooth
+--gs-kernel-cl="h2lpool"
+--gs-kernel-cl-up="h2lpool2x2"
+--gs-h2l-list-opt=1
+--gs-h2l-accurate-hash=1
+--gs-adaptive-frameskip=1
+
+--vu0-mpg-cycles=600
+--vu1-mpg-cycles=600
+
+--ee-cycle-scalar=1.3
+</pre>
+
+====God Hand====
+'''''CLI'''''
+
+<pre>--vu0-no-clamping=0
+--vu1-no-clamping=0
+--vu0-clamp-operands=1
+--vu0-clamp-results=1
+--vu1-clamp-operands=1
+--vu1-clamp-results=1
+--cop2-no-clamping=0
+--cop2-clamp-operands=1
+--cop2-clamp-results=1
+
+#fix for graphical glitches, specially the missing ground.
+</pre>
+
+==== God Of War ====
+<br>'''EU'''
+'''''CLI'''''
+<pre>
+--vu1-di-bits=0
+--vu1-mpg-cycles=800
+--vu1-jr-cache-policy=newprog
+--vu1-jalr-cache-policy=newprog
+--ee-block-validation=PageProt
+--ee-cycle-scalar=1.2
+--ee-hook=0x0017A2DC,AdvanceClock,,45
+#Fix for upscaling glitches
+--gs-kernel-cl-up="up2x2simple"
+#Fix for audio re-starting
+--iop-cycle-scalar=0.1
+--cdvd-sector-seek-cycles=0.1
+--cdvd-sector-read-cycles=4500
+</pre>
+<br>'''US'''
+<pre>
+--gs-uprender=2x2
+--gs-upscale=EdgeSmooth
+--gs-adaptive-frameskip=1
+--gs-kernel-cl="h2lpool"
+--gs-kernel-cl-up="h2lpool2x2"
+--gs-progressive=1
+
+--ee-cycle-scalar=2.0
+
+--vu1-mpg-cycles=2000
+--vu1-di-bits=0
+--vu1=trans
+#Cdvd timing
+--iop-cycle-scalar=0.20
+--cdvd-sector-read-cycles=4000</pre>
+
+'''''LUA file'''''
+<pre>-- God Of War EU & US
+
+-- 01 Music sound problem: music restarts every time there are many sounds to play
+-- 02 Latest emu removes a lot of game lag, anyway the game still suffer of shuttering in the next levels
+-- 03 Corrupted green lines around the objects, uprendering problem
+-- Slowdowns and performances patched in cli.conf file
+apiRequest(2.2)
+
+local emuObj 		= getEmuObject()
+local gsObj		= getGsObject()
+
+-- 03 removes corrupted lines around the objects when use --gs-uprender
+emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", { texMode=1 } )
+
+-- Disable internal field shift compensation, part of post-process removal feature.
+gsObj.SetDeinterlaceShift(0)
+</pre>
+
+====God of War 2====
+'''''CLI'''''
+<pre>--gs-uprender=2x2
+--gs-upscale=edgesmooth
+--gs-adaptive-frameskip=1
+--ee-cycle-scalar=0.62
+--iop-cycle-scalar=0.10
+--vu1-mpg-cycles=1985
+--vu1-jr-cache-policy=newprog
+--vu1-jalr-cache-policy=newprog
+--cdvd-sector-read-cycles=4000
+--host-audio-latency=1.6
+--host-display-mode=16:9
+
+*Jakx Emu used*</pre>
+
+'''''LUA File'''''
+<pre>-- God of War II  
+-- ported to PS4 
+
+apiRequest(2.2)
+
+local gpr    		= require("ee-gpr-alias")
+local cpr    		= require("ee-cpr0-alias")
+local hwaddr    	= require("ee-hwaddr")
+
+local emuObj 		= getEmuObject()
+local eeObj			= getEEObject()
+local gsObj			= getGsObject()
+local eeOverlay 	= eeObj.getOverlayObject()
+local iopObj        = getIOPObject()
+     
+emuObj.SetDisplayAspectWide()
+gsObj.SetDeinterlaceShift(1) 
+
+local patcher = function()
+
+--skip renShadowClient::Prep
+--eeObj.WriteMem32(0x001706E0,0x03e00008)
+--eeObj.WriteMem32(0x001706E4,0x00000000)
+--skip renPrimMaster::RenderStencilLayer
+eeObj.WriteMem32(0x0016E720,0x03e00008)
+eeObj.WriteMem32(0x0016E724,0x00000000)
+--skip fxBloom::Client::Run
+eeObj.WriteMem32(0x00126EB0,0x03e00008)
+eeObj.WriteMem32(0x00126EB4,0x00000000)
+--default to progressive at first run
+eeObj.WriteMem32(0x0025a608,0xa04986dc)
+eeObj.WriteMem32(0x001E45D4,0x24020001)
+--default to ws at first run
+eeObj.WriteMem32(0x001E45B4,0x24040001)
+eeObj.WriteMem32(0x001E45B8,0x00000000)
+eeObj.WriteMem32(0x0027894C,0x3c013fe3)
+eeObj.WriteMem32(0x00278950,0x34218e39)
+--allow mpeg skip by pressing x
+eeObj.WriteMem32(0x001DD8C8,0x00000000)
+
+
+emuObj.ThrottleMax()
+end
+
+emuObj.AddVsyncHook(patcher)
+
+emuObj.SetGsTitleFix( "SetSelfRender", "reserved", { fbmask= 0x00FFFFFF , renderSelf=1 , zmsk=1 , alpha=0 , texMode=1  } )
+emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", { texMode=1  } )
+</pre>
+
+====Gradius V====
+'''''CLI'''''
+<pre>--vu1=jit-sync
+
+#fix for blackscreen after PS2 Logo.
+</pre>
+
+====Grandia III====
+'''LUA'''
+<br>NTSC
+<pre>
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+
+eeObj.WriteMem32(0x0014586C, 0x0)
+
+end
+emuObj.AddVsyncHook(patcher)
+</pre>
+
+====Harry Potter and The Prisoner of Azkaban====
+'''CLI'''
+<br>Emu: Jakv2
+<pre>
+#Fix for graphical issues
+--gs-use-mipmap=1
+--gs-kernel-cl="mipmap"
+--gs-kernel-cl-up="mipmap2x2"
+#Fix for random freezing even after the EE memory patch
+--vif1-instant-xfer=0
+</pre>
+'''LUA'''
+<br>SLUS20926
+<pre>
+apiRequest(0.1)
+
+-- Full credits to Kozarovv
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+--clear interrupts in handler
+
+eeObj.WriteMem32(0x000fff00, 0x3c191000)
+eeObj.WriteMem32(0x000fff04, 0x24180c00)
+eeObj.WriteMem32(0x000fff08, 0x081137e0)
+eeObj.WriteMem32(0x000fff0c, 0xaf380010)
+eeObj.WriteMem32(0x0016fb7c, 0x0c03ffc0)
+end
+emuObj.AddVsyncHook(patcher)
+</pre>
+
+====Haunting Ground====
+<br>CLI
+<br>NTSC
+<br>Emu: Fatal Fury
+<pre>
+--vu1=jit-sync
+--vif1-instant-xfer=0
+--vu1-mpg-cycles=0
+--gs-kernel-cl-up="up2x2simple"
+</pre>
+
+====Hunter the Reckoning Wayward====
+'''''CLI'''''
+
+<br>All Versions
+
+<pre>--gs-uprender=2x2
+--gs-upscale=EdgeSmooth
+
+--host-display-mode=16:9
+
+--vu1-no-clamping=0
+
+
+#fix for graphical glitches.
+</pre>
+
+====Ice Age 2 Meltdown====
+'''''LUA file'''''
+<br>Company logo freeze Fix
+<br>'''Use Forbidden Siren v2 Emu'''
+
+<br>SLUS_213.07
+<pre>apiRequest(0.1)
+
+eeInsnReplace(0x2feb80, 0x27bdff70, 0x27bdfee0)
+eeInsnReplace(0x2febbc, 0x27bd0090, 0x27bd0120)
+</pre>
+<br>SLES_539.84
+<pre>apiRequest(0.1)
+
+eeInsnReplace(0x2ff3f0, 0x27bdff70, 0x27bdfee0)
+eeInsnReplace(0x2ff42c, 0x27bd0090, 0x27bd0120)
+</pre>
+<br>SLPM_664.97
+<pre>apiRequest(0.1)
+
+eeInsnReplace(0x2e91e8, 0x27bdff70, 0x27bdfee0)
+eeInsnReplace(0x2e9224, 0x27bd0090, 0x27bd0120)
+</pre>
+
+====Jackie Chan Adventures====
+'''''CLI''''' 
+
+<br>SCES_524.12
+
+<pre>
+#Fix For Jackie chan falling forever near The Ox Talisman Glitch
+--fpu-accurate-addsub-range=0x22F2B0,0x22F468
+#Fixes For Slowdowns
+--vu1-di-bits=0
+--vu1-const-prop=1
+--ee-cycle-scalar=1.2
+#RECVX
+</pre>
+
+====Jaws Unleashed====
+Config #1
+<br>#Forbidden siren V2 emu used.
+<br>'''CLI'''
+<pre>
+#Crash fix
+--vu-xgkick-delay=2
+#Speedhacks
+--vu1-di-bits=0
+--ee-cycle-scalar=1.2
+--vu1-mpg-cycles=200
+</pre>
+
+<br>Config #2
+<br>'''''LUA file'''''
+
+<pre>
+
+apiRequest(1.0)
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+local patcher = function()
+eeObj.WriteMem32(0x006758a8,0x03e42000)
+eeObj.WriteMem32(0x006758b8,0x800026fc)
+end
+emuObj.AddVsyncHook(patcher)
+
+#fix for loading screen hang. 
+</pre>
+
+====Juiced====
+'''CLI'''
+<br>All versions
+
+<pre>
+#Fix for graphical glitches
+--gs-kernel-cl-up="up2x2simple"
+#Speedhacks
+--vu1-di-bits=0
+--vu1-mpg-cycles=800
+--ee-cycle-scalar=1.2
+</pre>
+
+====Killer7====
+'''''CLI'''''
+
+<br>All versions
+
+<pre>--vu0-no-clamping=0
+--vu0-clamp-operands=1
+--vu0-clamp-results=1
+--vu1-no-clamping=0
+--vu1-clamp-operands=1
+--vu1-clamp-results=1
+
+#fix for flickering polygons.</pre>
+
+====Kim Possible: What's the Switch====
+'''''CLI'''''
+
+<br>PAL
+<pre>--vu1-mpg-cycles=950
+
+#fix lag during cutscenes
+</pre>
+
+====Klonoa 2====
+'''''CLI'''''
+
+<br>All versions
+
+<pre>
+#Fix for Misplaced objects
+--fpu-no-clamping=1
+#Potential fix for Graphics
+--vu1-no-clamping=0
+--vu0-no-clamping=0
+
+#still require fix for texturing problems. Require Rogue Galaxy emu</pre>
+
+====Kuon====
+<br>CLI
+<br>All Versions
+<pre>
+--vif1-ignore-cmd-ints=1
+--vif-ignore-invalid-cmd=0
+--vif1-instant-xfer=0
+#Fix the freezing problem in the opening scene of 《阴の章》
+</pre>
+
+<br>NTSC Version ONLY CLI
+<pre>
+--vif1-ignore-cmd-ints=1
+--vif-ignore-invalid-cmd=0
+--vif1-instant-xfer=0
+#Sugoroku Fix
+--fpu-accurate-addsub=0x104124
+</pre>
+
+====Time Crisis 2====
+'''LUA'''
+<br>SLUS_202.19
+<pre>
+-- Time Crisis 2 SLUS_202.19
+-- Widescreen Hack
+-- fix by Kozarovv
+-- emu used=jakx v2
+
+apiRequest(0.1)
+
+local iopObj = getIOPObject()
+local emuObj = getEmuObject()
+local eeObj  = getEEObject()
+ 
+local FireWithoutWire = function()
+   --16:9
+   eeObj.WriteMem32(0x003cd7fc,0x3f400000)
+   --Infinite Credits by InterAct
+   --eeObj.WriteMem32(0x00482410,0x00090009)
+ 
+  -- Fix cdvd issue which cause ieee1394 error
+  iopObj.WriteMem32(0xACD40,0)
+  
+  -- Audio desync fix (probably useless, or even harmful on ps4 due to different "cyclerate")
+  -- eeObj.WriteMem32(0x154954,0x10000009)
+ 
+   emuObj.ThrottleMax()
+end
+ 
+emuObj.AddVsyncHook(FireWithoutWire)
+</pre>
+
+====Time Crisis 3====
+'''LUA'''
+<br>SLUS_206.45
+<pre>
+-- Time Crisis 3 SLUS_206.45
+-- Widescreen Hack
+-- Fix by Kozarovv
+-- emu used=aofa
+
+apiRequest(0.1)
+
+local iopObj = getIOPObject()
+local emuObj = getEmuObject()
+local eeObj  = getEEObject()
+ 
+local FireWithoutWire = function()
+   --16:9
+   eeObj.WriteMem32(0x0033976c,0x3f400000)
+   --Infinite Credits by InterAct
+   --eeObj.WriteMem32(0x00482410,0x00090009)
+ 
+  -- Fix cdvd issue which cause ieee1394 error
+  iopObj.WriteMem32(0xA0840,0)
+  
+  -- Audio desync fix (probably useless, or even harmful on ps4 due to different "cyclerate")
+  -- eeObj.WriteMem32(0x154954,0x10000009)
+ 
+   emuObj.ThrottleMax()
+end
+ 
+emuObj.AddVsyncHook(FireWithoutWire)
+</pre>
+
+====Tomb Raider: The Angel of Darkness====
+<br>'''SLUS20467'''
+<br> Skip the first fmv to prevent freezing!
+<br>'''LUA'''
+<pre>
+local gpr = require("ee-gpr-alias")
+
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+
+-- Black screen fix
+eeObj.WriteMem32(0x00207B24, 0x0) -- 1040FFFA
+eeObj.WriteMem32(0x00207B4C, 0x0) -- 1040FFFA
+
+end
+emuObj.AddVsyncHook(patcher)
+</pre>
+
+<br>'''SLES51227'''
+<br>Skip the first fmv to prevent freezing!
+<br>'''LUA'''
+<pre>
+local gpr = require("ee-gpr-alias")
+
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+
+-- Black screen fix
+eeObj.WriteMem32(0x00209D9C, 0x0) -- 1040FFFA
+eeObj.WriteMem32(0x00209DC4, 0x0) -- 1040FFFA
+
+end
+emuObj.AddVsyncHook(patcher)
+</pre>
+
+====Largo Winch - Empire Under Threat====
+<br>SLES-51093
+<br>'''''CLI'''''
+<pre>--gs-uprender=2x2
+--gs-upscale=EdgeSmooth
+--host-display-mode=16:9
+--cdvd-sector-read-cycles=5000
+#emu used=rotk v1
+</pre>
+'''''LUA file'''''
+<pre>
+-- Largo Winch - Empire Under Threat (E)(SLES-51093)
+-- Widescreen hack by Arapapa
+-- Fix by Kozarovv
+-- ported to PS4 lua by Stayhye
+-- emu used=rotk v1
+
+local gpr = require("ee-gpr-alias")
+
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local WS2 = function()
+--16:9
+--Zoom
+eeObj.WriteMem32(0x0028029c,0x3c013f2f) --3c013f80
+--Y-Fov
+eeObj.WriteMem32(0x001abc40,0x08030000)
+
+eeObj.WriteMem32(0x000c0000,0x46070a02)
+eeObj.WriteMem32(0x000c0004,0x3c013fa6)
+eeObj.WriteMem32(0x000c0008,0x4481f000)
+eeObj.WriteMem32(0x000c000c,0x461e4202)
+eeObj.WriteMem32(0x000c0010,0x0806af11)
+----------------------------
+--X-Fov (Needs render fix)
+--eeObj.WriteMem32(0x001abb98,0x08030000)
+--eeObj.WriteMem32(0x000c0000,0x24420050)
+--eeObj.WriteMem32(0x000c0004,0x3c013f40)
+--eeObj.WriteMem32(0x000c0008,0x4481f000)
+--eeObj.WriteMem32(0x000c000c,0x461e4202)
+--eeObj.WriteMem32(0x000c0010,0x0806aee7)
+--Start microprograms manually instead of rely on timings.
+--0x48c83000 >> ctc2 t0, $vi6
+--eeObj.WriteMem32(0x00116d4c,0x4a0000b8)
+eeObj.WriteMem32(0x00116e04,0x4a0000b8)
+eeObj.WriteMem32(0x00116fe0,0x4a0000b8)
+eeObj.WriteMem32(0x00117054,0x4a000938)
+eeObj.WriteMem32(0x001170a4,0x4a000938)
+eeObj.WriteMem32(0x001172ac,0x4a000938)
+eeObj.WriteMem32(0x001172e4,0x4a000938)
+eeObj.WriteMem32(0x00117470,0x4a000938)
+eeObj.WriteMem32(0x001174ac,0x4a000938)
+eeObj.WriteMem32(0x00117540,0x4a000938)
+-- No need to loop here, just e-bit and wait for vcallms from EE.
+eeObj.WriteMem32(0x00298f70,0x8000033c) -- 500607ff
+eeObj.WriteMem32(0x00298f74,0x400002ff)
+eeObj.WriteMem32(0x002990a0,0x8000033c)
+eeObj.WriteMem32(0x002990a4,0x400002ff)
+--Remove xgkick responsible for shadow packet.
+eeObj.WriteMem32(0x2B1810,0x8000033c)
+
+--pros. Fix bug, allow upscalling cons. No shadow.
+
+emuObj.ThrottleMax()
+end
+
+emuObj.AddVsyncHook(WS2)
+</pre>
+
+
+====The Legacy of Kain - Blood Omen 2==== 
+'''LUA'''
+<pre>
+-- Boot fix by Kozarovv                           --
+-- ported to PS4 lua by JSimesen                  --
+-- PS3 mipmapping fix converted                   --
+-- Specal Thanks to: Kozarovv, Stayhye, Scalerize --
+-- emu used=KOF2000                               --
+                                                                                             
+apiRequest(1.0)                                   
+
+local eeObj = getEEObject() 
+local emuObj = getEmuObject()
+
+local CheckInputs = function()
+
+local pad_bits = emuObj.GetPad()
+
+local UP    = pad_bits &  0x0010
+local DOWN    = pad_bits &  0x0040
+local LEFT    = pad_bits &  0x0080
+local RIGHT    = pad_bits &  0x0020
+local Triangle  = pad_bits &  0x1000
+local Cross    = pad_bits &  0x4000
+local Square    = pad_bits &  0x8000
+local Circle  = pad_bits &  0x2000
+local L1    = pad_bits &  0x0400
+local L2    = pad_bits &  0x0100
+local L3    = pad_bits &  0x0002
+local R1    = pad_bits &  0x0800
+local R2    = pad_bits &  0x0200
+local R3    = pad_bits &  0x0004
+local Select  = pad_bits &  0x0001
+local Start    = pad_bits &  0x0008
+
+if (R2 ~= 0 and UP ~= 0) then
+
+emuObj.SetFormattedCard("blood.card")
+end
+
+end
+
+emuObj.AddVsyncHook(CheckInputs)
+
+emuObj.SetDisplayAspectWide()
+
+
+local patcher = function()
+
+eeObj.WriteMem32(0x002f4350,0x10000006)
+
+-- No Widescreen
+-- eeObj.WriteMem32(0x00312b08,0x3C013FE3)
+-- eeObj.WriteMem32(0x00312b0c,0x34218E38)
+
+-- No Black Borders Fix
+-- eeObj.WriteMem32(0x002d443c,0x00000000) -- causes kain to not re-appear after dying/loading
+
+-- No Fix FMV
+-- eeObj.WriteMem32(0x002eb280,0x240575e0) --y-position
+-- eeObj.WriteMem32(0x002eb298,0x240a1440) --y-scaling
+
+end
+
+emuObj.AddVsyncHook(patcher)
+
+local fix = function()
+
+-- Completely skip ridiculous debugger hook.
+eeObj.WriteMem32(0x297DA8, 0x10000006)
+eeObj.WriteMem32(0x297DA0, 0x00000000)
+
+end
+
+emuObj.AddEntryPointHook(fix)
+
+emuObj.SetGsTitleFix( "forceSimpleFetch",  "reserved", {psm=0} )
+emuObj.SetGsTitleFix( "fetchFromCurrBuff", "reserved", {psm=0} )
+</pre>
+
+====Legacy of Kain: Defiance====
+SLUS_207.73
+<br>LUA
+<pre>apiRequest(0.1)    -- request version 0.1 API. Calling apiRequest() is mandatory.
+
+-- Texture Flickering fix
+
+eeInsnReplace(0x188F50, 0x10600020, 0x10000020)
+</pre>
+
+SLES_521.50
+<br>LUA
+<pre>apiRequest(0.1)	-- request version 0.1 API. Calling apiRequest() is mandatory.
+
+-- Texture Flickering fix
+
+eeInsnReplace(0x189340, 0x10600020, 0x10000020)
+</pre>
+
+====Legacy of Kain: Soul Reaver 2====
+SLES_501.96
+<br>Lua
+<pre>
+apiRequest(0.1)    -- request version 0.1 API. Calling apiRequest() is mandatory.
+
+-- Turn off mipmapping in game engine. Completely fix flickering, and bad texturing. Don't require "gs-kernel-cl=mipmap"
+-- SLES_501.96 only!
+
+eeInsnReplace(0x2A1F80, 0x00000001, 0x00000000)</pre>
+
+====Mafia====
+'''''CLI'''''
+
+<br>All versions
+
+<pre>--host-display-mode=16:9
+--framelimit-mode=normal
+--cdvd-sector-read-cycles=6000
+--ee-cycle-scalar=2.1
+--vif1-instant-xfer=0
+#Fix.</pre>
+'''''LUA file'''''
+
+SLUS-20671 (NTSC)
+<pre>-- emu used=kinetica v2
+
+apiRequest(1.0)   
+
+local gpr = require("ee-gpr-alias")
+
+local eeObj  = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+
+-- Widescreen + Render fix
+eeObj.WriteMem32(0x20FF8D60,0x3f3fffff)
+
+--Rendering distance (Optional)
+--eeObj.WriteMem32(0x20FF8DB8,0x44000000)
+
+--avoid hang before molotov party
+eeObj.WriteMem32(0x003E2BB4,0x00000000) --00000000
+
+--fix crash in The priest mission
+eeObj.WriteMem32(0x0016F04C,0x1000000D) --1000000D
+
+emuObj.ThrottleMax()
+
+end
+
+emuObj.AddVsyncHook(patcher)
+</pre>
+
+====Manhunt 2====
+'''''CLI'''''
+<pre>
+--ee-kernel-hle=1
+--ee-injection-kernel=1
+--ee-injection-title=1
+--ee-block-validation=PageProt
+--vu1-opt-flags=2
+--vu1-jr-cache-policy=newprog
+--vu1-jalr-cache-policy=newprog
+--vu1-mpg-cycles=900
+--gs-frontend-opt-mode=2
+--gs-adaptive-frameskip=1
+--gs-optimize-30fps=1
+--framelimit-fps=2.0
+--ee-cycle-scalar=0.8
+--gs-uprender=none
+
+# Fixed framerate dip issue using Jak v2 emulator (NOTE: disabling uprender fixes fps drop to some extent and corrupted lines on shadows, however in NTSC Version, there will be a black screen glitch in cutscenes only!!).
+</pre>
+
+'''''LUA file'''''
+<pre>
+apiRequest(0.1)
+
+-- Fix lags and slowdowns
+
+eeInsnReplace(0x370DA8, 0x00000000, 0x24020001)
+
+# Minor framerate issue exists in NTSC version. PAL version works fine with no pain.
+</pre>
+
+==== Max Payne 2 ====
+
+'''''CLI'''''
+<pre>
+--vu0-no-clamping=0
+--vu1-no-clamping=0
+--vu0-clamp-operands=1
+--vu0-clamp-results=1
+--vu1-clamp-operands=1
+--vu1-clamp-results=1
+--cop2-no-clamping=0
+--cop2-clamp-operands=1
+--cop2-clamp-results=1
+# Fixed green, blue and red graphical issues. The game works better.
+</pre>
+
+====Metal Gear Solid 2 - Sons of Liberty====
+'''CLI'''
+<br>All versions
+<br>Jakv2 used
+<pre>
+#Speedhacks
+--vu1-di-bits=0
+#Gamefixes for freeze, Not tested much but once i used it. the freezes were gone
+--vif-ignore-invalid-cmd=1
+--vif1-ignore-cmd-ints=1
+</pre>
+
+====Metal Gear Solid 2: Substance====
+'''CLI'''
+<br>All versions
+<br>Use jakv2. Untested.
+<pre>
+#Speedhacks
+--vu1-di-bits=0
+--vu1-mpg-cycles=700
+#Gamefixes for freeze, Not tested much but once i used it. the freezes were gone
+--vif-ignore-invalid-cmd=1
+--vif1-ignore-cmd-ints=1
+</pre>
+
+====Mojib-Ribbon====
+'''CLI'''
+<br>Works on kof98
+<pre>
+--vif-ignore-invalid-cmd=1
+--vif1-ignore-cmd-ints=1
+--vif1-instant-xfer=0
+--vu1=jit-sync
+</pre>
+
+====Midnight Club 3: DUB Edition / Remix====
+'''CLI'''
+<br>All versions
+<br>Note: VU1 clamping will cause the cars to not load properly, please don't use it on this game.
+<pre>
+#Speedhacks
+--ee-cycle-scalar=1.2
+--vu1-mpg-cycles=350
+--vu1-injection=1
+--vu1-di-bits=0
+--vu1-const-prop=1
+</pre>
+
+====MTV's Celebrity Deathmatch====
+'''''CLI'''''
+
+<br>All versions
+
+<pre>
+#Disables MTVU
+--vu1=jit-sync
+
+#Fix for black-screen after ps2 logo.</pre>
+====Musashi Samurai Legend====
+'''LUA'''
+<br>NTSC
+<pre>
+apiRequest(0.1)
+
+local gpr       = require("ee-gpr-alias")
+
+local emuObj      = getEmuObject()
+local eeObj       = getEEObject()
+
+local patcher = function()
+eeObj.WriteMem32(0x203DD108,0x3F19999A) --3F4CCCCD
+
+--SPS FiX
+eeObj.WriteMem32(0x001476A4,0x10000047) --10600047
+eeObj.WriteMem32(0x002E8D78,0x8000033C) --80005EFC
+end
+
+emuObj.AddVsyncHook(patcher)
+</pre>
+
+====Need for Speed Carbon====
+'''''CLI'''''
+
+<br>SLES_543.22
+
+<pre>  
+#Fix loading freeze
+--fpu-accurate-range=0x162800,0x162900
+
+--ee-cycle-scalar=1.35
+--vu1-mpg-cycles=900
+--vu1-const-prop=1
+--vu1-di-bits=0
+
+</pre>
+
+==== Need For Speed: Carbon Collector Edition ====
+'''''CLI "SLUS-21494_cli.conf"'''''<syntaxhighlight>
+--fpu-accurate-range=0x162800,0x162900
+--vu1-mpg-cycles=500
+</syntaxhighlight>'''''LUA'''''<syntaxhighlight>
+-- Need for Speed - Carbon (SLUS-21494)
+-- -> use KOF2000 emu // PS4 Pro optimized (boost mode enabled)
+-- MD5: 4F325C12F0D07E5C138CD779E0EF2F94
+
+local gpr = require("ee-gpr-alias")
+apiRequest(1.0)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+local patcher = function()
+
+eeObj.WriteMem32(0x00263ab0,0x00000000) --overlay/uprender/speed fix
+-- force 480p/progressive
+eeObj.WriteMem32(0x005408bc,0x3c050000)
+eeObj.WriteMem32(0x005408c4,0x3c060050)
+eeObj.WriteMem32(0x005408cc,0x3c070001)
+end
+
+emuObj.AddVsyncHook(patcher)
+emuObj.SetDisplayAspectWide() -- 16:9
+-- Graphic improvement: removes corrupted lines on screen with uprender on for PAL/NTSC-U/NTSC-J version
+emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", { texMode=1 } ) --texMode=1
+</syntaxhighlight>
+
+====Need for Speed Underground 2====
+'''''LUA'''''
+
+<br>SLUS-21065
+
+<pre>apiRequest(1.0)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+--Speed Fix
+eeObj.WriteMem32(0x001D77C8,0x100000B4)
+end
+
+emuObj.AddVsyncHook(patcher)
+
+</pre>
+
+====NBA Street Vol.2====
+'''''CLI'''''
+
+<br>All versions
+
+<pre>
+#Fix for Graphical glitches
+--vu1-no-clamping=0
+#Jakv2 emu Used</pre>
+
+====Okami====
+'''''CLI'''''
+
+<br>All versions
+
+<pre>
+--gs-use-mipmap=1
+--gs-force-bilinear=1
+--gs-kernel-cl="mipmap"
+--gs-kernel-cl-up="mipmap2x2"
+--vu0-no-clamping=0
+--vu0-clamp-results=1
+--vu1-no-clamping=0
+--vu1-clamp-results=1
+--cop2-clamp-results=1
+--cop2-no-clamping=0
+#Fixes for slowdowns
+--vu1-const-prop=1
+--vu1-di-bits=0
+--ee-cycle-scalar=1.2		
+--vu1-injection=1
+#RECVX EMU Fixes Crash Near Orochi boss fight</pre>
+
+'''''LUA file'''''
+<br>All Versions
+<pre>
+apiRequest(0.4)
+
+local emuObj = getEmuObject()
+
+emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", { texMode=1 } )</pre>
+
+====Oni====
+'''''LUA'''''
+
+<br>SLES_501.34 
+<br>SLES_501.76 
+<br>SLES_501.77 
+<br>SLES_501.78 
+<br>SLES_501.79
+
+<pre>apiRequest(0.1)
+
+-- Fix for hang at loading screen
+
+eeInsnReplace(0x1CEF7C, 0x4100FFFF, 0x00000000)</pre>
+'''''LUA'''''
+
+<br>SLUS_200.64
+
+<pre>apiRequest(0.1)
+
+-- Fix for hang at loading screen
+
+eeInsnReplace(0x1CF3CC, 0x4100FFFF, 0x00000000)</pre>
+
+====Pac Man World 3====
+'''''CLI'''''
+<br>SLES-53959
+<pre>
+--gs-uprender=2x2
+--gs-upscale=edgesmooth
+--cdvd-sector-read-cycles=2000
+--host-display-mode=16:9
+#Fix for fmvs showing black screen with subtitles
+--fpu-accurate-range=0x3f3068,0x3f32bc
+
+#emu used=fatal fury battle archives vol2
+</pre>
+'''''LUA'''''
+<br>SLES-53959
+<pre>
+-- Pac-Man World 3 (PAL-M5)(SLES-53959)
+-- Widescreen Hack by ICUP321
+-- emu used=fatal fury battle archives vol2
+-- Ported to ps4 by Stayhye
+local gpr = require("ee-gpr-alias")
+
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+--Widescreen hack 16:9
+eeObj.WriteMem32(0x003f30c4,0x3c013f40)
+eeObj.WriteMem32(0x003f30c8,0x4481f000)
+eeObj.WriteMem32(0x003f30d0,0x461eb582)
+--Render fix
+eeObj.WriteMem32(0x00439184,0x3c013f2b)
+
+emuObj.ThrottleMax()
+end
+
+emuObj.AddVsyncHook(patcher)
+</pre>
+
+====Pac-Man World Rally====
+<br>SLUS-21328
+<br>CLI
+<pre>
+--vu1-no-clamping=1
+--vu0-no-clamping=1
+</pre>
+SLUS-21328
+<br>LUA
+<pre>
+local gpr = require("ee-gpr-alias")
+
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+eeObj.WriteMem32(0x0016DDE4,0x4A80AADC)
+eeObj.WriteMem32(0x0016DDEC,0x4B7103BC)
+eeObj.WriteMem32(0x0016DDD0,0x4B00A29C)
+eeObj.WriteMem32(0x0016DDD8,0x4AF103BC)
+
+end
+
+emuObj.AddVsyncHook(patcher)
+</pre>
+
+====Phantasy Star Universe====
+'''''CLI'''''
+
+All Versions
+
+<pre>
+#Fix for flickering textures and geometry
+--gs-use-clut-merge=1
+--gs-kernel-cl="clutmerge"
+--gs-kernel-cl-up="clutmerge2x2"
+
+--gs-adaptive-frameskip=1
+--cdvd-sector-read-cycles=4000
+
+#fix for Enemies dont move bug
+--fpu-accurate-mul-fast=1
+--fpu-accurate-range=0x48cce0,0x49cce0
+
+#emu used=jakx v2
+</pre>
+
+====PK - Out of the Shadows====
+<br>NTSC
+<br>LUA
+<pre>
+-- Disney's PK - Out of the Shadows
+-- boot fix by kozarovv
+-- Widescreen Hack by Arapapa
+-- emu used=rotk v1
+
+local gpr = require("ee-gpr-alias")
+
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local WS2 = function()
+--16:9
+eeObj.WriteMem32(0x003324b0,0xbf400000) --0x3f800000
+--0x48c83000 >> ctc2 t0, $vi6
+eeObj.WriteMem32(0x001dfa8c,0x4a0000b8)
+eeObj.WriteMem32(0x001dfc24,0x4a0000b8)
+eeObj.WriteMem32(0x001dfcac,0x4a0000b8)
+eeObj.WriteMem32(0x001dfd00,0x4a000938)
+eeObj.WriteMem32(0x001dffdc,0x4a000938)
+eeObj.WriteMem32(0x001e003c,0x4a000938)
+eeObj.WriteMem32(0x001e022c,0x4a000938)
+eeObj.WriteMem32(0x001e028c,0x4a000938)
+eeObj.WriteMem32(0x001e0348,0x4a000938)
+-- No need to loop here, just e-bit and wait for vcallms from EE.
+eeObj.WriteMem32(0x00324a90,0x8000033c) -- 500607ff
+eeObj.WriteMem32(0x00324a94,0x400002ff)
+eeObj.WriteMem32(0x00324bc0,0x8000033c)
+eeObj.WriteMem32(0x00324bc4,0x400002ff)
+-- skip videos
+--eeObj.WriteMem32(0x0010ae80,0x24020001)
+
+emuObj.ThrottleMax()
+end
+
+emuObj.AddVsyncHook(WS2)
+
+-- Fix vertical lines
+emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", { texMode=1  } )
+</pre>
+
+====Powerpuff Girls - Relish Rampage====
+<br>All versions
+<br>CLI
+<pre>
+#Fixes hangs in certain locations like building under construction.
+--fpu-no-clamping=1
+</pre>
+==== Psi-Ops: The Mindgate Conspiracy ====
+
+'''''CLI'''''
+<pre>
+--ee-cycle-scalar=1.6
+--vu1-mpg-cycles=1000
+# Fixed low framerate. Jakv2
+</pre>
+====Ratchet And Clank Size Matters====
+'''CLI'''
+<br>All versions
+<pre>
+#Fix for audio looping at first level
+--iop-cycle-scalar=0.1
+--cdvd-sector-read-cycles=14000
+</pre>
+
+==== Rayman 3: Hoodlum havoc====
+'''CLI'''
+<br>'''SLUS_206.01'''
+<br>Note: Use Kof2000 to prevent missing 3d models
+<pre>
+#Gamefix, change 1000 into 500 if you encounter gfx bugs
+--ee-hook=0x0028A578,AdvanceClock,,1000
+#Necessary Clamping
+--vu1-no-clamping=0
+--vu0-no-clamping=0
+#Optional Clamping
+--fpu-no-clamping=0
+#Speedup
+--vu1-di-bits=0
+#underclocking the animation offsets
+--ee-hook=0x0028A808,AdvanceClock,,500
+--ee-hook=0x0028A574,AdvanceClock,,500
+--ee-hook=0x0028A4F4,AdvanceClock,,500
+--ee-hook=0x0028A4E4,AdvanceClock,,500
+--ee-hook=0x0028A6EC,AdvanceClock,,500
+--ee-hook=0x0028A460,AdvanceClock,,500
+--ee-hook=0x0028A278,AdvanceClock,,500
+--ee-hook=0x0028A410,AdvanceClock,,500
+--ee-hook=0x0028A288,AdvanceClock,,500
+--ee-hook=0x0028A294,AdvanceClock,,500
+--ee-hook=0x0028A4A0,AdvanceClock,,500
+--ee-hook=0x0028A36C,AdvanceClock,,500
+--ee-hook=0x0028A6BC,AdvanceClock,,500
+--ee-hook=0x0028A488,AdvanceClock,,500
+--ee-hook=0x0028A65C,AdvanceClock,,500
+--ee-hook=0x0028A68C,AdvanceClock,,500
+--ee-hook=0x0028A6D4,AdvanceClock,,500
+--ee-hook=0x0028A6A4,AdvanceClock,,500
+--ee-hook=0x0028A5D4,AdvanceClock,,500
+</pre><br>'''LUA'''
+<pre>
+-- Rayman 3 Hoodlum Havoc (NTSC)
+-- emu used=KOF 2000
+
+apiRequest(1.0)   
+
+local gpr = require("ee-gpr-alias")
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+-- Fix for thin vertical lines that separate screen picture, misallignment/tearing of screen during upscaling
+-- psm= SCE_GS_PSMCT32 (0)
+emuObj.SetGsTitleFix( "forceSimpleFetch",  "reserved", {psm=0} )
+emuObj.SetGsTitleFix( "fetchFromCurrBuff", "reserved", {psm=0} )
+
+local patcher = function()
+
+--Max Score/Unlock Bonuses
+eeObj.WriteMem32(0x211E7744,0x000F423F)
+
+end
+
+emuObj.AddVsyncHook(patcher)
+</pre>
+<br>'''SLES-51222'''
+<br>'''CLI'''
+<pre>
+--gs-kernel-cl-up="up2x2skipinterp"
+
+--vu0-no-clamping=0
+--vu1-no-clamping=0
+
+--ee-hook=0x0028A408,AdvanceClock,,500
+
+--ee-hook=0x0028A588,AdvanceClock,,500
+--ee-hook=0x0028A584,AdvanceClock,,500
+--ee-hook=0x0028A57C,AdvanceClock,,500
+--ee-hook=0x0028A558,AdvanceClock,,500
+--ee-hook=0x0028A554,AdvanceClock,,500
+--ee-hook=0x0028A54C,AdvanceClock,,500
+--ee-hook=0x0028A528,AdvanceClock,,500
+--ee-hook=0x0028A524,AdvanceClock,,500
+--ee-hook=0x0028A51C,AdvanceClock,,500
+--ee-hook=0x0028A4F8,AdvanceClock,,500
+--ee-hook=0x0028A4F4,AdvanceClock,,500
+--ee-hook=0x0028A4EC,AdvanceClock,,500
+--ee-hook=0x0028A4A8,AdvanceClock,,500
+--ee-hook=0x0028A49C,AdvanceClock,,500
+--ee-hook=0x0028A494,AdvanceClock,,500
+--ee-hook=0x0028A48C,AdvanceClock,,500
+--ee-hook=0x0028A47C,AdvanceClock,,500
+--ee-hook=0x0028A478,AdvanceClock,,500
+--ee-hook=0x0028A474,AdvanceClock,,500
+--ee-hook=0x0028A230,AdvanceClock,,500
+--ee-hook=0x0028A228,AdvanceClock,,500
+--ee-hook=0x0028A220,AdvanceClock,,500
+--ee-hook=0x0028A218,AdvanceClock,,500
+--ee-hook=0x0028A210,AdvanceClock,,500
+--ee-hook=0x0028A20C,AdvanceClock,,500
+--ee-hook=0x0028A208,AdvanceClock,,500
+--ee-hook=0x0028A1FC,AdvanceClock,,500
+--ee-hook=0x0028A194,AdvanceClock,,500
+--ee-hook=0x0028A160,AdvanceClock,,500
+--ee-hook=0x0028A130,AdvanceClock,,500
+--ee-hook=0x0028A124,AdvanceClock,,500
+--ee-hook=0x0028A120,AdvanceClock,,500
+--ee-hook=0x0028A118,AdvanceClock,,500
+--ee-hook=0x0028A108,AdvanceClock,,500
+--ee-hook=0x0028A0AC,AdvanceClock,,500
+--ee-hook=0x0028A098,AdvanceClock,,500
+--ee-hook=0x0028A084,AdvanceClock,,500
+--ee-hook=0x0028A080,AdvanceClock,,500
+--ee-hook=0x0028A078,AdvanceClock,,500
+--ee-hook=0x00289F6C,AdvanceClock,,500
+--ee-hook=0x00289F68,AdvanceClock,,500
+--ee-hook=0x00289F64,AdvanceClock,,500
+--ee-hook=0x00289F54,AdvanceClock,,500
+--ee-hook=0x00289F4C,AdvanceClock,,500
+--ee-hook=0x00289F30,AdvanceClock,,500
+</pre>
+
+====Rayman M (Arena)====
+<br>'''SLES-50457'''
+<br>'''CLI'''
+<pre>
+--vu1-no-clamping=0
+--vu0-no-clamping=0
+--vif1-instant-xfer=0
+--mtap1=always
+</pre>
+<br>'''LUA'''
+<br>Pal
+<pre>
+-- Rayman M (SLES-50457)
+-- Fix by Kozarovv
+-- ported to PS4 lua by Stayhye
+-- emu used=rotk v1
+
+--[[ useful information
+
+This fix should work for other games using this engine.  Like Largo Winch, and Disney's PK - Out of the Shadows.
+....and what's more important that patch is by kozarovv
+
+--]]
+
+local gpr = require("ee-gpr-alias")
+
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local Fix = function()
+--Start microprograms manually instead of rely on timings.
+eeObj.WriteMem32(0x001c997c,0x4a0000b8)
+eeObj.WriteMem32(0x001c9b64,0x4a0000b8)
+eeObj.WriteMem32(0x001c9bd4,0x4a0000b8)
+eeObj.WriteMem32(0x001c9c24,0x4a000938)
+eeObj.WriteMem32(0x001c9e7c,0x4a000938)
+eeObj.WriteMem32(0x001c9ec4,0x4a000938)
+eeObj.WriteMem32(0x001ca044,0x4a000938)
+eeObj.WriteMem32(0x001ca08c,0x4a000938)
+-- No need to loop here, just e-bit and wait for vcallms from EE.
+eeObj.WriteMem32(0x002fc910,0x8000033c)
+eeObj.WriteMem32(0x002fc914,0x400002ff)
+eeObj.WriteMem32(0x002fca40,0x8000033c)
+eeObj.WriteMem32(0x002fca44,0x400002ff)
+end
+
+emuObj.AddVsyncHook(Fix)
+</pre>
+NTSC (Arena)
+<pre>
+-- Rayman Arena
+-- fix method for game engine by kozarovv
+-- ported to PS4
+-- emu used=jakx v2
+
+local gpr = require("ee-gpr-alias")
+
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+--Start microprograms manually instead of rely on timings.
+--0x48c83000 >> ctc2 t0, $vi6
+--eeObj.WriteMem32(0x001de8e4,0x4a0000b8)
+eeObj.WriteMem32(0x001de9b0,0x4a0000b8)
+eeObj.WriteMem32(0x001deb94,0x4a0000b8)
+eeObj.WriteMem32(0x001dec00,0x4a000938)
+eeObj.WriteMem32(0x001dec54,0x4a000938)
+eeObj.WriteMem32(0x001deea0,0x4a000938)
+eeObj.WriteMem32(0x001deedc,0x4a000938)
+eeObj.WriteMem32(0x001df078,0x4a000938)
+eeObj.WriteMem32(0x001df0b4,0x4a000938)
+eeObj.WriteMem32(0x001df154,0x4a000938)
+-- No need to loop here, just e-bit and wait for vcallms from EE.
+eeObj.WriteMem32(0x0031ba90,0x8000033c) -- 500607ff
+eeObj.WriteMem32(0x0031ba94,0x400002ff)
+eeObj.WriteMem32(0x0031bbc0,0x8000033c)
+eeObj.WriteMem32(0x0031bbc4,0x400002ff)
+
+
+emuObj.ThrottleMax()
+end
+
+emuObj.AddVsyncHook(patcher)
+</pre>
+
+====R-Racing Revolution====
+'''''LUA'''''
+
+<br>SLUS_207.21
+
+<pre>apiRequest(0.1)    -- request version 0.1 API. Calling apiRequest() is mandatory.
+
+-- Divide $v0 value by 8 before copying it to CMSAR0
+-- sra $v0, 3, this time we are losing one nop on cop2. Can be important.
+
+eeInsnReplace(0x2DDB4C, 0x48C2D801, 0x000210C3)
+eeInsnReplace(0x2DDB50, 0x4A0002FF, 0x48C2D801)
+eeInsnReplace(0x2DDBC4, 0x48C2D801, 0x000210C3)
+eeInsnReplace(0x2DDBC8, 0x4A0002FF, 0x48C2D801)
+eeInsnReplace(0x313C30, 0x48C2D801, 0x000210C3)
+eeInsnReplace(0x313C34, 0x4A0002FF, 0x48C2D801)
+eeInsnReplace(0x3144FC, 0x48C2D801, 0x000210C3)
+eeInsnReplace(0x314500, 0x4A0002FF, 0x48C2D801)
+eeInsnReplace(0x314E04, 0x48C2D801, 0x000210C3)
+eeInsnReplace(0x314E08, 0x4A0002FF, 0x48C2D801)
+eeInsnReplace(0x31570C, 0x48C2D801, 0x000210C3)
+eeInsnReplace(0x315710, 0x4A0002FF, 0x48C2D801)
+eeInsnReplace(0x315FFC, 0x48C2D801, 0x000210C3)
+eeInsnReplace(0x316000, 0x4A0002FF, 0x48C2D801)
+eeInsnReplace(0x3168EC, 0x48C2D801, 0x000210C3)
+eeInsnReplace(0x3168F0, 0x4A0002FF, 0x48C2D801)
+eeInsnReplace(0x31724C, 0x48C2D801, 0x000210C3)
+eeInsnReplace(0x317250, 0x4A0002FF, 0x48C2D801)
+eeInsnReplace(0x317B74, 0x48C2D801, 0x000210C3)
+eeInsnReplace(0x317B78, 0x4A0002FF, 0x48C2D801)
+eeInsnReplace(0x318430, 0x48C2D801, 0x000210C3)
+eeInsnReplace(0x318434, 0x4A0002FF, 0x48C2D801)
+eeInsnReplace(0x318D54, 0x48C2D801, 0x000210C3)
+eeInsnReplace(0x318D58, 0x4A0002FF, 0x48C2D801)
+eeInsnReplace(0x319AA0, 0x48C2D801, 0x000210C3)
+eeInsnReplace(0x319AA4, 0x4A0002FF, 0x48C2D801)
+eeInsnReplace(0x31A8D4, 0x48C2D801, 0x000210C3)
+eeInsnReplace(0x31A8D8, 0x4A0002FF, 0x48C2D801)
+eeInsnReplace(0x31B7A4, 0x48C2D801, 0x000210C3)
+eeInsnReplace(0x31B7A8, 0x4A0002FF, 0x48C2D801)
+
+-- fix graphical issues</pre>
+
+====Radiata Stories====
+'''''CLI'''''
+
+<br>All versions
+
+<pre>--vu-hack-triace=1
+--gs-use-mipmap=1
+--gs-kernel-cl="mipmap"
+--gs-kernel-cl-up="mipmap2x2"
+
+#Mandatory triace fix for boot crash and fix for uncommon glitches like outlines in Jack's face during specific cutscenes.</pre>
+
+====Raw Danger! / Zettai Zetsumei Toshi 2 - Itetsuita Kiokutachi====
+
+SLUS_215.01
+<br>LUA
+<pre>apiRequest(0.1)
+
+-- SLUS-21501 speedhack
+
+eeInsnReplace(0x11e104, 0x0c066a5c, 0x00000000)
+eeInsnReplace(0x11e10c, 0x0c08a8ec, 0x00000000)</pre>
+
+SLES_545.87
+<br>LUA
+<pre>apiRequest(0.1)
+
+-- SLES-54587 speedhack
+
+eeInsnReplace(0x11e0f4, 0x0c066a40, 0x00000000)
+eeInsnReplace(0x11e0fc, 0x0c08a8d0, 0x00000000)</pre>
+
+SLPS_256.06
+<br>LUA
+<pre>apiRequest(0.1)
+
+-- SLPS-25606 speedhack
+
+eeInsnReplace(0x11e094, 0x0c066804, 0x00000000)
+eeInsnReplace(0x11e09c, 0x0c08a654, 0x00000000)</pre>
+
+====Rygar: The Legendary Adventure====
+'''''CLI'''''
+
+<br>SLUS_204.71
+
+<pre>--fpu-accurate-range=0x147CC0,0x147EA0
+
+#Fix for freeze after leaving the first area.</pre>
+
+<br>SCAJ_200.16
+
+<pre>--fpu-accurate-range=0x1485C4,0x148724
+
+#Fix </pre>
+
+====Samurai Shodown VI====
+'''''CLI'''''
+
+<br>All versions
+
+<pre>--gs-upscale=point
+--gs-uprender=2x2
+--gs-motion-factor=25
+--host-audio-latency=0.01
+--gs-ignore-dirty-page-border=1
+--gs-kernel-cl="h2lpool"
+--gs-kernel-cl-up="h2lpool2x2"
+--gs-h2l-list-opt=1
+--gs-h2l-accurate-hash=1
+
+#same as Anthology, which VI is a patched-out section of; substantial slowdown during combat has been mitigated.</pre>
+
+====Samurai Warriors 2 Xtreme Legends====
+'''LUA'''
+<br>'''Jakv2'''
+<br>NTSC
+<pre>
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+--Load merge menus
+eeObj.WriteMem32(0x00397E80, 0x00000001)
+--Merge's Data
+eeObj.WriteMem32(0x005C1E28, 0x65300000)
+eeObj.WriteMem32(0x005C1E58, 0x65300000)
+eeObj.WriteMem32(0x005EC270, 0x05030100)
+eeObj.WriteMem32(0x005EC2A0, 0x04030100)
+eeObj.WriteMem32(0x005EC2D0, 0x04030100)
+eeObj.WriteMem32(0x005EC300, 0x05030100)
+eeObj.WriteMem32(0x00614320, 0x05030100)
+eeObj.WriteMem32(0x00614350, 0x05030100)
+eeObj.WriteMem32(0x00614380, 0x05030100)
+eeObj.WriteMem32(0x006143B0, 0x04030100)
+eeObj.WriteMem32(0x00584DB0, 0x00000010)
+eeObj.WriteMem32(0x00584DB4, 0x06010000)
+eeObj.WriteMem32(0x00584DC0, 0x00000010)
+eeObj.WriteMem32(0x00584DC4, 0x06010000)
+eeObj.WriteMem32(0x00584DD0, 0x00000010)
+eeObj.WriteMem32(0x00584DD4, 0x06010000)
+eeObj.WriteMem32(0x00584DD8, 0x00000010)
+eeObj.WriteMem32(0x00584DDC, 0x06010000)
+eeObj.WriteMem32(0x00584DE0, 0x00000010)
+eeObj.WriteMem32(0x00584DE4, 0x06010000)
+eeObj.WriteMem32(0x00584DE8, 0x00000010)
+eeObj.WriteMem32(0x00584DEC, 0x06010000)
+eeObj.WriteMem32(0x00584DF0, 0x00000010)
+eeObj.WriteMem32(0x00584DF4, 0x06010000)
+eeObj.WriteMem32(0x00584E00, 0x00000010)
+eeObj.WriteMem32(0x00584E04, 0x06010000)
+eeObj.WriteMem32(0x00584E10, 0x00000010)
+eeObj.WriteMem32(0x00584E14, 0x06010000)
+eeObj.WriteMem32(0x00584E20, 0x00000010)
+eeObj.WriteMem32(0x00584E24, 0x06010000)
+eeObj.WriteMem32(0x00584E28, 0x00000010)
+eeObj.WriteMem32(0x00584E2C, 0x06010000)
+eeObj.WriteMem32(0x00584E30, 0x00000010)
+eeObj.WriteMem32(0x00584E34, 0x06010000)
+eeObj.WriteMem32(0x00584E38, 0x00000010)
+eeObj.WriteMem32(0x00584E3C, 0x06010000)
+eeObj.WriteMem32(0x00584E40, 0x00000010)
+eeObj.WriteMem32(0x00584E44, 0x06010000)
+eeObj.WriteMem32(0x00584E50, 0x00000010)
+eeObj.WriteMem32(0x00584E54, 0x06010000)
+eeObj.WriteMem32(0x00584E60, 0x00000010)
+eeObj.WriteMem32(0x00584E64, 0x06010000)
+eeObj.WriteMem32(0x00584E70, 0x00000010)
+eeObj.WriteMem32(0x00584E74, 0x06010000)
+eeObj.WriteMem32(0x00584E80, 0x00000010)
+eeObj.WriteMem32(0x00584E84, 0x06010000)
+eeObj.WriteMem32(0x00584E90, 0x00000010)
+eeObj.WriteMem32(0x00584E94, 0x06010000)
+eeObj.WriteMem32(0x00584Ea0, 0x00000010)
+eeObj.WriteMem32(0x00584Ea4, 0x06010000)
+eeObj.WriteMem32(0x00584Ea8, 0x00000010)
+eeObj.WriteMem32(0x00584Eac, 0x06010000)
+eeObj.WriteMem32(0x00584Eb0, 0x00000010)
+eeObj.WriteMem32(0x00584Eb4, 0x06010000)
+eeObj.WriteMem32(0x00584Eb8, 0x00000010)
+eeObj.WriteMem32(0x00584Ebc, 0x06010000)
+eeObj.WriteMem32(0x00584EC0, 0x00000010)
+eeObj.WriteMem32(0x00584EC4, 0x06010000)
+eeObj.WriteMem32(0x00584EC8, 0x00000010)
+eeObj.WriteMem32(0x00584ECC, 0x06010000)
+eeObj.WriteMem32(0x00584ED0, 0x00000010)
+eeObj.WriteMem32(0x00584ED4, 0x06010000)
+eeObj.WriteMem32(0x00584EE0, 0x00000010)
+eeObj.WriteMem32(0x00584EE4, 0x06010000)
+eeObj.WriteMem32(0x00584EF0, 0x00000010)
+eeObj.WriteMem32(0x00584EF4, 0x06010000)
+eeObj.WriteMem32(0x00584EF8, 0x00000010)
+eeObj.WriteMem32(0x00584EFC, 0x06010000)
+--Sugoroku glitch patch
+eeObj.WriteMem32(0x00102230,0x00000000)
+--No interlacing
+eeObj.WriteMem32(0x00102298,0x30420000)
+
+end
+--Fix for upscaling glitches
+emuObj.SetGsTitleFix( "forceSimpleFetch",  "reserved", {psm=0} )
+emuObj.SetGsTitleFix( "fetchFromCurrBuff", "reserved", {psm=0} )
+
+emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", { texMode=1  } )
+
+emuObj.AddVsyncHook(patcher)
+</pre>
+
+====Scaler====
+<br>'''CLI'''
+<br>'''JAKv2'''
+<br>All Versions
+<pre>
+#Upscaling fix
+--gs-kernel-cl-up="up2x2simple"
+#Speedhacks
+--vu1-jr-cache-policy=sameprog
+--vu1-jalr-cache-policy=sameprog
+--vu1-mpg-cycles=600
+--vu1-di-bits=0
+--ee-cycle-scalar=1.1
+</pre>
+
+<br>'''LUA'''
+<br>'''JAKv2'''
+<br>PAL
+<pre>
+
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+
+eeObj.WriteMem32(0x0021E5AC, 0x8F8288C0)
+eeObj.WriteMem32(0x0021E218, 0x8F8288C0)
+eeObj.WriteMem32(0x0021E598, 0x8F8288C0)
+eeObj.WriteMem32(0x0021DDA4, 0x8F8288C0)
+eeObj.WriteMem32(0x0021DDC8, 0x0)
+eeObj.WriteMem32(0x001DDC3C, 0x0)
+end
+emuObj.AddVsyncHook(patcher)
+</pre>
+
+====Scooby-Doo! First Frights™====
+SLES_554.76 Only!
+<br>CLI
+<pre>--ee-hook=0x00163984,FastForwardClock
+--ee-hook=0x00163998,FastForwardClock
+#Fix for distorted audio</pre>
+
+====Scooby-Doo! and the Spooky Swamp™====
+SLES_556.09 Only!
+<br>CLI
+<pre>--ee-hook=0x001480F4,FastForwardClock
+--ee-hook=0x00148108,FastForwardClock
+#Fix for distorted audio</pre>
+
+====SEGA Sports Tennis/ Virtua Tennis 2====
+<br>SLUS-20480
+<pre>
+-- fix by kozarovv
+-- emu used=psychonauts v2
+
+local gpr = require("ee-gpr-alias")
+
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+-- First unpack, then run program you silly.
+eeObj.WriteMem8(0x283774, 0x30)
+eeObj.WriteMem8(0x283780, 0x20)
+end
+
+emuObj.AddVsyncHook(patcher)
+</pre>
+<br>SLES-51232
+<pre>
+local gpr = require("ee-gpr-alias")
+
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+-- First unpack, then run program you silly.
+eeObj.WriteMem8(0x289914, 0x30)
+eeObj.WriteMem8(0x289920, 0x20)
+end
+
+emuObj.AddVsyncHook(patcher)
+</pre>
+
+====Shadow of the Colossus====
+'''CLI'''
+<br>All versions
+<pre>
+#Speedhacks for performance
+--ee-cycle-scalar=1.2
+--vu1-di-bits=0
+--vu1-mpg-cycles=600
+</pre>
+
+'''LUA'''
+<br>
+<pre>
+-- Shadow of the Colossus
+-- ported to PS4 by Stayhye
+-- emu used=kof98um
+
+apiRequest(0.1)
+
+local gpr       = require("ee-gpr-alias")
+
+local emuObj      = getEmuObject()
+local eeObj       = getEEObject()
+local gsObj       = getGsObject()
+
+
+emuObj.PadSetLightBar(0, 45,65,55)
+emuObj.SetDeinterlace(true)
+emuObj.SetDisplayAspectWide()
+
+--stutter fix
+eeObj.AddHook(0x00125838,0x00041878,function() -- dsll v1, a0, 1
+         eeObj.AdvanceClock(8000)
+         eeObj.Vu1MpgCycles(450)
+end)        
+
+
+local WS = function()
+--
+--eeObj.WriteMem32(0x0012584c,0x1000fffa)
+
+emuObj.ThrottleMax()
+end
+
+emuObj.AddVsyncHook(WS)
+
+emuObj.SetGsTitleFix( "globalSet",  "reserved", { workLoadThreshold = 100000} )
+emuObj.SetGsTitleFix( "globalSet",  "reserved", { waveThreshold = 90000} )
+emuObj.SetGsTitleFix( "ignoreAreaUpdate", 0, { } )
+</pre>
+
+====Shin Megami Tensei: Persona 3 FES====
+
+<br>'''NTSC'''
+<br>'''CLI'''
+<pre>
+# Misc
+--host-display-mode=full
+--force-frame-blend=0
+--gs-progressive=1
+--ee-cycle-scalar=0.62
+--host-audio-latency=0.05
+# Mipmapping
+--gs-use-mipmap=1
+--gs-kernel-cl="mipmap"
+--gs-kernel-cl-up="mipmap2x2"
+# VU Speedhacks
+--vu0-const-prop=1
+--vu1-const-prop=1
+--vu1-di-bits=0
+--vu0-di-bits=0
+--vu1-opt-vf00=2
+--vu0-opt-vf00=2
+--vu1-mpg-cycles=1400
+--vu-custom-min-max=0
+# IOP Speedhacks
+--iop-const-folding=All
+--iop-cycle-scalar=0.1
+--cdvd-sector-seek-cycles=0.1
+--cdvd-sector-read-cycles=0.1
+# Default Optimizations
+--fpu-no-clamping=0
+--fpu-clamp-operands=1
+--fpu-clamp-results=1
+--vu0-no-clamping=0
+--vu0-clamp-operands=1
+--vu0-clamp-results=1
+--vu1-no-clamping=0
+--vu1-clamp-operands=1
+--vu1-clamp-results=1
+--cop2-no-clamping=0
+--cop2-clamp-operands=1
+--cop2-clamp-results=1
+--vu0-opt-flags=1
+--vu1-opt-flags=1
+--cop2-opt-flags=1
+--vu1-jr-cache-policy=newprog
+--vu1-jalr-cache-policy=newprog
+--vu0-jr-cache-policy=newprog
+--vu0-jalr-cache-policy=newprog
+
+#User Emu = kof98um
+</pre>
+
+* Config and icons [https://www.psx-place.com/threads/research-ps2-emulator-configuration-on-ps4.16131/page-243 Download]
+
+====Shin Megami Tensei: Persona 4====
+'''''CLI'''''
+
+All Versions
+
+<pre>
+#Graphical glitches fixes, Vu Clamp mode 2
+--vu1-no-clamping=0
+#Performance fixes
+--vu1-const-prop=1
+--vu1-di-bits=0
+--ee-cycle-scalar=1.3
+
+#Jakv2 Emu Used
+
+#Fix for Slowdowns in Battles And flickering textures When fusing Personas</pre>
+
+<br>'''LUA'''
+<br>NTSC
+<pre>
+-- Persona 4 NTSC Fix for bottom left text not appearing
+
+local gpr = require("ee-gpr-alias")
+
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+
+eeObj.WriteMem32(0x00189c60,0x3c023f7f)
+
+end
+
+emuObj.AddVsyncHook(patcher)
+</pre>
+
+====Shinobido: Way of the Ninja====
+<br>All versions
+<pre>
+# Fixes hang going in to the gardens.
+--fpu-no-clamping=1
+</pre>
+
+====Simpsons Hit and Run====
+<br>NTSC
+<br>'''CLI'''
+<pre>
+--Fixes the slowdowns
+--ee-cycle-scalar=3.5
+</pre>
+
+'''LUA'''
+<pre>
+#Fixes the freeze on Jakv2
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+eeObj.WriteMem32(0x0036CA5C,0x0)
+end
+emuObj.AddVsyncHook(patcher)
+</pre>
+
+====Sly Cooper 1====
+'''CLI'''
+<br>All versions
+<pre>
+#Fix for upscaling corruptions
+--gs-kernel-cl-up="up2x2simple"
+#Speedhacks
+--ee-cycle-scalar=1.2
+--vu1-di-bits=0
+</pre>
+
+====Second Sight====
+'''''CLI'''''
+
+<br>All Versions
+
+<pre>--vu1=jit-sync
+--vif1-instant-xfer=0
+
+#Fix for black screen after ps2 logo and graphical glitches.</pre>
+
+====Silent Hill 2====
+'''''CLI'''''
+<br>(SLUS-20228)
+<pre>
+#Fix For Slowdowns
+--vu1-mpg-cycles=1000
+--vu1-di-bits=0
+--vu1-const-prop=1
+</pre>
+
+'''''LUA'''''
+<br>(SLUS-20228)
+<pre>apiRequest(1.0)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+local patcher = function()
+
+--Enable custom progressive scan mode and enhanced mode to fix double-layer screen display errors
+eeObj.WriteMem32(0x1A68e4,0x24050000)
+eeObj.WriteMem32(0x1A68e8,0x24060050)
+eeObj.WriteMem32(0x1A68ec,0x24070001)
+eeObj.WriteMem32(0x2a7968,0x34030002)
+eeObj.WriteMem32(0x1961f8,0x28670000)
+eeObj.WriteMem32(0x27fe74,0x00000000)
+eeObj.WriteMem32(0x27fac4,0x00000000)
+
+local code_check1 = eeObj.ReadMem16(0x1221C4E)
+if code_check1 == 0x001F then
+eeObj.WriteMem8(0x1221c4e,0x1b)
+eeObj.WriteMem8(0x1221c76,0x1b)
+end
+end
+
+emuObj.AddVsyncHook(patcher)
+</pre>
+
+====Silent Hill 2: Director's Cut====
+<br>
+'''''CLI'''''
+<br>SLES_511.56
+<pre>
+#Performance boost.
+--ee-cycle-scalar=1.8
+## Force PAL game to 30 fps with Progressive scan (but '--force-pal-60hz=1' does the audio and video unsync )
+#--force-pal-60hz=1
+--gs-progressive=1
+
+## I need to test more, but it looks good.
+</pre>
+
+====SNK vs Capcom: SVC Chaos====
+'''''CLI'''''
+
+<br>All Versions
+
+<pre>--gs-use-clut-merge=1
+--gs-kernel-cl="clutmerge"
+--gs-kernel-cl-up="clutmerge2x2"
+
+#Fixes missing hud/UI elements.</pre>
+
+====Soul Calibur 3====
+ALL
+<br>CLI
+<pre>--gs-uprender=2x2
+--gs-upscale=edgesmooth
+--gs-kernel-cl-up="up2x2skipinterp"
+
+--vif1-instant-xfer=0
+
+--ee-cycle-scalar=1.82
+--ee-regalloc-preserve-scalar=LoadStore
+--iop-cycle-scalar=2.10
+
+--vu0-mpg-cycles=1
+--vu1-mpg-cycles=1
+
+#emu used=jakx v2
+</pre>
+<br>LUA
+<pre>-- Soul Calibur III (SLUS-21216)
+-- ported to PS4 lua
+-- emu used=jakx v2
+
+apiRequest(2.3)
+
+local gpr    		= require("ee-gpr-alias")
+local emuObj 		= getEmuObject()
+local eeObj			= getEEObject()
+local gsObj			= getGsObject()
+   
+emuObj.PadSetLightBar(0, 10,176,4)
+emuObj.SetDisplayAspectWide() 
+
+local WS = function()
+-- 16:9
+eeObj.WriteMem32(0x0012a118,0x3c013f40)
+eeObj.WriteMem32(0x0012a11c,0x34210000)
+
+eeObj.Vu1MpgCycles(1)
+eeObj.SetVifDataCycleScalar(1, 0.80)
+
+emuObj.ThrottleMax()
+end
+
+emuObj.AddVsyncHook(WS)
+</pre>
+
+====Spider-Man 3 ====
+ALL
+<br>CLI
+<pre>--vu0-di-bits=0
+--vu1-di-bits=0
+
+--ee-cycle-scalar=1.7 
+--iop-cycle-scalar=0.8
+
+--vu1-mpg-cycles=600
+
+--host-audio-latency=2.21
+
+#Fix for slowdown and micro-freezes</pre>
+
+====SpongeBob SquarePants: Battle for Bikini Bottom====
+'''CLI'''
+<br>All versions
+<pre>
+#Fix for Graphical issues
+--vu1-no-clamping=0
+#Rest might be unnecessary
+--vu0-no-clamping=0
+--vu0-clamp-operands=1
+--vu0-clamp-results=1
+--vu1-clamp-operands=1
+--vu1-clamp-results=1
+--cop2-no-clamping=0
+--cop2-clamp-operands=1
+--cop2-clamp-results=1
+</pre>
+
+====Spyro: Enter The Dragonfly====
+<br>'''All versions'''
+<br>'''''CLI'''''
+<pre>
+#Speedhacks + Clamping
+--vu1-di-bits=0
+--vu1-const-prop=1
+--vu1-mpg-cycles=800
+--ee-cycle-scalar=1.2
+#Jakv2 Emu Used
+</pre>
+
+====Spy hunter====
+'''CLI'''
+<br>All versions
+<pre>
+#Fixes loading hang.
+--vif1-instant-xfer=0
+</pre>
+
+====SSX====
+<br>'''''CLI'''''
+<br>All versions
+<pre>
+--iop-cycle-scalar=1.8
+--host-audio-latency=1.1
+
+#Use JakX v2 emu</pre>
+
+====Star Wars - Episode 3 - Die Rache der Sith====
+
+'''''CLI file'''''
+<pre>
+#for none PS4 Pro users
+--ee-cycle-scalar=1.75
+--iop-cycle-scalar=1.75
+--vu1-mpg-cycles=1480
+--vu0-mpg-cycles=1480
+--vu0-di-bits=0
+--vu1-di-bits=0
+
+#emu used=Star Wars Racer's Revenge v1
+</pre>
+
+'''''LUA file'''''
+<pre>
+-- Star Wars - Episode III - Die Rache der Sith (PAL) SLES-53157
+-- Widescreen Hack by ElHecht
+-- ported to PS4
+-- emu used=Star Wars Racer's Revenge v1
+
+apiRequest(0.4)
+
+local gpr       = require("ee-gpr-alias")
+local emuObj      = getEmuObject()
+local eeObj       = getEEObject()
+local widescreen = function()
+
+-- 16:9
+eeObj.WriteMem32(0x004dbd44,0x3c023f40)
+eeObj.WriteMem32(0x0051bca0,0x3c013f40)
+eeObj.WriteMem32(0x0051bcac,0x4481f000)
+eeObj.WriteMem32(0x0051bcf0,0x461e4a42)
+
+emuObj.ThrottleMax()
+end
+
+emuObj.AddVsyncHook(widescreen)
+</pre>
+
+====Street Fighter Alpha Anthology====
+ALL
+<br>CLI
+<pre>
+#Graphical glitches fix
+--gs-motion-factor=50
+--gs-kernel-cl="h2lpool"
+--gs-kernel-cl-up="h2lpool2x2"
+--gs-h2l-list-opt=1
+--gs-h2l-accurate-hash=1
+#Speehacks
+--vu0-di-bits=0
+--vu1-di-bits=0
+--vu0-const-prop=1
+--vu1-const-prop=1
+--ee-cycle-scalar=1.5
+--gs-adaptive-frameskip=1
+--vu1-injection=1
+#Misc
+--host-audio-latency=0.01
+
+#PS4 Pro required for full speed
+</pre>
+
+====Steambot Chronicles====
+'''''CLI'''''
+
+<br>All Versions
+
+<pre>
+--vu1-no-clamping=0
+--gs-kernel-cl-up="up2x2skipinterp"
+#Fix for graphical glitches.</pre>
+
+====Sword of etheria====
+'''CLI'''
+<br>All versions
+<pre>
+#Fix for game's graphics being missing And game crashing
+--vu-custom-min-max=0
+#Jakv2 emu used
+</pre>
+
+====Syberia====
+'''CLI'''
+<br>All versions
+<pre>
+#Fix for graphical glitches
+--vu1=jit-sync
+#Speedhacks
+--vu1-di-bits=0
+--vu1-mpg-cycles=400
+--ee-cycle-scalar=1.2
+</pre>
+
+====Tales of Destiny: Directors Cut====
+<br>'''SLPS-25842'''</br>
+
+'''''CLI'''''
+
+<pre>
+#Glitch Fix
+--fpu-accurate-range=0x1C7B50,0x1C7C00
+#unnecessary command
+--fpu-accurate-mul-fast=1
+#Performance Fix
+--ee-cycle-scalar=1.74
+#Graphical Glitches fixes
+--gs-use-clut-merge=1 
+--gs-kernel-cl="clutmerge"
+--gs-kernel-cl-up="clutmerge2x2"
+#Fix for menu UI interlacing shake
+--force-frame-blend=1</pre>
+
+'''''LUA file'''''
+<pre>
+-- Emu used=Jak v2
+-- SLPS-25842 FPUMULHACK (fix for getting stuck in the room before Irene in Helraios)
+local gpr = require("ee-gpr-alias")
+
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local goathack = function()
+local db_check = eeObj.ReadMem8(0x3EECC4)
+if db_check == 0xDB then
+eeObj.WriteMem8(0x3EECC4,0xDA)
+end
+end
+
+emuObj.AddVsyncHook(goathack)
+</pre>
+
+====Tales of The Abyss====
+'''''CLI'''''
+<pre>
+--gs-uprender=2x2
+--gs-upscale=EdgeSmooth
+
+--fpu-accurate-range=0x27FFFC,0x27FFFF
+--fpu-accurate-range=0x2921F4,0x2921F8
+
+--vu0-no-clamping=0
+--vu1-no-clamping=0
+--cop2-no-clamping=0
+
+--host-display-mode=16:9
+</pre>
+'''''LUA file'''''
+<pre>
+-- Tales Of The Abyss (NTSC-U) (SLUS-21386)
+-- emu used=psychonauts v2
+
+local gpr = require("ee-gpr-alias")
+
+apiRequest(0.1)
+local emuObj = getEmuObject()
+emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", { texMode=1 } )
+</pre>
+
+====Tekken 5====
+'''CLI'''
+<br>All versions
+<br>
+<pre>
+#Upscaling glitches fix
+--gs-kernel-cl-up="up2x2simple"
+#Game needs progressive scan
+--gs-progressive=1
+#Speedhacks
+--vu1-di-bits=0
+
+#Side note: game is best played using War of the monsters v1 emu as it removes a graphical glitch from some levels.
+#side note2: "--gs-kernel-cl-up="up2x2simple" doing this will make graphics look worse than actual ps2
+</pre>
+<br>'''LUA'''
+<br>NTSC only
+<pre>-- Tekken 5 NTSC
+-- Widescreen and No interlace
+-- emu used=rogue v1 or wotm v1 or 2
+
+apiRequest(0.1)
+
+local gpr    		= require("ee-gpr-alias")
+
+local emuObj 		= getEmuObject()
+local eeObj			= getEEObject()
+
+local patcher = function()
+
+eeObj.WriteMem32(0x0032b448,0x3c013f40) -- both fov+
+--applies both fov+ only for widescreen mode
+eeObj.WriteMem32(0x0032b478,0x3c010015)
+eeObj.WriteMem32(0x0032b47c,0xc62dd11c)
+eeObj.WriteMem32(0x0032b49c,0x46016b42)
+eeObj.WriteMem32(0x0032b4a0,0x46010843)
+eeObj.WriteMem32(0x0032b4b8,0x460d1083)
+eeObj.WriteMem32(0x0032b4bC,0x460d0843)
+--effects fix
+eeObj.WriteMem32(0x00257434,0x46161083)
+eeObj.WriteMem32(0x00257488,0x46160843)
+eeObj.WriteMem32(0x002574e0,0x46160843)
+eeObj.WriteMem32(0x00257538,0x46160843)
+
+local code_check1 = eeObj.ReadMem16(0x15D11C)
+if code_check1 == 0x8e38 then
+eeObj.WriteMem32(0x20257764,0x10000008)
+end
+local code_check2 = eeObj.ReadMem16(0x15D11C)
+if code_check2 == 0xaaaa then
+eeObj.WriteMem32(0x20257764,0x45020008)
+end
+--render fix
+eeObj.WriteMem32(0x00222484,0x3c013f2b)
+eeObj.WriteMem32(0x00222494,0x44810000)
+eeObj.WriteMem32(0x00222498,0x46006302)
+--Devil Within Mode by Arapapa
+local code_check3 = eeObj.ReadMem16(0x100000)
+if code_check3 == 0xfff0 then
+eeObj.WriteMem32(0x2041E82C,0x3f400000) --Zoom
+eeObj.WriteMem32(0x202ACED8,0x3FDDA51A) --Y-Fov
+end
+--no interlace for starblade
+local code_check4 = eeObj.ReadMem16(0x2F5BD0)
+if code_check4 == 0x0104 then
+eeObj.WriteMem32(0x202F5BD0,0x34070003)
+local code_check5 = eeObj.ReadMem16(0x187FB0)
+if code_check5 == 0x0008 then
+eeObj.WriteMem32(0x20187FB0,0x34030001)
+eeObj.WriteMem32(0x20187FC4,0x34021078)
+end
+end
+--[[
+--Workaround
+eeObj.WriteMem32(0x2010207C,0x3c050000)
+eeObj.WriteMem32(0x20102084,0x3c060050)
+eeObj.WriteMem32(0x2010208C,0x3c070001)
+eeObj.WriteMem32(0x20102EAC,0x3C0701E0)
+--]]
+--Intro Mini Game
+local code_check6 = eeObj.ReadMem16(0xFFECF4)
+if code_check6 == 0x0001 then
+eeObj.WriteMem32(0x2010230C,0x34029078)
+end
+--Framebuffer - Progressive - No interleacing - No black lines HW mode
+local code_check7 = eeObj.ReadMem16(0xFFEF20)
+if code_check7 == 0x8870 then
+eeObj.WriteMem32(0x2010230C,0x34029400)
+eeObj.WriteMem32(0x203EF450,0x00000001) -- Official Progressive mode
+end
+-- Devil W. Game
+local code_check8 = eeObj.ReadMem16(0xFFEF20)
+if code_check8 == 0x2c70 then
+eeObj.WriteMem32(0x2026033C,0x34029400)
+end
+-- Tek 1 sdtv mode 240p
+local code_check9 = eeObj.ReadMem16(0xFFEF20)
+if code_check9 == 0x3df0 then
+eeObj.WriteMem32(0x2014F454,0x3c050000)
+eeObj.WriteMem32(0x2014F45C,0x3C060050)
+eeObj.WriteMem32(0x2014F464,0x3c070001)
+end
+-- Tek 2 sdtv mode 240p
+local code_check10 = eeObj.ReadMem16(0xFFEF20)
+if code_check10 == 0x6570 then
+eeObj.WriteMem32(0x2015E494,0x3c050000)
+eeObj.WriteMem32(0x2015E49C,0x3C060050)
+eeObj.WriteMem32(0x2015E4A4,0x3c070001)
+end
+-- Tek 3 sdtv mode 480p extended
+local code_check11 = eeObj.ReadMem16(0xFFEF20)
+if code_check11 == 0xF370 then
+eeObj.WriteMem32(0x201E4F54,0x3c050000)
+eeObj.WriteMem32(0x201E4F5C,0x3C060050)
+eeObj.WriteMem32(0x201E4F64,0x3c070001)
+end
+
+end
+
+emuObj.AddVsyncHook(patcher)
+--Fix lines appearing in some areas
+emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", { texMode=2  } ) -- also makes graphics look like crap
+</pre>
+
+====The Godfather====
+'''CLI'''
+<br>All versions
+<br>SW racer revenge v1 emu used
+<pre>
+#Fix for upscaling graphical glitches
+--gs-kernel-cl-up="up2x2simple"
+#Fix for intro stutter
+--iop-cycle-scalar=0.80
+--cdvd-sector-read-cycles=5000
+</pre>
+
+====The Legend of Spyro A New Beginning====
+PAL only!
+<br>LUA
+<pre>apiRequest(0.4)
+
+-- The Legend of Spyro: A New Beginning
+
+local eeObj	= getEEObject()
+local emuObj	= getEmuObject()
+
+eeInsnReplace(0x1849b8, 0x44840800, 0x00000000)	-- Fixes HUD and menu display.
+
+-- Graphic improvement: removes corrupted lines on screen with uprender enabled, for PAL version
+
+emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", { texMode=1 } ) --texMode=1 ?
+emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", { texMode=2 } ) --texMode=2 is BILINEAR</pre>
+
+====The Legend of Spyro: The Eternal Night====
+PAL only!
+<br>LUA
+<pre>apiRequest(0.4)
+
+-- The Legend of Spyro: The Eternal Night
+
+local eeObj	= getEEObject()
+local emuObj	= getEmuObject()
+
+eeInsnReplace(0x173c38, 0x44840800, 0x00000000)	-- Fixes HUD and menu display.
+
+
+-- Graphic improvement: removes corrupted lines on screen with uprender enabled, for PAL version
+
+emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", { texMode=1 } ) --texMode=1 ?
+emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", { texMode=2 } ) --texMode=2 is BILINEAR</pre>
+
+====The Operative: No One Lives Forever====
+
+'''''CLI'''''
+<pre>
+
+#Fix for "The Operative - No One Lives Forever"
+
+For US version
+
+--fpu-accurate-addsub-range=0x104204,0x1042B8
+
+For EU version:
+
+--fpu-accurate-addsub-range=0x103F28,0x104074
+
+Use Jak v2 emulator
+</pre>
+
+==== The Shield ====
+'''''CLI'''''
+<pre>
+--fpu-accurate-addsub-range=0x100008,0x700000
+
+#Fix for game over error on level '''2354 Casitas Dr'''.
+#JAK V2 emulator used.
+</pre>
+
+====Timesplitters™====
+'''''CLI'''''
+
+<br>All Versions
+
+<pre>
+
+—vu1=jit-sync 
+</pre>
+
+====Tomb Raider: Anniversary====
+'''''LUA'''''
+
+<br>SLUS_215.55
+
+<pre>apiRequest(0.1)    -- request version 0.1 API. Calling apiRequest() is mandatory.
+
+-- Texture Flickering fix
+
+eeInsnReplace(0x1297C0, 0x10600022, 0x10000022)
+</pre>
+
+<br>SLES_539.08
+
+<pre>apiRequest(0.1)	-- request version 0.1 API. Calling apiRequest() is mandatory.
+
+-- Texture Flickering fix
+
+eeInsnReplace(0x1273E8, 0x10600022, 0x10000022)</pre>
+
+====Tomb Raider - Legend====
+CLI
+<br>All Regions
+<pre>
+--gs-progressive=1
+--gs-kernel-cl-up="up2x2skipinterp"
+--gs-use-mipmap=1
+--gs-kernel-cl="mipmap"
+</pre>
+
+'''SLUS_212.03'''
+<br>LUA
+<pre>apiRequest(0.1)    -- request version 0.1 API. Calling apiRequest() is mandatory.
+
+-- Texture Flickering fix
+
+eeInsnReplace(0x127390, 0x10600022, 0x10000022)
+</pre>
+
+'''SLES_546.74'''
+<br>LUA
+<pre>apiRequest(0.1)	-- request version 0.1 API. Calling apiRequest() is mandatory.
+
+-- Texture Flickering fix
+eeInsnReplace(0x129800, 0x10600022, 0x10000022)
+</pre>
+
+Additional LUA fix
+<br>All Regions
+<pre>
+-- Fix for thin vertical lines that separate screen picture, misallignment/tearing of screen during upscaling (was used in official PSN Red Dead Revolver)
+apiRequest(1.0)
+local emuObj = getEmuObject()
+-- psm= SCE_GS_PSMCT32 (0)
+emuObj.SetGsTitleFix( "forceSimpleFetch",  "reserved", {psm=0} )
+emuObj.SetGsTitleFix( "fetchFromCurrBuff", "reserved", {psm=0} )
+</pre>
+
+====Tony Hawk Pro Skater 3====
+'''''CLI'''''
+
+<br>All Versions
+
+<pre>--vu0-no-clamping=0
+--vu1-no-clamping=0
+--vu0-clamp-results=1
+--vu1-clamp-results=1
+--fpu-no-clamping=0
+--cop2-no-clamping=0
+--fpu-clamp-results=1
+--cop2-clamp-results=1
+
+#SPS Fix</pre>
+
+====Tony Hawk's Underground 2====
+'''CLI'''
+<br>SLUS20965
+<br>Redfaction emu used
+<pre>
+#sps fix
+--vu1-mpg-cycles=1
+</pre>
+'''LUA'''
+<br>SLUS20965
+<pre>
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+--loop skip to prevent freezing
+eeObj.WriteMem32(0x001958A0, 0x10000086)
+--rounding to remove sps
+eeObj.WriteMem32(0x003F0FE8, 0xD3400000)
+--Giving it the value it wants in order to branch
+eeObj.WriteMem32(0x001AF5FC, 0x24060000)
+end
+emuObj.AddVsyncHook(patcher)
+--mtvu patch
+eeInsnReplace(0x00194918, 0x0, 0x0803fff0)
+eeInsnReplace(0x000fffc4, 0x0, 0x24186000)
+eeInsnReplace(0x000fffc8, 0x0, 0x3c191200)
+eeInsnReplace(0x000fffcc, 0x0, 0x37391010)
+eeInsnReplace(0x000fffd0, 0x0, 0x2718ffff)
+eeInsnReplace(0x000fffd4, 0x0, 0x1418fffe)
+eeInsnReplace(0x000fffdc, 0x0, 0x08065248)
+eeInsnReplace(0x000fffe0, 0x0, 0xaf200000)
+</pre>
+
+====True Crime: Streets of LA====
+<br>cli.conf 
+<br>All Versions
+<pre>--gs-use-mipmap=1
+--gs-kernel-cl="mipmap"
+--gs-kernel-cl-up="mipmap2x2"
+#Fix for missing enemies in the gyms</pre>
+<br> cli.conf 
+<br>SLES_517.54 only!
+<pre>--vu1-mpg-cycles=2350
+--vu1-opt-flags=2
+--vu1-opt-vf00=2
+--gs-optimize-30fps=1
+--ee-kernel-hle=1
+--ee-block-validation=PageProt
+--gs-use-mipmap=1
+--gs-kernel-cl="mipmap"
+--gs-kernel-cl-up="mipmap2x2"
+#Performance fix and fix for missing enemies in the gyms</pre>
+
+<br>'''SLUS_205.50'''
+<br>'''SLES_517.53'''
+<br>LUA
+<br>They use the same offsets.
+<pre>local gpr = require("ee-gpr-alias")
+
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+eeObj.WriteMem32(0x480640, 0x10000000) --Fix for title screen freeze
+
+end
+
+emuObj.AddVsyncHook(patcher)
+</pre>
+
+<br>'''SLES_517.54''' LUA
+<pre>local gpr = require("ee-gpr-alias")
+
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+eeObj.WriteMem32(0x480DB0, 0x10000000) --Fix for title screen freeze
+
+end
+
+emuObj.AddVsyncHook(patcher)
+</pre>
+
+====Twisted Metal: Head-On====
+'''CLI'''
+<br>All versions
+<pre>
+#Speedhacks
+--vu1-mpg-cycles=400
+--ee-cycle-scalar=1.2
+--vu1-di-bits=0
+</pre>
+
+====Urban Reign====
+'''''CLI'''''
+
+<br>All Versions
+
+<pre>
+--gs-uprender=2x2
+--gs-upscale=EdgeSmooth
+
+--force-frame-blend=1
+--vif-ignore-invalid-cmd=0
+--vif1-ignore-cmd-ints=1
+--vif1-instant-xfer=0
+--vu1=jit-sync
+--mtap1=Always
+</pre>
+'''''LUA'''''
+<br>NTSC
+<pre>
+-- Urban Reign NTSC (SLUS-21209) 
+-- Multitap fix by Kozarovv
+-- ported to PS4 by Stayhye
+-- emu used=kof98um
+
+apiRequest(0.1)
+
+local gpr    		= require("ee-gpr-alias")
+
+local emuObj 		= getEmuObject()
+local eeObj			= getEEObject()
+local gsObj			= getGsObject()
+
+
+emuObj.PadSetLightBar(0, 45,65,55)
+emuObj.SetDeinterlace(true)
+emuObj.SetDisplayAspectWide()
+
+
+local WS = function()
+-- Init first mtap
+eeObj.WriteMem32(0x12BA88,0x24040000)
+-- Read data from 1B port when 2A is requested
+eeObj.WriteMem32(0x0ffc00,0x10040005)
+eeObj.WriteMem32(0x0ffc04,0x00000000)
+eeObj.WriteMem32(0x0ffc08,0x14050003)
+eeObj.WriteMem32(0x0ffc10,0x24040000)
+eeObj.WriteMem32(0x0ffc14,0x24050001)
+eeObj.WriteMem32(0x0ffc18,0x080c5cbd)
+eeObj.WriteMem32(0x0ffc1c,0x24030070)
+eeObj.WriteMem32(0x3172ec,0x0803ff00)
+
+emuObj.ThrottleMax()
+end
+
+emuObj.AddVsyncHook(WS)
+
+emuObj.SetGsTitleFix( "globalSet",  "reserved", { workLoadThreshold = 100000} )
+emuObj.SetGsTitleFix( "globalSet",  "reserved", { waveThreshold = 90000} )
+emuObj.SetGsTitleFix( "ignoreAreaUpdate", 0, { } )
+
+</pre>
+
+====Valkyrie Profile 2: Silmeria====
+'''''CLI'''''
+
+<br>All versions
+
+<pre>
+#emu used Star Ocean 3 for black screen upon leaving town and corrupted world map
+--gs-progressive=1
+--vu-hack-triace=1
+--gs-use-mipmap=1
+--gs-kernel-cl="mipmap"
+--gs-kernel-cl-up="mipmap2x2"
+</pre>
+
+'''''LUA file'''''
+<br>SLUS_21452
+<pre>--Proper Widescreen and No ghosting
+--Valkyrie Profile 2 - Silmeria (USA) SLUS_214.52
+apiRequest(1.0)
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+local patcher = function()
+
+local code_check = eeObj.ReadMem16(0x37984C)
+if code_check == 0x0800 then
+eeObj.WriteMem32(0x37984C,0x0803FC00)
+end
+
+eeObj.WriteMem32(0x000FF000, 0x3C043F40)
+eeObj.WriteMem32(0x000FF004, 0x44840800)
+eeObj.WriteMem32(0x000FF008, 0x46000802)
+eeObj.WriteMem32(0x000FF00C, 0x080DE615)
+eeObj.WriteMem32(0x000FF010, 0xC66100C8)
+--No ghosting in battle
+eeObj.WriteMem32(0x0035FA38, 0x46001030)
+end
+emuObj.AddVsyncHook(patcher)
+</pre>
+
+====Vampire: Darkstalkers Collection====
+ALL
+<br>CLI
+<pre>--gs-motion-factor=50
+--host-audio-latency=0.01
+--gs-kernel-cl="h2lpool"
+--gs-kernel-cl-up="h2lpool2x2"
+--gs-h2l-list-opt=1
+--gs-h2l-accurate-hash=1
+#Fix for performance issues. PS4 Pro required for full speed.</pre>
+
+====Van Helsing====
+ALL
+<br>CLI
+<pre>
+--gs-uprender=2x2
+--gs-upscale=edgesmooth
+--gs-kernel-cl="h2lpool"
+--gs-kernel-cl-up="h2lpool2x2"
+--gs-adaptive-frameskip=1
+--cdvd-sector-read-cycles=2000
+--gs-progressive=1
+
+#--vu0-di-bits=0
+#--vu1-di-bits=0
+
+--vu1-mpg-cycles=358
+
+--ee-cycle-scalar=2.8 
+--iop-cycle-scalar=0.9
+
+--vif1-instant-xfer=0</pre>
+<br>'''LUA'''
+<pre>
+-- Van Helsing (SLUS-20738)
+-- Wide screen patch 16:9 by paul_met
+-- ported to PS4 Lua by Stayhye
+-- emu used=jakx v2
+
+apiRequest(2.2)
+
+local gpr    		= require("ee-gpr-alias")
+
+local emuObj 		= getEmuObject()
+local eeObj			= getEEObject()
+local gsObj			= getGsObject()
+local eeOverlay 	= eeObj.getOverlayObject()
+local iopObj        = getIOPObject()
+    
+
+emuObj.SetDisplayAspectWide()
+gsObj.SetDeinterlaceShift(1) 
+
+local WS = function()
+--16:9
+eeObj.WriteMem32(0x002E7FA0,0x3FE38E38) 
+--Access All Cheats by GameMasterZer0
+eeObj.WriteMem32(0x2019FFB0,0x24100001)
+
+
+
+emuObj.ThrottleMax()
+end
+
+emuObj.AddVsyncHook(WS)
+</pre>
+
+====Wallace & Gromit in Project Zoo====
+'''CLI'''
+<br>All Versions
+<pre>
+--gs-uprender=2x2
+--gs-upscale=EdgeSmooth
+--gs-progressive=1
+--gs-force-bilinear=1
+--cdvd-sector-read-cycles=2000
+--force-frame-blend=1
+--vif1-instant-xfer=0
+--vu0-di-bits=0
+--vu1-di-bits=0
+--vu1-mpg-cycles=800
+--ee-cycle-scalar=1.5
+</pre>
+
+====Whiplash====
+All versions
+<br>CLI
+<pre>--gs-kernel-cl="mipmap"
+--gs-kernel-cl-up="mipmap2x2"
+--gs-use-mipmap=1
+#Fix for texture glitches</pre>
+
+====WinBack: Covert Operations====
+All versions
+<br>CLI
+<pre>--vu0-no-clamping=0
+--vu0-clamp-operands=1
+--vu0-clamp-results=1
+--vu1-no-clamping=0
+--vu1-clamp-operands=1
+--vu1-clamp-results=1
+--cop2-no-clamping=0
+--cop2-clamp-operands=1
+--cop2-clamp-results=1
+
+#Fix for texture glitches</pre>
+
+====X-Files - Resist or Serve====
+<br>'''''CLI'''''
+<pre>--gs-uprender=2x2
+--gs-upscale=EdgeSmooth
+--gs-adaptive-frameskip=1
+
+--vu0-no-clamping=0
+--vu1-no-clamping=0
+
+--cdvd-sector-read-cycles=3000
+
+#emu used=jak tpl v1
+</pre>
+
+==== X-Men Legends====
+'''CLI'''
+<br>All versions
+<pre>
+--gs-uprender=2x2
+--gs-upscale=motionvector
+--gs-optimize-30fps=1
+--cdvd-sector-read-cycles=2000
+--vu-custom-min-max=0
+--vu1-di-bits=0
+--vu0-di-bits=0
+--vu1-opt-vf00=2
+--vu0-opt-vf00=2
+--vu1-injection=1
+--vu1=jit-sync
+--vu1-jr-cache-policy=newprog
+--vu1-jalr-cache-policy=newprog
+--vu0-jr-cache-policy=newprog
+--vu0-jalr-cache-policy=newprog
+
+
+--ee-cycle-scalar=1.5
+</pre>
+'''LUA'''
+<br>NTSC only
+<pre>
+-- X-Men™ Legends®
+-- ported to PS4 Lua by Stayhye
+-- emu used=jakx v2
+
+apiRequest(2.2)
+
+local gpr       = require("ee-gpr-alias")
+local emuObj      = getEmuObject()
+local eeObj       = getEEObject()
+local gsObj       = getGsObject()
+local eeOverlay    = eeObj.getOverlayObject()
+local iopObj  = getIOPObject()
+ 
+
+emuObj.PadSetLightBar(0, 10,50,145)
+emuObj.SetDisplayAspectWide()
+gsObj.SetDeinterlaceShift(0)
+
+local WS = function()
+--eeObj.WriteMem32(0x005cc888,0x3c023f34)
+eeObj.WriteMem32(0x20720920,0x3FE147AE)  --In-game width widescreen 16:9
+eeObj.WriteMem32(0x2072094c,0x3F000000)  --Fonts Width
+eeObj.WriteMem32(0x20720950,0x3F000000)  --Fonts Height
+eeObj.WriteMem32(0x20720958,0x3F8CCCCD)  --HUD & Menu Height
+--eeObj.WriteMem32(0x20720954,0x3FA00000)  --HUD & Menu Width
+eeObj.WriteMem32(0x20D85448,0x3F666666)  --HUD Height
+eeObj.WriteMem32(0x20D85430,0x3F59999A)  --HUD Width
+
+eeObj.Vu1MpgCycles(3450)
+emuObj.ThrottleMax()
+end
+
+emuObj.AddVsyncHook(WS)
+
+emuObj.SetGsTitleFix( "globalSet",  "reserved", { workLoadThreshold = 100000} )
+emuObj.SetGsTitleFix( "globalSet",  "reserved", { waveThreshold = 90000} )
+emuObj.SetGsTitleFix( "ignoreAreaUpdate", 0, { } )
+
+</pre>
+
+==== Yu-Gi-Oh! Capsule Monsters Colosseum====
+All
+<br>CLI
+<pre>
+#Fix for freeze. RECVX emu is required.
+--vu1=jit-sync
+</pre>
+
+====Zatch Bell! Mamodo Battles™====
+NTSC/U
+<br>CLI
+<pre>
+#Graphical glitches fix
+--gs-kernel-cl="mipmap"
+--gs-kernel-cl-up="mipmap2x2"
+--gs-use-mipmap=1
+#Clamping, also for graphics
+--vu0-no-clamping=0
+--vu1-no-clamping=0
+#likely unnecessary commands
+--vu0-clamp-results=1
+--vu1-clamp-results=1
+--cop2-no-clamping=0
+--cop2-clamp-results=1
+--fpu-no-clamping=0
+--fpu-clamp-results=1
+
+#Jak Emu used*</pre>
+
+====Zombie Hunters 2====
+'''CLI'''
+<br>All versions
+<pre>
+#Speedhacks
+--vu1-di-bits=0
+--ee-cycle-scalar=1.2
+--vu1-mpg-cycles=150
+#Graphics clean up
+--gs-use-clut-merge=1
+--gs-kernel-cl="clutmerge"
+--gs-kernel-cl-up="clutmerge2x2"
+--vu1-no-clamping=0
+</pre>
+
+====Zombie Zone====
+'''CLI'''
+<br>All versions
+<pre>
+#Speedhacks
+--vu1-di-bits=0
+--ee-cycle-scalar=1.2
+--vu1-mpg-cycles=150
+#Graphics clean up
+--gs-use-clut-merge=1
+--gs-kernel-cl="clutmerge"
+--gs-kernel-cl-up="clutmerge2x2"
+</pre>
+
+====Coraline====
+'''CLI'''
+<br>All versions
+<pre>
+--gs-uprender=2x2
+--gs-upscale=EdgeSmooth
+--gs-use-mipmap=1
+--gs-kernel-cl-up="mipmap2x2"
+--gs-scanout-offsetx=27
+--gs-scanout-offsety=27
+--safe-area-min=0.9
+--cdvd-sector-read-cycles=2000
+</pre>
+'''LUA'''
+<br>PAL
+<pre>
+-- Coraline
+-- emu used=KOF 98
+
+apiRequest(1.0)   
+
+local gpr = require("ee-gpr-alias")
+
+local eeObj  = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+
+--Widescreen hack 
+--Gameplay 16:9
+--eeObj.WriteMem32(0x0026432C,0x3C014440) --3C014480 (Increases hor. axis)
+
+--Render fix
+eeObj.WriteMem32(0x001A6548,0x3C013C2E) --3C013C0E
+
+--Get rid of black bar
+eeObj.WriteMem32(0x00225ea8,0x3c014000) --3c014299
+eeObj.WriteMem32(0x00225eac,0x00000000) --3421999a
+
+eeObj.WriteMem32(0x002644ec,0x3c014440) -- hor fov
+
+local pad_bits = emuObj.GetPad()
+
+local UP       = pad_bits &  0x0010
+local DOWN     = pad_bits &  0x0040
+local LEFT     = pad_bits &  0x0080
+local RIGHT    = pad_bits &  0x0020
+local Triangle = pad_bits &  0x1000
+local Cross    = pad_bits &  0x4000
+local Square   = pad_bits &  0x8000
+local Circle   = pad_bits &  0x2000
+local L1       = pad_bits &  0x0400
+local L2       = pad_bits &  0x0100
+local L3       = pad_bits &  0x0002
+local R1       = pad_bits &  0x0800
+local R2       = pad_bits &  0x0200
+local R3       = pad_bits &  0x0004
+local Select   = pad_bits &  0x0001
+local Start    = pad_bits &  0x0008
+
+if (R1 ~= 0 and LEFT ~= 0) then --L3 Normal Screen
+   eeObj.WriteMem32(0x0026432C,0x3C014480) -- original value
+end
+
+if (R1 ~= 0 and RIGHT ~= 0) then --R3 Widescreen Screen
+   eeObj.WriteMem32(0x0026432C,0x3C014440) --3C014480 (Increases hor. axis)
+end
+
+emuObj.ThrottleMax()
+
+end
+
+emuObj.AddVsyncHook(patcher)
+</pre>
+
+====Total Overdose====
+'''CLI'''
+<br>All versions
+<pre>
+--host-display-mode=16:9
+--host-vsync=1
+--gs-optimize=60fps
+--cdvd-sector-read-cycles=2000
+--ps2-lang=system
+
+--gs-progressive=1
+--gs-motion-factor=50
+
+--vu0-no-clamping=0
+--vu1-no-clamping=0
+
+--gs-ignore-rect-correction=1
+
+#ADK Damashii Emu used
+</pre>
+
+'''LUA'''
+<br>PAL - SLES53492
+<pre>
+-- Total Overdose (E)(SLES-53492)
+-- emu used=ADK
+
+apiRequest(1.0)
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+--Widescreen hack 16:9
+
+--00 00 80 3F 83 F9 22 3F DB 0F C9 3F 00 00 00 BF
+eeObj.WriteMem32(0x20692A2C,0x3F47AE14) -- Zoom
+
+--00 00 80 3F 00 00 00 00 00 00 00 00 2F 00 00 00
+eeObj.WriteMem32(0x206C64C4,0x3F400000) -- Vert fov
+end
+
+emuObj.AddVsyncHook(patcher)
+
+emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", { texMode=1 } )
+emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", { texMode=2 } )
+
+emuObj.SetGsTitleFix( "forceSimpleFetch",  "reserved", {psm=0} )
+emuObj.SetGsTitleFix( "fetchFromCurrBuff", "reserved", {psm=0} )
+</pre>
+
+====Dark Summit====
+'''CLI'''
+<br>All versions
+<pre>
+--host-display-mode=16:9
+--force-pal-60hz=1
+
+# Fahrenheit Emu used
+</pre>
+
+'''LUA'''
+<br>PAL - SLES50575
+<pre>
+-- Dark Summit (PAL)
+-- emu used=Fahrenheit
+apiRequest(1.2)    -- request version 0.1 API. Calling apiRequest() is mandatory.
+
+local emuObj = getEmuObject()
+local eeObj  = getEEObject()
+
+local WS = function()
+
+--Widescreen hack 16:9
+
+--X-Fov
+--02000446 280100ae 42080546
+eeObj.WriteMem32(0x003d37d0,0x08030000)
+
+eeObj.WriteMem32(0x000c0000,0x46040002)
+eeObj.WriteMem32(0x000c0004,0x3c013f40)
+eeObj.WriteMem32(0x000c0008,0x00000000)
+eeObj.WriteMem32(0x000c000c,0x4481f000)
+eeObj.WriteMem32(0x000c0010,0x461e0002)
+eeObj.WriteMem32(0x000c0014,0x080f4df5)
+
+--Render fix
+--003f013c 00a88144 0000b07f
+eeObj.WriteMem32(0x0036444c,0x3c013f2b) --3c013f00
+
+emuObj.ThrottleMax()
+
+end
+
+emuObj.AddVsyncHook(WS)
+</pre>
+
+====Nightshade====
+'''CLI'''
+<P>
+ALL versions
+<pre>
+--host-display-mode=16:9
+--gs-vert-precision=8
+--force-frame-blend=1
+</pre>
+'''LUA'''
+<br>NTSC - SLUS20810
+<pre>
+-- Nightshade （SLUS-20810）
+-- Total Repair by nifengyuexia
+-- emu used=jak v2
+
+apiRequest(1.0)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+local patcher = function()
+
+--Disable the fade-in effect to fix framerate drops caused by excessive enemies
+eeObj.WriteMem32(0x1d1048,0x1000000f)
+
+--Disable shadows to fix square bugs around characters
+eeObj.WriteMem32(0x322060,0x03e00008)
+eeObj.WriteMem32(0x322064,0x00000000)
+
+--Disable haze effect to fix charged attack frame rate drop
+eeObj.WriteMem32(0x30f3f4,0x00000000)
+
+end
+emuObj.AddVsyncHook(patcher)
+</pre>
+'''LUA'''
+<br>PAL - SLES52238
+<pre>
+-- Nightshade（SLES-52238）
+-- Total Repair by nifengyuexia
+-- emu used=jak v2
+
+apiRequest(1.0)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+local patcher = function()
+
+--Disable the fade-in effect to fix framerate drops caused by excessive enemies
+eeObj.WriteMem32(0x1d1f38,0x1000000f)
+
+--Disable shadows to fix square bugs around characters
+eeObj.WriteMem32(0x326370,0x03e00008)
+eeObj.WriteMem32(0x326374,0x00000000)
+
+--Disable haze effect to fix charged attack frame rate drop
+eeObj.WriteMem32(0x3135f4,0x00000000)
+
+end
+emuObj.AddVsyncHook(patcher)
+</pre>
+
+====Kunoichi====
+<br>NTSC-J
+<br>SLAJ-25031
+<br>'''LUA'''
+<pre>
+-- Kunoichi（SLAJ-25031）
+-- Total Repair by nifengyuexia
+-- emu used=jak v2
+
+apiRequest(1.0)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+local patcher = function()
+
+--Disable the fade-in effect to fix framerate drops caused by excessive enemies
+eeObj.WriteMem32(0x1d10f8,0x1000000f)
+
+--Disable shadows to fix square bugs around characters
+eeObj.WriteMem32(0x324450,0x03e00008)
+eeObj.WriteMem32(0x324454,0x00000000)
+
+--Disable haze effect to fix charged attack frame rate drop
+eeObj.WriteMem32(0x3117f4,0x00000000)
+
+end
+emuObj.AddVsyncHook(patcher)
+</pre>
+<br>'''LUA'''
+<br>NTSC-J 
+<br>SLPM-65447
+<pre>
+-- Kunoichi（SLPM-65447）
+-- Total Repair by nifengyuexia
+-- emu used=jak v2
+
+apiRequest(1.0)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+local patcher = function()
+
+--Disable the fade-in effect to fix framerate drops caused by excessive enemies
+eeObj.WriteMem32(0x1d1058,0x1000000f)
+
+--Disable shadows to fix square bugs around characters
+eeObj.WriteMem32(0x321c70,0x03e00008)
+eeObj.WriteMem32(0x321c74,0x00000000)
+
+--Disable haze effect to fix charged attack frame rate drop
+eeObj.WriteMem32(0x30f004,0x00000000)
+end
+emuObj.AddVsyncHook(patcher)
+</pre>
+
+====Jak and Daxter: The Lost Frontier====
+'''CLI'''
+<P>
+ALL versions
+<pre>
+--vu1-di-bits=0
+--vu0-di-bits=1
+--gs-optimize=60fps
+
+# Emu used = Red Dead Revolver
+</pre>
+
+====Sled Storm====
+<P>
+ALL versions
+<pre>
+--cdvd-sector-read-cycles=2000
+--vu0-no-clamping=0
+--vu1-no-clamping=0
+--host-gamepads=2
+
+# Emu used = Rogue v1
+</pre>
+
+=Global Configurations=
+<pre>Configurations made for more than one game for a specific purpose</pre>
+
+==SkipMpegHack (FMV skip)==
+'''''LUA file'''''
+<br>
+All games using standard sceMpeg decoder will have their fmvs disabled by this patch.
+<pre>
+apiRequest(1.0)
+eeObj  = getEEObject()
+emuObj = getEmuObject()
+
+local addr   = 0x100008
+local skipMpeg = function()
+    while(addr < 0x1000000)
+    do
+        if eeObj.ReadMem32(addr) == 0x8c830040 then
+            if eeObj.ReadMem32(addr + 4) == 0x03e00008 then
+                if eeObj.ReadMem32(addr + 8) == 0x8c620000 then
+                    eeObj.WriteMem32(addr + 8, 0x24020001)
+                    break
+                else
+                    addr = addr + 4
+                end
+            else
+                addr = addr + 4
+            end
+        else
+            addr = addr + 4
+        end
+    end
+end
+
+emuObj.AddEntryPointHook(skipMpeg)
+--We should remove that hook, but we never really hit entry point again.
+--emuObj.RemoveEntryPointHook(skipMpeg)
+</pre>
+
+=Incomplete configurations=
+<pre>This is a list of unsuccessful, or incomplete configurations, along with information that might help others in the future.
+A place for research and sharing useful info.</pre>
+
+
+====Dragon ball z budokai tenkaichi====
+'''LUA'''
+<br>NTSC
+
+Things go wrong somewhere around 0x001137A8
+<pre>
+apiRequest(0.1)
+
+--untested
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+eeObj.WriteMem32(0x0011A54C, 0x24020000)
+eeObj.WriteMem32(0x0018D944, 0x24020000)
+eeObj.WriteMem32(0x0018D4CC, 0x24020000)
+end
+emuObj.AddVsyncHook(patcher)
+</pre>
+====Dynasty Warriors 5 - Empires====
+<br>PAL
+<pre>
+001428CC
+
+-00142910
+</pre>
+
+====Batman begins====
+NTSC
+<pre>
+00409BF8 0000001E
+</pre>
+
+====Genji dawn of the samurai====
+<br>NTSC
+<pre>
+002F876C
+</pre>
+====Bee movie====
+NTSC
+<br>CLI
+<br>NTSC
+<br>Redfaction 
+<pre>
+--ee-context-switch-cycles=16000
+--assert-path1-ad=1
+--gs-kernel-cl-up="up2x2simple"
+</pre>
+
+====Hitman - Blood Money====
+NTSC
+<br>LUA
+<pre>
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+--Exhibits a strange DMA issue
+local patcher = function()
+eeObj.WriteMem32(0x0028B554, 0x240F0000)
+eeObj.WriteMem32(0x0028B4B0, 0x240F0000)
+end
+emuObj.AddVsyncHook(patcher)
+</pre>
+
+====The Simpsons====
+<pre>
+--vu1-no-clamping=0
+</pre>
+
+
+====Tenchu - Fatal Shadows====
+<br>NTSC
+<br>Destroy all humans v1
+<pre>
+#Removes most elements of graphical corruption
+--vif1-instant-xfer=0
+</pre>
+<pre>
+apiRequest(0.1)
+-- Not the best solution, but it works.
+eeInsnReplace(0x001023E0, 0xAE020000, 0x0)
+-- The graphical issues start somewhere in this function 0x00134B10
+</pre>
+
+====Ratchet 4 - Deadlocked====
+<br>'''CLI'''
+<br>Emu = '''War of the Monsters'''
+<pre>
+#Fix graphics
+--gs-use-mipmap=1
+--gs-kernel-cl="mipmap"
+--gs-kernel-cl-up="up2x2simple"
+#Fix VU0 sync
+--ee-hook=0x000FF904,AdvanceClock,,400
+</pre>
+
+<br>'''LUA'''
+<br>SCUS-97465
+<br>Author:Scalerize
+<pre>
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+--jmp
+eeObj.WriteMem32(0x0012710C, 0x0803FE80)
+
+--Check if patcher's needed
+eeObj.WriteMem32(0x000FFA00, 0x3C1B7120)
+eeObj.WriteMem32(0x000FFA04, 0x377BCDA8)
+eeObj.WriteMem32(0x000FFA08, 0x3C02000F)
+eeObj.WriteMem32(0x000FFA10, 0xAC44FFF4)
+eeObj.WriteMem32(0x000FFA0C, 0x3442FA00)
+eeObj.WriteMem32(0x000FFA14, 0xAC45FFF0)
+eeObj.WriteMem32(0x000FFA18, 0x8C44FFFC)
+eeObj.WriteMem32(0x000FFA1C, 0x8C840000)
+eeObj.WriteMem32(0x000FFA20, 0x149B0003)
+eeObj.WriteMem32(0x000FFA28, 0x08049C44)
+eeObj.WriteMem32(0x000FFA2C, 0x241B0000)
+eeObj.WriteMem32(0x000FFA34, 0xAC43FFF8)
+eeObj.WriteMem32(0x000FFA38, 0x3C040010)
+eeObj.WriteMem32(0x000FFA3C, 0x24840004)
+eeObj.WriteMem32(0x000FFA40, 0x8C830000)
+eeObj.WriteMem32(0x000FFA44, 0x107B0003)
+eeObj.WriteMem32(0x000FFA4C, 0x1000FFFB)
+--Patcher
+eeObj.WriteMem32(0x000FFA54, 0xAC44FFFC)
+eeObj.WriteMem32(0x000FFA64, 0x3C030C03)
+eeObj.WriteMem32(0x000FFA68, 0x3463FE48)
+eeObj.WriteMem32(0x000FFA6C, 0xAC8300BC) --First 6 vi01
+eeObj.WriteMem32(0x000FFA78, 0xAC8301FC)
+eeObj.WriteMem32(0x000FFA84, 0xAC830354)
+eeObj.WriteMem32(0x000FFA90, 0xAC830494)
+eeObj.WriteMem32(0x000FFA9C, 0xAC8305EC)
+eeObj.WriteMem32(0x000FFAA8, 0xAC83072C)
+eeObj.WriteMem32(0x000FFAAC, 0x3C030C03)
+eeObj.WriteMem32(0x000FFAB0, 0x3463FE4B)
+eeObj.WriteMem32(0x000FFAB4, 0xAC83015C) --First 4 vi02
+eeObj.WriteMem32(0x000FFAC0, 0xAC8302AC)
+eeObj.WriteMem32(0x000FFACC, 0xAC8303F4)
+eeObj.WriteMem32(0x000FFAD8, 0xAC830544)
+--Physics (Camera, glove weapon, and gravity)
+eeObj.WriteMem32(0x000FFADC, 0x3C032401)
+eeObj.WriteMem32(0x000FFAE0, 0x346300E0)
+eeObj.WriteMem32(0x000FFAE4, 0xAC831214) -- 48418800
+eeObj.WriteMem32(0x000FFAE8, 0xAC831D00)
+eeObj.WriteMem32(0x000FFAEC, 0xAC83223C)
+eeObj.WriteMem32(0x000FFAF0, 0xAC83306C)
+eeObj.WriteMem32(0x000FFAF4, 0xAC834638)
+eeObj.WriteMem32(0x000FFAF8, 0xAC834B44)
+--Ret
+eeObj.WriteMem32(0x000FFC0C, 0x8C44FFF4)
+eeObj.WriteMem32(0x000FFC10, 0x8C45FFF0)
+eeObj.WriteMem32(0x000FFC14, 0x8C43FFF8)
+eeObj.WriteMem32(0x000FFC18, 0x08049C44)
+--VI01 AND VI02 to burn cycles in (000FF904) using advanceclock
+eeObj.WriteMem32(0x000FF914, 0x03E00008)
+eeObj.WriteMem32(0x000FF918, 0x241F0000)
+eeObj.WriteMem32(0x000FF920, 0x48C00800)
+eeObj.WriteMem32(0x000FF924, 0x1000FFF7)
+eeObj.WriteMem32(0x000FF92C, 0x48C01000)
+eeObj.WriteMem32(0x000FF930, 0x1000FFF4)
+end
+emuObj.AddVsyncHook(patcher)
+
+
+</pre>
+
+====Ratchet and Clank 3: Up Your Arsenal====
+
+<br>SCUS97353
+<br>Author: Kozarovv
+<br>LUA
+<pre>
+-- 23.07.2023 Added debug stuff that should print in klog.
+-- This should help us figure out why patch fail. 
+
+apiRequest(1.0)
+ 
+local em  = getEmuObject()
+local ee  = getEEObject()
+ 
+local patcher = function()
+    
+    print("CONFIG: Entering patcher!")
+    local base = -1
+    local addr = -1
+    --local spmp = -1
+    
+    -- Check for SP/MP, not working yet. Only SP supported.
+    --spmp = ee.ReadMem32(0x13B3D8)
+    --if spmp == 0x0000202d then
+    --    addr = 0x13B3D8
+    --else
+    --    addr = 0x13B3D8
+    --end
+ 
+    -- Search for base.
+    addr = 0x13B3D8
+    while addr < 0x1000000
+    do
+        if ee.ReadMem32(addr) == 0x8c810014 then
+            if ee.ReadMem32(addr + 4) == 0x3c067000 then
+                if ee.ReadMem32(addr + 8) == 0x7cdf1ff0 then
+                    base = addr
+                    break
+                else
+                    addr = addr + 4
+                end
+            else
+                addr = addr + 4
+            end
+        else
+            addr = addr + 4
+        end
+    end
+    
+    -- Shouldn't be the case.
+    if base == -1 then
+        print("CONFIG: Base not found!")
+        return
+    end
+    print(string.format("CONFIG: Base = %08x", base))
+    -- Patch ctc2 instances.
+    ee.WriteMem32(base + 0x490, 0x0C03FF0C) -- ctc2         $zero, vi2
+    ee.WriteMem32(base + 0x5e0, 0x0C03FF0C) -- ctc2         $zero, vi2
+    ee.WriteMem32(base + 0x728, 0x0C03FF0C) -- ctc2         $zero, vi2
+    ee.WriteMem32(base + 0x878, 0x0C03FF0C) -- ctc2         $zero, vi2
+    ee.WriteMem32(base + 0x9c0, 0x0C03FF0C) -- ctc2         $zero, vi2
+    ee.WriteMem32(base + 0xb18, 0x0C03FF0C) -- ctc2         $zero, vi2
+ 
+    ee.WriteMem32(base + 0x3f0, 0x0C03FF00) -- ctc2         $zero, vi1
+    ee.WriteMem32(base + 0x530, 0x0C03FF00) -- ctc2         $zero, vi1
+    ee.WriteMem32(base + 0x688, 0x0C03FF00) -- ctc2         $zero, vi1
+    ee.WriteMem32(base + 0x7c8, 0x0C03FF00) -- ctc2         $zero, vi1
+    ee.WriteMem32(base + 0x920, 0x0C03FF00) -- ctc2         $zero, vi1
+    ee.WriteMem32(base + 0xa60, 0x0C03FF00) -- ctc2         $zero, vi1
+ 
+    -- preserve ra
+    ee.WriteMem32(base + 0x22c, 0xACDF1FF4)
+    -- restore ra 
+    ee.WriteMem32(base + 0xcac, 0x8CDF1FF4)
+    -- lq --> lw
+    ee.WriteMem32(base + 0xd6c, 0x8c3f1ff0)
+    -- delay vcall by few cycles
+    ee.WriteMem32(base + 0x33c, 0x241C0020) -- modify to burn ee cycles after vcallms
+    ee.WriteMem32(base + 0x340, 0x141CFFFF)
+    ee.WriteMem32(base + 0x344, 0x279CFFFF)
+    print("CONFIG: Dynamic patches applied!")
+end
+ 
+local delayer = function()
+    
+    local check = ee.ReadMem32(0x000ffc00)
+    if check ~= 0xfcd91ff8 then
+        print("CONFIG: Applying static patches!")
+    end
+    
+    -- loop vi1
+    ee.WriteMem32(0x000ffc00, 0xfcd91ff8)
+    ee.WriteMem32(0x000ffc04, 0x24190080) -- modify to burn ee cycles before ctc2
+    ee.WriteMem32(0x000ffc08, 0x1419ffff)
+    ee.WriteMem32(0x000ffc0c, 0x2739ffff)
+    ee.WriteMem32(0x000ffc10, 0x48c00800)
+    ee.WriteMem32(0x000ffc14, 0x24190020) -- modify to burn ee cycles after ctc2
+    ee.WriteMem32(0x000ffc18, 0x1419ffff)
+    ee.WriteMem32(0x000ffc1c, 0x2739ffff)
+    ee.WriteMem32(0x000ffc20, 0x03e00008)
+    ee.WriteMem32(0x000ffc24, 0xdcd91ff8)
+    
+    -- loop vi2
+    ee.WriteMem32(0x000ffc30, 0xfcd91ff8)
+    ee.WriteMem32(0x000ffc34, 0x24190080) -- modify to burn ee cycles before ctc2
+    ee.WriteMem32(0x000ffc38, 0x1419ffff)
+    ee.WriteMem32(0x000ffc3c, 0x2739ffff)
+    ee.WriteMem32(0x000ffc40, 0x48c01000)
+    ee.WriteMem32(0x000ffc44, 0x24190020) -- modify to burn ee cycles after ctc2
+    ee.WriteMem32(0x000ffc48, 0x1419ffff)
+    ee.WriteMem32(0x000ffc4c, 0x2739ffff)
+    ee.WriteMem32(0x000ffc50, 0x03e00008)
+    ee.WriteMem32(0x000ffc54, 0xdcd91ff8)
+    
+    -- This static patch is required because game don't use level loader to load main menu.
+    local new_game = ee.ReadMem32(0x3D58B8)
+    local check2   = ee.ReadMem32(0x3D5D48)
+    if new_game == 0x8c810014 and check2 ~= 0x0C03FF0C then
+        print("CONFIG: Applying static patch for new game!")
+        ee.WriteMem32(0x3D5D48, 0x0C03FF0C) -- ctc2         $zero, vi2
+        ee.WriteMem32(0x3D5E98, 0x0C03FF0C) -- ctc2         $zero, vi2
+        ee.WriteMem32(0x3D5FE0, 0x0C03FF0C) -- ctc2         $zero, vi2
+        ee.WriteMem32(0x3D6130, 0x0C03FF0C) -- ctc2         $zero, vi2
+        ee.WriteMem32(0x3D6278, 0x0C03FF0C) -- ctc2         $zero, vi2
+        ee.WriteMem32(0x3D63D0, 0x0C03FF0C) -- ctc2         $zero, vi2
+ 
+        ee.WriteMem32(0x3D5CA8, 0x0C03FF00) -- ctc2         $zero, vi1
+        ee.WriteMem32(0x3D5DE8, 0x0C03FF00) -- ctc2         $zero, vi1
+        ee.WriteMem32(0x3D5F40, 0x0C03FF00) -- ctc2         $zero, vi1
+        ee.WriteMem32(0x3D6080, 0x0C03FF00) -- ctc2         $zero, vi1
+        ee.WriteMem32(0x3D61D8, 0x0C03FF00) -- ctc2         $zero, vi1
+        ee.WriteMem32(0x3D6318, 0x0C03FF00) -- ctc2         $zero, vi1
+        
+        -- preserve ra
+        ee.WriteMem32(0x3D5AE4, 0xACDF1FF4)
+        -- restore ra 
+        ee.WriteMem32(0x3D6564, 0x8CDF1FF4)
+        -- lq --> lw
+        ee.WriteMem32(0x3D6624, 0x8c3f1ff0)
+        -- vcall
+        ee.WriteMem32(0x3D5BF4, 0x241C0020) -- modify to burn ee cycles after vcallms
+        ee.WriteMem32(0x3D5BF8, 0x141CFFFF)
+        ee.WriteMem32(0x3D5BFC, 0x279CFFFF)
+    end
+end
+ 
+-- hook right after level loader, ideally this should be hook inside loader...
+ee.AddHook(0x13B3D8, 0x0000202D, patcher)
+em.AddVsyncHook(delayer)
+</pre>
+
+<br>'''CLI'''
+<br>Emu = '''War of the Monsters'''
+<br>Author: '''Scalerize'''
+<br>SCUS-97353
+<pre>
+#Fix graphics
+--gs-use-mipmap=1
+--gs-kernel-cl="mipmap"
+--gs-kernel-cl-up="up2x2simple"
+#Fix VU0 sync
+--ee-hook=0x000FF904,AdvanceClock,,400
+</pre>
+<br>Author: Scalerize
+<br>LUA
+<pre>
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+--jmp
+eeObj.WriteMem32(0x0011F38C, 0x0803FE80)
+
+--Check if patcher's needed
+eeObj.WriteMem32(0x000FFA00, 0x3C1B7120)
+eeObj.WriteMem32(0x000FFA04, 0x377BCDA8)
+eeObj.WriteMem32(0x000FFA08, 0x3C02000F)
+eeObj.WriteMem32(0x000FFA10, 0xAC44FFF4)
+eeObj.WriteMem32(0x000FFA0C, 0x3442FA00)
+eeObj.WriteMem32(0x000FFA14, 0xAC45FFF0)
+eeObj.WriteMem32(0x000FFA18, 0x8C44FFFC)
+eeObj.WriteMem32(0x000FFA1C, 0x8C840000)
+eeObj.WriteMem32(0x000FFA20, 0x149B0003)
+eeObj.WriteMem32(0x000FFA28, 0x08047CE4)
+eeObj.WriteMem32(0x000FFA2C, 0x241B0000)
+eeObj.WriteMem32(0x000FFA34, 0xAC43FFF8)
+eeObj.WriteMem32(0x000FFA38, 0x3C040010)
+eeObj.WriteMem32(0x000FFA3C, 0x24840004)
+eeObj.WriteMem32(0x000FFA40, 0x8C830000)
+eeObj.WriteMem32(0x000FFA44, 0x107B0003)
+eeObj.WriteMem32(0x000FFA4C, 0x1000FFFB)
+--Patcher
+eeObj.WriteMem32(0x000FFA54, 0xAC44FFFC)
+eeObj.WriteMem32(0x000FFA64, 0x3C030C03)
+eeObj.WriteMem32(0x000FFA68, 0x3463FE48)
+eeObj.WriteMem32(0x000FFA6C, 0xAC8300BC) --First 6 vi01
+eeObj.WriteMem32(0x000FFA78, 0xAC8301FC)
+eeObj.WriteMem32(0x000FFA84, 0xAC830354)
+eeObj.WriteMem32(0x000FFA90, 0xAC830494)
+eeObj.WriteMem32(0x000FFA9C, 0xAC8305EC)
+eeObj.WriteMem32(0x000FFAA8, 0xAC83072C)
+eeObj.WriteMem32(0x000FFAAC, 0x3C030C03)
+eeObj.WriteMem32(0x000FFAB0, 0x3463FE4B)
+eeObj.WriteMem32(0x000FFAB4, 0xAC83015C) --First 4 vi02
+eeObj.WriteMem32(0x000FFAC0, 0xAC8302AC)
+eeObj.WriteMem32(0x000FFACC, 0xAC8303F4)
+eeObj.WriteMem32(0x000FFAD8, 0xAC830544)
+--Physics (Camera, glove weapon, and gravity)
+eeObj.WriteMem32(0x000FFADC, 0x3C032401)
+eeObj.WriteMem32(0x000FFAE0, 0x346300E0)
+eeObj.WriteMem32(0x000FFAE4, 0xAC8311E4)
+eeObj.WriteMem32(0x000FFAE8, 0xAC831D40)
+eeObj.WriteMem32(0x000FFAEC, 0xAC832244)
+eeObj.WriteMem32(0x000FFAF0, 0xAC833F64)
+--Ret
+eeObj.WriteMem32(0x000FFC0C, 0x8C44FFF4)
+eeObj.WriteMem32(0x000FFC10, 0x8C45FFF0)
+eeObj.WriteMem32(0x000FFC14, 0x8C43FFF8)
+eeObj.WriteMem32(0x000FFC18, 0x08047CE4)
+--VI01 AND VI02 to burn cycles in (000FF904) using advanceclock
+eeObj.WriteMem32(0x000FF914, 0x03E00008)
+eeObj.WriteMem32(0x000FF918, 0x241F0000)
+eeObj.WriteMem32(0x000FF920, 0x48C00800)
+eeObj.WriteMem32(0x000FF924, 0x1000FFF7)
+eeObj.WriteMem32(0x000FF92C, 0x48C01000)
+eeObj.WriteMem32(0x000FF930, 0x1000FFF4)
+end
+emuObj.AddVsyncHook(patcher)
+
+
+</pre>
+
+====Ratchet & Clank 2 - Going Commando====
+<br>'''CLI'''
+<br>Emu = '''War of the Monsters'''
+<br>SCUS-97268
+<pre>
+#Fix graphics
+--gs-use-mipmap=1
+--gs-kernel-cl="mipmap"
+--gs-kernel-cl-up="up2x2simple"
+#Fix VU0 sync
+--ee-hook=0x000FF904,AdvanceClock,,400
+</pre>
+
+'''LUA'''
+<br>SCUS-97268
+<pre>
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+--jmp
+eeObj.WriteMem32(0x0011B18C, 0x0803FE80)
+
+--Check if patcher's needed
+eeObj.WriteMem32(0x000FFA00, 0x3C1B7120)
+eeObj.WriteMem32(0x000FFA04, 0x377BCDA8)
+eeObj.WriteMem32(0x000FFA08, 0x3C02000F)
+eeObj.WriteMem32(0x000FFA10, 0xAC44FFF4)
+eeObj.WriteMem32(0x000FFA0C, 0x3442FA00)
+eeObj.WriteMem32(0x000FFA14, 0xAC45FFF0)
+eeObj.WriteMem32(0x000FFA18, 0x8C44FFFC)
+eeObj.WriteMem32(0x000FFA1C, 0x8C840000)
+eeObj.WriteMem32(0x000FFA20, 0x149B0003)
+eeObj.WriteMem32(0x000FFA28, 0x08046C64)
+eeObj.WriteMem32(0x000FFA2C, 0x241B0000)
+eeObj.WriteMem32(0x000FFA34, 0xAC43FFF8)
+eeObj.WriteMem32(0x000FFA38, 0x3C040010)
+eeObj.WriteMem32(0x000FFA3C, 0x24840004)
+eeObj.WriteMem32(0x000FFA40, 0x8C830000)
+eeObj.WriteMem32(0x000FFA44, 0x107B0003)
+eeObj.WriteMem32(0x000FFA4C, 0x1000FFFB)
+--Patcher
+eeObj.WriteMem32(0x000FFA54, 0xAC44FFFC)
+eeObj.WriteMem32(0x000FFA64, 0x3C030C03)
+eeObj.WriteMem32(0x000FFA68, 0x3463FE48)
+eeObj.WriteMem32(0x000FFA6C, 0xAC8300BC) --First 6 vi01
+eeObj.WriteMem32(0x000FFA78, 0xAC8301FC)
+eeObj.WriteMem32(0x000FFA84, 0xAC830354)
+eeObj.WriteMem32(0x000FFA90, 0xAC830494)
+eeObj.WriteMem32(0x000FFA9C, 0xAC8305EC)
+eeObj.WriteMem32(0x000FFAA8, 0xAC83072C)
+eeObj.WriteMem32(0x000FFAAC, 0x3C030C03)
+eeObj.WriteMem32(0x000FFAB0, 0x3463FE4B)
+eeObj.WriteMem32(0x000FFAB4, 0xAC83015C) --First 4 vi02
+eeObj.WriteMem32(0x000FFAC0, 0xAC8302AC)
+eeObj.WriteMem32(0x000FFACC, 0xAC8303F4)
+eeObj.WriteMem32(0x000FFAD8, 0xAC830544)
+--Physics (Camera, glove weapon, and gravity. Boxes still not fixed)
+eeObj.WriteMem32(0x000FFADC, 0x3C032401)
+eeObj.WriteMem32(0x000FFAE0, 0x346300E0)
+eeObj.WriteMem32(0x000FFAE4, 0xAC8311F4) -- 48418800
+eeObj.WriteMem32(0x000FFAE8, 0xAC831D50)
+eeObj.WriteMem32(0x000FFAEC, 0xAC832263)
+eeObj.WriteMem32(0x000FFAF0, 0xAC832F64)
+eeObj.WriteMem32(0x000FFAF4, 0xAC833E24)
+--Ret
+eeObj.WriteMem32(0x000FFC0C, 0x8C44FFF4)
+eeObj.WriteMem32(0x000FFC10, 0x8C45FFF0)
+eeObj.WriteMem32(0x000FFC14, 0x8C43FFF8)
+eeObj.WriteMem32(0x000FFC18, 0x08046C64)
+--VI01 AND VI02 to burn cycles in (000FF904) using advanceclock
+eeObj.WriteMem32(0x000FF914, 0x03E00008)
+eeObj.WriteMem32(0x000FF918, 0x241F0000)
+eeObj.WriteMem32(0x000FF920, 0x48C00800)
+eeObj.WriteMem32(0x000FF924, 0x1000FFF7)
+eeObj.WriteMem32(0x000FF92C, 0x48C01000)
+eeObj.WriteMem32(0x000FF930, 0x1000FFF4)
+end
+emuObj.AddVsyncHook(patcher)
+
+</pre>
+
+====Ratchet & Clank 1====
+<br>'''CLI'''
+<br>Emu = '''War of the Monsters'''
+<br>SCUS-97199
+<pre>
+#Fix graphics
+--gs-use-mipmap=1
+--gs-kernel-cl="mipmap"
+--gs-kernel-cl-up="up2x2simple"	
+#Fix VU0 sync
+--ee-hook=0x000FF904,AdvanceClock,,400
+</pre>
+
+'''LUA'''
+<br>SCUS-97199
+<br>Author:Scalerize
+<pre>
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+--jmp
+eeObj.WriteMem32(0x00118CAC, 0x0803FE80)
+
+--Check if patcher's needed
+eeObj.WriteMem32(0x000FFA00, 0x3C1B7120)
+eeObj.WriteMem32(0x000FFA04, 0x377BCDA8)
+eeObj.WriteMem32(0x000FFA08, 0x3C02000F)
+eeObj.WriteMem32(0x000FFA10, 0xAC44FFF4)
+eeObj.WriteMem32(0x000FFA0C, 0x3442FA00)
+eeObj.WriteMem32(0x000FFA14, 0xAC45FFF0)
+eeObj.WriteMem32(0x000FFA18, 0x8C44FFFC)
+eeObj.WriteMem32(0x000FFA1C, 0x8C840000)
+eeObj.WriteMem32(0x000FFA20, 0x149B0003)
+eeObj.WriteMem32(0x000FFA28, 0x0804632C)
+eeObj.WriteMem32(0x000FFA2C, 0x241B0000)
+eeObj.WriteMem32(0x000FFA34, 0xAC43FFF8)
+eeObj.WriteMem32(0x000FFA38, 0x3C040010)
+eeObj.WriteMem32(0x000FFA3C, 0x24840004)
+eeObj.WriteMem32(0x000FFA40, 0x8C830000)
+eeObj.WriteMem32(0x000FFA44, 0x107B0003)
+eeObj.WriteMem32(0x000FFA4C, 0x1000FFFB)
+--Patcher
+eeObj.WriteMem32(0x000FFA54, 0xAC44FFFC)
+eeObj.WriteMem32(0x000FFA64, 0x3C030C03)
+eeObj.WriteMem32(0x000FFA68, 0x3463FE48)
+eeObj.WriteMem32(0x000FFA6C, 0xAC8300BC) --First 6 vi01
+eeObj.WriteMem32(0x000FFA78, 0xAC8301FC)
+eeObj.WriteMem32(0x000FFA84, 0xAC830354)
+eeObj.WriteMem32(0x000FFA90, 0xAC830494)
+eeObj.WriteMem32(0x000FFA9C, 0xAC8305EC)
+eeObj.WriteMem32(0x000FFAA8, 0xAC83072C)
+eeObj.WriteMem32(0x000FFAAC, 0x3C030C03)
+eeObj.WriteMem32(0x000FFAB0, 0x3463FE4B)
+eeObj.WriteMem32(0x000FFAB4, 0xAC83015C) --First 4 vi02
+eeObj.WriteMem32(0x000FFAC0, 0xAC8302AC)
+eeObj.WriteMem32(0x000FFACC, 0xAC8303F4)
+eeObj.WriteMem32(0x000FFAD8, 0xAC830544)
+--Physics (Camera, glove weapon, and gravity. Boxes still not fixed)
+eeObj.WriteMem32(0x000FFADC, 0x3C032401)
+eeObj.WriteMem32(0x000FFAE0, 0x346300E0)
+eeObj.WriteMem32(0x000FFAE4, 0xAC8311B0) -- 48418800
+eeObj.WriteMem32(0x000FFAE8, 0xAC831EFC)
+eeObj.WriteMem32(0x000FFAEC, 0xAC8324B0)
+eeObj.WriteMem32(0x000FFAF0, 0xAC833108)
+eeObj.WriteMem32(0x000FFAF4, 0xAC833FA8)
+--Ret
+eeObj.WriteMem32(0x000FFC0C, 0x8C44FFF4)
+eeObj.WriteMem32(0x000FFC10, 0x8C45FFF0)
+eeObj.WriteMem32(0x000FFC14, 0x8C43FFF8)
+eeObj.WriteMem32(0x000FFC18, 0x0804632C)
+--VI01 AND VI02 to burn cycles in (000FF904) using advanceclock
+eeObj.WriteMem32(0x000FF914, 0x03E00008)
+eeObj.WriteMem32(0x000FF918, 0x241F0000)
+eeObj.WriteMem32(0x000FF920, 0x48C00800)
+eeObj.WriteMem32(0x000FF924, 0x1000FFF7)
+eeObj.WriteMem32(0x000FF92C, 0x48C01000)
+eeObj.WriteMem32(0x000FF930, 0x1000FFF4)
+end
+emuObj.AddVsyncHook(patcher)
+</pre>
+
+====Robot Alchemic Drive====
+'''LUA'''
+<pre>
+apiRequest(0.1)
+
+local emuObj 		= getEmuObject()
+local iopObj        = getIOPObject()
+
+local patcher = function()
+--Audio fix(?)
+--iopObj.WriteMem32(0x000F5CBC, 0x24C6FFFF)
+iopObj.WriteMem32(0x000F5764, 0x24064000)
+end
+
+emuObj.AddVsyncHook(patcher)
+</pre>
+
+====Shadow Man - 2econd Coming====
+<br>SLUS204.13
+<pre>
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+
+--Once it reaches to the TEQ, the game crashes.
+eeObj.WriteMem32(0x00231AF0, 0x0808C6AF)
+
+end
+emuObj.AddVsyncHook(patcher)
+</pre>
+====Forbidden Siren 2====
+'''CLI'''
+<br>NTSC
+<pre>
+--vu-xgkick-delay=9
+</pre>
+
+====Wild Arms 4====
+'''CLI'''
+<pre>
+#Fatal Fury emu
+#Gamefixes
+--vu-hack-triace=1
+--iop-hook=0xAD808,AdvanceClock,,3000
+</pre>
+
+===sceTtyPrint===
+This should print some debug info in emulog/klog, pcsx2 a like. Pattern based on Smugglers Run 2 and Spiderman 3. So first test should be done with those games. Spiderman should print something like "Legal screen is 512 x 256." first. Smugglers Run 2 "Timezone=60". Assuming it work, this can give some valuable info about VIF1/GIF hangs, which are 50% of issues in those crappy emus. 
+
+ --sceTtyWrite take:
+ --a0 = string ptr
+ --a1 = size (we need to overwrite str_ptr + size with 0 to make it 0 terminated)
+ 
+ -- best tty pattern for now = "0A 00 07 24 0D 00 05 24 0C 00 C4 24"
+ 
+ apiRequest(1.0)
+ 
+ eeObj  = getEEObject()
+ emuObj = getEmuObject()
+ 
+ local printerino = function() 
+     local str_ptr  = eeObj.GetGpr(4) -- a0
+     local str_size = eeObj.GetGpr(5) -- a1
+     
+     -- Add zero terminator, not sure if we need it...
+     -- But i don't see any way to pass how long string should be.
+     -- So just 0 terminate it just in case.
+     -- Note: PS2 pass newline as last character, maybe we don't need it.
+     -- if it break anything, or looks weird, then remove +1 from below write. 
+     eeObj.WriteMem8(str_ptr + str_size + 1, 0)
+     
+     local str = eeObj.ReadMemStr(str_ptr)
+     print(string.format("PS2 DEBUG: %s", str))
+ end
+ 
+ 
+ local addr   = 0x100008
+ local ttySearch = function()
+ 	print("PS2 DEBUG: Entering ttySearch.")
+     while(addr < 0x1000000 )
+     do
+         if eeObj.ReadMem32(addr) == 0x2407000A then
+             if eeObj.ReadMem32(addr + 4) == 0x2405000D then
+                 if eeObj.ReadMem32(addr + 8) == 0x24C4000C then
+ 					-- I'm sorry...
+ 					local check = 0
+ 					local full_op = 0
+ 					while(check ~= 0x27BD and addr ~= 0x100008)
+ 					do
+ 					    addr = addr - 4
+ 						full_op = eeObj.ReadMem32(addr)
+ 						check = full_op >> 16
+ 					end
+                     break -- first loop
+                 else
+                     addr = addr + 4
+                 end
+             else
+                 addr = addr + 4
+             end
+         else
+             addr = addr + 4
+         end
+     end
+ 	if addr < 0x1000000 and not addr < 0x100008 then
+ 	    print(string.format("Found sceTtyWrite function at: 0x%X", addr))
+ 		eeObj.AddHook(addr, full_op, printerino)
+ 	else
+ 	    print("sceTtyWrite function not found!")
+     end
+ end
+ 
+ emuObj.AddEntryPointHook(ttySearch)
+
+{{Reverse Engineering}}<noinclude>
+[[Category:Main]]
+</noinclude>
