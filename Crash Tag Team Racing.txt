@@ -1,6 +1,0 @@
-#Potato pc patch
-SLUS-21191
-
-patch=1,EE,003940C8,word,3463F000
-patch=1,EE,003940D4,word,2442FFF4
-patch=1,EE,003940E4,word,1440FFFA
