@@ -3,11 +3,5 @@ SLUS-20515
 patch=1,EE,001D9474,word,24050001
 
 //Deck leader has all abilities
-patch=1,EE,00318684,word,0
-patch=1,EE,00318688,word,0
-patch=1,EE,0031868C,word,0
-patch=1,EE,00318690,word,0
-patch=1,EE,00318694,word,0
-patch=1,EE,00318698,word,0
-patch=1,EE,0031869C,word,0
-patch=1,EE,003186A0,word,0
+patch=1,EE,001DF83C,word,E4A20008
+patch=1,EE,001DF840,word,E4A2000C
