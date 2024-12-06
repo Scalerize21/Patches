@@ -379,6 +379,14 @@ eeInsnReplace(0x2625F4, 0xC7809780, 0x3C014316)
 eeInsnReplace(0x262608, 0xE4400000, 0xAC410000)
 eeInsnReplace(0x2564A8, 0x8F829764, 0x24020000)</pre>
 
+====Cabela's Dangerous Hunts====
+<br>CLI
+<br>All
+<pre>
+#Sps fix
+--vu1-no-clamping=0
+</pre>
+
 ====Castlevania: Curse of Darkness====
 <br>SLUS-21168
 <br>LUA
@@ -867,7 +875,7 @@ All versions
 <br>ALL
 
 <pre>
-#Fix for game being stuck at main menu with selections moving very fast
+#Fix for game being stuck with flickering, immovable main menu items.
 --fpu-no-clamping=1
 #Speedhack
 --vu1-di-bits=0
@@ -1029,7 +1037,7 @@ emuObj.AddVsyncHook(patcher)
 '''CLI'''
 <br>SLUS-20587
 <pre>
-#Fix for AI cop car
+#Fix for AI cop car (00422D18 to 00423018 on PCSX2?)
 --cop2-accurate-addsub-range=0x4b8108,0x4b8408
 #Speedhacks
 --vu1-di-bits=0
@@ -3449,11 +3457,11 @@ ALL
 <br>'''All versions'''
 <br>'''''CLI'''''
 <pre>
-#Speedhacks + Clamping
+#Speedhacks
 --vu1-di-bits=0
---vu1-const-prop=1
---vu1-mpg-cycles=800
---ee-cycle-scalar=1.2
+--vu1-mpg-cycles=850
+#Fix for flickering Spyro shadow
+--gs-use-clut-merge=1
 #Jakv2 Emu Used
 </pre>
 
@@ -4227,6 +4235,21 @@ All versions
 --cop2-clamp-results=1
 
 #Fix for texture glitches</pre>
+====World Series of Poker - Tournament of Champions====
+<br>LUA
+<br>SLUS-21491
+<br>Emu: War of the monsters
+<pre>
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+eeObj.WriteMem32(0x0036A180, 0x0)
+end
+emuObj.AddVsyncHook(patcher)
+</pre>
 
 ====X-Files - Resist or Serve====
 <br>'''''CLI'''''
@@ -4813,9 +4836,9 @@ eeInsnReplace(0x001023E0, 0xAE020000, 0x0)
 #Fix graphics
 --gs-use-mipmap=1
 --gs-kernel-cl="mipmap"
---gs-kernel-cl-up="up2x2simple"
-#Fix VU0 sync
---ee-hook=0x000FF904,AdvanceClock,,400
+--gs-kernel-cl-up="mipmap2x2"
+#Fix VU0 sync (raise or lower it as convenient)
+--ee-hook=0x000FF904,AdvanceClock,,395
 </pre>
 
 <br>'''LUA'''
@@ -4865,15 +4888,10 @@ eeObj.WriteMem32(0x000FFAB4, 0xAC83015C) --First 4 vi02
 eeObj.WriteMem32(0x000FFAC0, 0xAC8302AC)
 eeObj.WriteMem32(0x000FFACC, 0xAC8303F4)
 eeObj.WriteMem32(0x000FFAD8, 0xAC830544)
---Physics (Camera, glove weapon, and gravity)
+--Physics (COP2 timing issues that I'm fixing through patches instead) (Camera, glove weapon, and gravity, but not ledge-hanging)
 eeObj.WriteMem32(0x000FFADC, 0x3C032401)
 eeObj.WriteMem32(0x000FFAE0, 0x346300E0)
-eeObj.WriteMem32(0x000FFAE4, 0xAC831214) -- 48418800
-eeObj.WriteMem32(0x000FFAE8, 0xAC831D00)
-eeObj.WriteMem32(0x000FFAEC, 0xAC83223C)
-eeObj.WriteMem32(0x000FFAF0, 0xAC83306C)
-eeObj.WriteMem32(0x000FFAF4, 0xAC834638)
-eeObj.WriteMem32(0x000FFAF8, 0xAC834B44)
+eeObj.WriteMem32(0x000FFAE4, 0xAC831214) --(gravity) 48418800
 --Ret
 eeObj.WriteMem32(0x000FFC0C, 0x8C44FFF4)
 eeObj.WriteMem32(0x000FFC10, 0x8C45FFF0)
@@ -5051,9 +5069,9 @@ em.AddVsyncHook(delayer)
 #Fix graphics
 --gs-use-mipmap=1
 --gs-kernel-cl="mipmap"
---gs-kernel-cl-up="up2x2simple"
-#Fix VU0 sync
---ee-hook=0x000FF904,AdvanceClock,,400
+--gs-kernel-cl-up="mipmap2x2"
+#Fix VU0 sync (raise or lower it as convenient)
+--ee-hook=0x000FF904,AdvanceClock,,395
 </pre>
 <br>Author: Scalerize
 <br>LUA
@@ -5101,13 +5119,11 @@ eeObj.WriteMem32(0x000FFAB4, 0xAC83015C) --First 4 vi02
 eeObj.WriteMem32(0x000FFAC0, 0xAC8302AC)
 eeObj.WriteMem32(0x000FFACC, 0xAC8303F4)
 eeObj.WriteMem32(0x000FFAD8, 0xAC830544)
---Physics (Camera, glove weapon, and gravity)
+--Physics (COP2 timing issues that I'm fixing through patches instead) (Camera, glove weapon, and gravity)
 eeObj.WriteMem32(0x000FFADC, 0x3C032401)
 eeObj.WriteMem32(0x000FFAE0, 0x346300E0)
-eeObj.WriteMem32(0x000FFAE4, 0xAC8311E4)
-eeObj.WriteMem32(0x000FFAE8, 0xAC831D40)
-eeObj.WriteMem32(0x000FFAEC, 0xAC832244)
-eeObj.WriteMem32(0x000FFAF0, 0xAC833F64)
+eeObj.WriteMem32(0x000FFAE4, 0xAC8311E4) --gravity
+eeObj.WriteMem32(0x000FFAF0, 0xAC833F64) --camera, glove weapon
 --Ret
 eeObj.WriteMem32(0x000FFC0C, 0x8C44FFF4)
 eeObj.WriteMem32(0x000FFC10, 0x8C45FFF0)
@@ -5134,9 +5150,9 @@ emuObj.AddVsyncHook(patcher)
 #Fix graphics
 --gs-use-mipmap=1
 --gs-kernel-cl="mipmap"
---gs-kernel-cl-up="up2x2simple"
-#Fix VU0 sync
---ee-hook=0x000FF904,AdvanceClock,,400
+--gs-kernel-cl-up="mipmap2x2"
+#Fix VU0 sync (raise or lower it as convenient)
+--ee-hook=0x000FF904,AdvanceClock,,395
 </pre>
 
 '''LUA'''
@@ -5185,14 +5201,12 @@ eeObj.WriteMem32(0x000FFAB4, 0xAC83015C) --First 4 vi02
 eeObj.WriteMem32(0x000FFAC0, 0xAC8302AC)
 eeObj.WriteMem32(0x000FFACC, 0xAC8303F4)
 eeObj.WriteMem32(0x000FFAD8, 0xAC830544)
---Physics (Camera, glove weapon, and gravity. Boxes still not fixed)
+--Physics (COP2 timing issues that I'm fixing through patches instead) (Camera, glove weapon, and gravity. Boxes still not fixed)
 eeObj.WriteMem32(0x000FFADC, 0x3C032401)
 eeObj.WriteMem32(0x000FFAE0, 0x346300E0)
-eeObj.WriteMem32(0x000FFAE4, 0xAC8311F4) -- 48418800
-eeObj.WriteMem32(0x000FFAE8, 0xAC831D50)
-eeObj.WriteMem32(0x000FFAEC, 0xAC832263)
-eeObj.WriteMem32(0x000FFAF0, 0xAC832F64)
-eeObj.WriteMem32(0x000FFAF4, 0xAC833E24)
+eeObj.WriteMem32(0x000FFAE4, 0xAC8311F4) -- (gravity) 48418800
+eeObj.WriteMem32(0x000FFAEC, 0xAC832264) -- (camera)
+eeObj.WriteMem32(0x000FFAF4, 0xAC833E24) -- (glove weapon)
 --Ret
 eeObj.WriteMem32(0x000FFC0C, 0x8C44FFF4)
 eeObj.WriteMem32(0x000FFC10, 0x8C45FFF0)
@@ -5210,6 +5224,88 @@ emuObj.AddVsyncHook(patcher)
 
 </pre>
 
+<br>'''CLI'''
+<br>Emu = '''War of the Monsters'''
+<br>SCES-51607
+<pre>
+--gs-use-mipmap=1
+--gs-kernel-cl="mipmap"
+--gs-kernel-cl-up="mipmap2x2"
+#Fix VU0 sync (raise or lower it as convenient)
+--ee-hook=0x000FF918,AdvanceClock,,386
+</pre>
+
+<br>'''LUA'''
+<br>SCES-51607
+<pre>
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+--Initial jmp
+eeObj.WriteMem32(0x0011B1AC, 0x0C03FE80)
+--Check if patcher's needed
+eeObj.WriteMem32(0x000FFA00, 0x3C1B000F)
+eeObj.WriteMem32(0x000FFA04, 0x377BFA00)
+eeObj.WriteMem32(0x000FFA08, 0xAF62FFFC)
+eeObj.WriteMem32(0x000FFA0C, 0xAF63FFF8)
+eeObj.WriteMem32(0x000FFA10, 0xAF64FFF4)
+eeObj.WriteMem32(0x000FFA14, 0x3C020C03)
+eeObj.WriteMem32(0x000FFA18, 0x3442FE53)
+eeObj.WriteMem32(0x000FFA1C, 0x8F63FFE8)
+eeObj.WriteMem32(0x000FFA20, 0x246305E0)
+eeObj.WriteMem32(0x000FFA24, 0x8C630000)
+eeObj.WriteMem32(0x000FFA28, 0x1062FFDF)
+--Create variable and start the patcher
+eeObj.WriteMem32(0x000FFA2C, 0x3C027829)
+eeObj.WriteMem32(0x000FFA30, 0x34420010)
+eeObj.WriteMem32(0x000FFA34, 0x3C030010)
+eeObj.WriteMem32(0x000FFA38, 0x8C640000)
+eeObj.WriteMem32(0x000FFA3C, 0x10820003)
+eeObj.WriteMem32(0x000FFA44, 0x24630004)
+eeObj.WriteMem32(0x000FFA48, 0x1000FFFB)
+eeObj.WriteMem32(0x000FFA50, 0xAF63FFE8)
+--VI01 patcher
+eeObj.WriteMem32(0x000FFA54, 0x3C020C03)
+eeObj.WriteMem32(0x000FFA58, 0x3442FE50)
+eeObj.WriteMem32(0x000FFA5C, 0xAC620158)
+eeObj.WriteMem32(0x000FFA60, 0xAC620298)
+eeObj.WriteMem32(0x000FFA64, 0xAC6203F0)
+eeObj.WriteMem32(0x000FFA68, 0xAC620530)
+eeObj.WriteMem32(0x000FFA6C, 0xAC620688)
+eeObj.WriteMem32(0x000FFA70, 0xAC6207C8)
+--VI02 patcher
+eeObj.WriteMem32(0x000FFA74, 0x3C020C03)
+eeObj.WriteMem32(0x000FFA78, 0x3442FE53)
+eeObj.WriteMem32(0x000FFA7C, 0xAC6201F8)
+eeObj.WriteMem32(0x000FFA80, 0xAC620348)
+eeObj.WriteMem32(0x000FFA84, 0xAC620490)
+eeObj.WriteMem32(0x000FFA88, 0xAC6205E0)
+--Physics
+eeObj.WriteMem32(0x000FFA8C, 0x3C022401)
+eeObj.WriteMem32(0x000FFA90, 0x344200E0)
+eeObj.WriteMem32(0x000FFA94, 0xAC621290) -- (gravity) 48418800
+--Ret
+eeObj.WriteMem32(0x000FF9A8, 0x8F62FFFC)
+eeObj.WriteMem32(0x000FF9AC, 0x8F63FFF8)
+eeObj.WriteMem32(0x000FF9B0, 0x8F64FFF4)
+eeObj.WriteMem32(0x000FF9BC, 0x241B0000)
+eeObj.WriteMem32(0x000FF9C0, 0x08047D78)
+--B to ret
+eeObj.WriteMem32(0x000FFABC, 0x1000FFBA)
+-- CTC2 cmnds
+eeObj.WriteMem32(0x000FF928, 0x03E00008)
+eeObj.WriteMem32(0x000FF92C, 0x241F0000)
+eeObj.WriteMem32(0x000FF940, 0x48C00800)
+eeObj.WriteMem32(0x000FF944, 0x1000FFF4)
+eeObj.WriteMem32(0x000FF94C, 0x48C01000)
+eeObj.WriteMem32(0x000FF950, 0x1000FFF1)
+end
+emuObj.AddVsyncHook(patcher)
+</pre>
+
 ====Ratchet & Clank 1====
 <br>'''CLI'''
 <br>Emu = '''War of the Monsters'''
@@ -5218,9 +5314,9 @@ emuObj.AddVsyncHook(patcher)
 #Fix graphics
 --gs-use-mipmap=1
 --gs-kernel-cl="mipmap"
---gs-kernel-cl-up="up2x2simple"	
-#Fix VU0 sync
---ee-hook=0x000FF904,AdvanceClock,,400
+--gs-kernel-cl-up="mipmap2x2"
+#Fix VU0 sync (raise or lower it as convenient)
+--ee-hook=0x000FF904,AdvanceClock,,385
 </pre>
 
 '''LUA'''
@@ -5270,14 +5366,10 @@ eeObj.WriteMem32(0x000FFAB4, 0xAC83015C) --First 4 vi02
 eeObj.WriteMem32(0x000FFAC0, 0xAC8302AC)
 eeObj.WriteMem32(0x000FFACC, 0xAC8303F4)
 eeObj.WriteMem32(0x000FFAD8, 0xAC830544)
---Physics (Camera, glove weapon, and gravity. Boxes still not fixed)
+--Physics (COP2 timing issues that I'm fixing through patches instead) (Camera, and gravity. Boxes and glove weapon still not fixed)
 eeObj.WriteMem32(0x000FFADC, 0x3C032401)
 eeObj.WriteMem32(0x000FFAE0, 0x346300E0)
-eeObj.WriteMem32(0x000FFAE4, 0xAC8311B0) -- 48418800
-eeObj.WriteMem32(0x000FFAE8, 0xAC831EFC)
-eeObj.WriteMem32(0x000FFAEC, 0xAC8324B0)
-eeObj.WriteMem32(0x000FFAF0, 0xAC833108)
-eeObj.WriteMem32(0x000FFAF4, 0xAC833FA8)
+eeObj.WriteMem32(0x000FFAE4, 0xAC8311B0) -- 48418800 (gravity)
 --Ret
 eeObj.WriteMem32(0x000FFC0C, 0x8C44FFF4)
 eeObj.WriteMem32(0x000FFC10, 0x8C45FFF0)
