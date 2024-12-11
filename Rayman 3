@@ -1,9 +1,9 @@
 VU0 sync patch
 SLUS-20601
 
-patch=1,EE,000FFA04,word,241B4000 -- 4000 can be changed.
-patch=1,EE,000FFA44,word,241B4000
-patch=1,EE,000FFA84,word,241B4000
+patch=1,EE,000FFA04,word,241B2000 -- 2000 can be changed.
+patch=1,EE,000FFA44,word,241B2000
+patch=1,EE,000FFA84,word,241B2000
 
 patch=1,EE,000FFA00,word,0004C880
 patch=1,EE,000FFA0C,word,277BFFFF
