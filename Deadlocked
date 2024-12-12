@@ -1,0 +1,51 @@
+##Deadlocked SCUS-97465
+
+#Initial jump (Address must be changed from one ratchet game to another)
+patch=1,EE,0012712C,word,0C03FE80
+#Check if patcher's needed
+patch=1,EE,000FFA00,word,3C02000F
+patch=1,EE,000FFA04,word,3442FA00
+patch=1,EE,000FFA08,word,8C43FFFC
+patch=1,EE,000FFA0C,word,8C630000
+patch=1,EE,000FFA10,word,3C040C03
+patch=1,EE,000FFA14,word,3484FE7C
+patch=1,EE,000FFA18,word,10830061
+#CTC2 VI01 Patcher
+patch=1,EE,000FFA20,word,3C0448C0
+patch=1,EE,000FFA24,word,34840800
+patch=1,EE,000FFA28,word,3C030010
+patch=1,EE,000FFA2C,word,24020006
+patch=1,EE,000FFA30,word,24630004
+patch=1,EE,000FFA34,word,8C7B0000
+patch=1,EE,000FFA38,word,1764FFFD
+patch=1,EE,000FFA40,word,2442FFFF
+patch=1,EE,000FFA44,word,3C1B0C03
+patch=1,EE,000FFA48,word,377BFE79
+patch=1,EE,000FFA4C,word,AC7B0000
+patch=1,EE,000FFA50,word,1440FFF7
+#CTC2 VI02 Patcher
+patch=1,EE,000FFA58,word,24020004
+patch=1,EE,000FFA5C,word,24840800
+patch=1,EE,000FFA60,word,24639000
+patch=1,EE,000FFA64,word,24630004
+patch=1,EE,000FFA68,word,8C7B0000
+patch=1,EE,000FFA6C,word,1764FFFD
+patch=1,EE,000FFA74,word,3C1B0C03
+patch=1,EE,000FFA78,word,377BFE7C
+patch=1,EE,000FFA7C,word,AC7B0000
+patch=1,EE,000FFA80,word,2442FFFF
+patch=1,EE,000FFA84,word,1440FFF7
+patch=1,EE,000FFA8C,word,3C02000F
+patch=1,EE,000FFA90,word,3442FA00
+patch=1,EE,000FFA94,word,AC43FFFC
+#Return (OPCODE must be changed from one ratchet game to another)
+patch=1,EE,000FFBA4,word,0804B508
+#Jr RA
+patch=1,EE,000FF9DC,word,03E00008
+patch=1,EE,000FF9E0,word,241F0000
+#VI01
+patch=1,EE,000FF9E4,word,48C00800
+patch=1,EE,000FF9E8,word,1000FFF8
+#VI02
+patch=1,EE,000FF9F0,word,48C01000
+patch=1,EE,000FF9F4,word,1000FFF5
