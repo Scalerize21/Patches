@@ -1218,6 +1218,7 @@ NTSC/U
 --ee-cycle-scalar=2.0
 
 </pre>
+
 '''''LUA file'''''
 <pre>
 -- Galarians Ash NTSC
@@ -1225,7 +1226,7 @@ NTSC/U
 
 local gpr = require("ee-gpr-alias")
 
-apiRequest(2.2)
+apiRequest(0.1)
 
 local eeObj = getEEObject()
 local emuObj = getEmuObject()
@@ -1237,6 +1238,23 @@ emuObj.ThrottleMax() -- Drastically reduces loading screens duration on most gam
 
 end
 
+emuObj.AddVsyncHook(patcher)
+</pre>
+
+====Genji Dawn of the Samurai====
+<br>'''LUA'''
+<br>NTSC (SCUS-97471)
+<br>Emu = War Of The Monsters
+<pre>
+apiRequest(0.1)
+
+local iopObj = getIOPObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+--Fix the IOP loop causing a random freeze.
+iopObj.WriteMem32(0x0006DCCC, 0x0)
+end
 emuObj.AddVsyncHook(patcher)
 </pre>
 
@@ -2618,29 +2636,8 @@ emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", { texMode=1  } )
 #Necessary Clamping
 --vu1-no-clamping=0
 --vu0-no-clamping=0
-#Optional Clamping
---fpu-no-clamping=0
-#Speedup
---vu1-di-bits=0
-#underclocking the animation offsets
---ee-hook=0x0028A808,AdvanceClock,,500
---ee-hook=0x0028A574,AdvanceClock,,500
---ee-hook=0x0028A4F4,AdvanceClock,,500
---ee-hook=0x0028A4E4,AdvanceClock,,500
---ee-hook=0x0028A6EC,AdvanceClock,,500
---ee-hook=0x0028A460,AdvanceClock,,500
+#Animation timing fix
 --ee-hook=0x0028A278,AdvanceClock,,500
---ee-hook=0x0028A410,AdvanceClock,,500
---ee-hook=0x0028A288,AdvanceClock,,500
---ee-hook=0x0028A294,AdvanceClock,,500
---ee-hook=0x0028A4A0,AdvanceClock,,500
---ee-hook=0x0028A36C,AdvanceClock,,500
---ee-hook=0x0028A6BC,AdvanceClock,,500
---ee-hook=0x0028A488,AdvanceClock,,500
---ee-hook=0x0028A65C,AdvanceClock,,500
---ee-hook=0x0028A68C,AdvanceClock,,500
---ee-hook=0x0028A6D4,AdvanceClock,,500
---ee-hook=0x0028A6A4,AdvanceClock,,500
 --ee-hook=0x0028A5D4,AdvanceClock,,500
 </pre><br>'''LUA'''
 <pre>
@@ -4331,6 +4328,20 @@ emuObj.SetGsTitleFix( "ignoreAreaUpdate", 0, { } )
 
 </pre>
 
+==== Yu-Gi-Oh! Duelists of the Roses====
+All
+<br>CLI
+<pre>
+#Speedhacks
+--vu1-di-bits=0
+--ee-cycle-scalar=1.1
+--vu1-mpg-cycles=200
+#Fix for random crashes during fights
+--ee-ignore-segfault=readwrite
+</pre>
+
+
+
 ==== Yu-Gi-Oh! Capsule Monsters Colosseum====
 All
 <br>CLI
@@ -4774,14 +4785,10 @@ emuObj.AddVsyncHook(patcher)
 ====Batman begins====
 NTSC
 <pre>
-00409BF8 0000001E
+00382568
+0038257C
 </pre>
 
-====Genji dawn of the samurai====
-<br>NTSC
-<pre>
-002F876C
-</pre>
 ====Bee movie====
 NTSC
 <br>CLI
