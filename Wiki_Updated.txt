@@ -47,25 +47,11 @@ emuObj.AddVsyncHook(patcher)
 ====24 The Game====
 '''''CLI'''''
 <pre>
---gs-uprender=2x2
---gs-upscale=edgesmooth
-
---host-display-mode=16:9
-
---ee-kernel-hle=1
---ee-injection-kernel=1
---ee-injection-title=1
 --ee-cycle-scalar=1.9
 --safe-area-min=1.0
 --vu0-no-clamping=0
---vu0-clamp-operands=1
---vu0-clamp-results=1
 --vu1-no-clamping=0
---vu1-clamp-operands=1
---vu1-clamp-results=1
 --cop2-no-clamping=0
---cop2-clamp-operands=1
---cop2-clamp-results=1
 
 
 # Fixed lags issue.
@@ -81,7 +67,7 @@ emuObj.AddVsyncHook(patcher)
 
 local gpr = require("ee-gpr-alias")
 
-apiRequest(1.0)
+apiRequest(0.1)
 
 local eeObj = getEEObject()
 local emuObj = getEmuObject()
@@ -166,7 +152,7 @@ eeInsnReplace(0x1A3BA8, 0x484A8800, 0x4B0C682C)
 <br>'''''LUA file'''''
 
 <br>SCES_504.10
-<pre>apiRequest(2.2)	-- request version 0.1 API. Calling apiRequest() is mandatory.
+<pre>apiRequest(0.1)	-- request version 0.1 API. Calling apiRequest() is mandatory.
 
 -- Wrong sky shader
 
@@ -202,7 +188,7 @@ eeInsnReplace(0x131ED0, 0x484A8800, 0x4B0C682C)</pre>
 
 <br>SCES_540.41
 
-<pre>apiRequest(2.2)	-- request version 0.1 API. Calling apiRequest() is mandatory.
+<pre>apiRequest(0.1)	-- request version 0.1 API. Calling apiRequest() is mandatory.
 
 -- Wrong sky shader
 
@@ -258,7 +244,7 @@ eeInsnReplace(0x131EC4, 0x484A8800, 0x4B0C682C)</pre>
 '''''LUA'''''
 
 <pre>--emu used=jakx v2
-apiRequest(1.0)
+apiRequest(0.1)
 local eeObj = getEEObject()
 local emuObj = getEmuObject()
 local patcher = function()
@@ -308,17 +294,9 @@ emuObj.AddVsyncHook(patcher)
 '''CLI'''
 <br>All Versions
 <pre>
---gs-uprender=2x2
---gs-upscale=EdgeSmooth
-
---host-display-mode=16:9
-
 --vif1-instant-xfer=0
-
 --vu0-no-clamping=0
---vu0-clamp-results=1
 --vu1-no-clamping=0
---vu1-clamp-results=1
 </pre>
 
 ====Bard's tale, the====
@@ -340,11 +318,8 @@ emuObj.AddVsyncHook(patcher)
 <br>All Versions
 
 <pre>--vu0-no-clamping=0
---vu0-clamp-results=1
 --vu1-no-clamping=0
---vu1-clamp-results=1
 --cop2-no-clamping=0
---cop2-clamp-results=1
 
 #SPS Fix</pre>
 
@@ -463,20 +438,11 @@ emuObj.AddVsyncHook(patcher)
 
 ==== Call of Duty: World at War - Final Fronts ====
 <pre>
---ee-kernel-hle=1
---ee-injection-kernel=1
---ee-injection-title=1
 --ee-cycle-scalar=1.9
 --safe-area-min=1.0
 --vu0-no-clamping=0
---vu0-clamp-operands=1
---vu0-clamp-results=1
 --vu1-no-clamping=0
---vu1-clamp-operands=1
---vu1-clamp-results=1
 --cop2-no-clamping=0
---cop2-clamp-operands=1
---cop2-clamp-results=1
 # Fixed low framrate issue, !!!JAK EMULATOR Used!!!
 </pre>
 ====Cold Winter====
@@ -486,10 +452,6 @@ emuObj.AddVsyncHook(patcher)
 
 <pre>--vu0-no-clamping=0
 --vu1-no-clamping=0
---vu0-clamp-operands=1
---vu0-clamp-results=1
---vu1-clamp-operands=1
---vu1-clamp-results=1
 
 # fix graphic and physics, there are still issue with fmv, and minor stering issue.</pre>
 
@@ -510,7 +472,7 @@ emuObj.AddVsyncHook(patcher)
 -- Crash Bandicoot The Wrath of Cortex [SLUS-20238] (U)
 -- emu used=KOF 98
 
-apiRequest(1.0)   
+apiRequest(0.1) 
 
 local gpr = require("ee-gpr-alias")
 
@@ -558,7 +520,7 @@ emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", { texMode=1 } ) --texMode=
 -- Crash Bandicoot The Wrath of Cortex [SLES-50386] (E)
 -- emu used=KOF 2000
 
-apiRequest(1.0)   
+apiRequest(0.1)
 
 local gpr = require("ee-gpr-alias")
 
@@ -582,9 +544,6 @@ emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", { texMode=1 } ) --texMode=
 <br>SLPM62114
 '''SLPM-62114_cli.conf'''
 <pre>
---gs-uprender=2x2
---gs-upscale=edgesmooth
---host-display-mode=16:9
 --force-frame-blend=1
 --gs-kernel-cl="h2lpool"
 --gs-kernel-cl-up="h2lpool2x2"
@@ -598,7 +557,7 @@ emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", { texMode=1 } ) --texMode=
 -- Crash Bandicoot 4: Sakuretsu! Majin Power [SLPM-62114] (NTSC-J)
 -- emu used=KOF 98
 
-apiRequest(1.0)
+apiRequest(0.1)
 
 local gpr = require("ee-gpr-alias")
 local eeObj = getEEObject()
@@ -729,16 +688,12 @@ emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", { texMode=1 } )</pre>
 <br>All Versions
 <br>'''''CLI'''''
 <pre>
---gs-uprender=2x2
---gs-upscale=edgesmooth
 --gs-adaptive-frameskip=1
 --force-frame-blend=1
-
 --vu0-no-clamping=0
 --vu1-no-clamping=0
 --vu1-di-bits=0
 --vu1=jit-sync
-
 --vu1-mpg-cycles=2200
 --vu1-jalr-cache-policy=newprog
 --vu0-jr-cache-policy=sameprog
@@ -754,7 +709,7 @@ emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", { texMode=1 } )</pre>
 
 local gpr = require("ee-gpr-alias")
 
-apiRequest(2.0)
+apiRequest(0.1)
 
 local emuObj 		= getEmuObject()
 local eeObj			= getEEObject()
@@ -824,7 +779,7 @@ Place config file named as "SLPS-25026_lopnor.cfgbin" in /patches/SLPS-25026/
 <pre>
 --DOA 2 Hardcore NTSC US
 
-apiRequest(2.2)
+apiRequest(0.1)
 
 local gpr       = require("ee-gpr-alias")
 local emuObj      = getEmuObject()
@@ -971,15 +926,28 @@ All versions
 --fpu-accurate-range=0x00693f88,0x00693f88
 </pre>
 
+====Drakengard 2====
+'''CLI'''
+<br>Emu: '''War of the Monsters'''
+<pre>
+#Fix upscaling artifacts (flames and lights)
+--gs-upscale=none
+--gs-uprender=none
+#Use EE clamping
+--fpu-no-clamping=0
+--cop2-no-clamping=0
+#Speedhacks
+--vu1-di-bits=0
+--vu1-mpg-cycles=200
+</pre>
+
 ====Dreamworks: Shrek the third====
 <br>All Versions
 <br>'''CLI'''
 <pre>
 #Slowdown fixes
 --vu1-di-bits=0
---vu1-mpg-cycles=600
---ee-cycle-scalar=1.2
-
+--vu1-mpg-cycles=700
 #Disable try to fix graphics if creating using ps2fpkg v0.6
 </pre>
 
@@ -1055,10 +1023,7 @@ emuObj.AddVsyncHook(patcher)
 
 <br>All Versions
 
-<pre>--gs-uprender=2x2
---gs-upscale=EdgeSmooth
-
---host-display-mode=16:9
+<pre>
 --framelimit-mode=normal
 #Fix for missing character/world parts
 --vu1-no-clamping=0
@@ -1177,34 +1142,23 @@ emuObj.AddVsyncHook(patcher)
 --vu1-no-clamping=0
 #use the rest just in case
 --vu0-no-clamping=0
---vu0-clamp-operands=1
---vu0-clamp-results=1
---vu1-clamp-operands=1
---vu1-clamp-results=1
 --cop2-no-clamping=0
---cop2-clamp-operands=1
---cop2-clamp-results=1 
 #Fixes disappearing models during cutscenes and during gameplay</pre>
 
 ====Galactic Wrestling Featuring Ultimate Muscle====
 NTSC/U
 <br>CLI
 <pre>--fpu-no-clamping=0
---fpu-clamp-results=1
 --vu0-no-clamping=0
---vu0-clamp-results=1
 --vu1-no-clamping=0
---vu1-clamp-results=1
 --cop2-no-clamping=0
---cop2-clamp-results=1
 #fix for missing character models
---vu-xgkick-delay=0.58
+--vu-xgkick-delay=0
 #KOF98Emu used</pre>
 
 ====Galarians: Ash====
 '''''CLI'''''
-<pre>--gs-uprender=2x2
---gs-upscale=EdgeSmooth
+<pre>
 --gs-adaptive-frameskip=1
 
 --vif-ignore-invalid-cmd=0
@@ -1252,7 +1206,7 @@ local iopObj = getIOPObject()
 local emuObj = getEmuObject()
 
 local patcher = function()
---Fix the IOP loop causing a random freeze.
+--Fix the IOP loop (1455FF27) causing a random freeze.
 iopObj.WriteMem32(0x0006DCCC, 0x0)
 end
 emuObj.AddVsyncHook(patcher)
@@ -1444,12 +1398,8 @@ emuObj.AddVsyncHook(patcher)
 SLUS_215.90
 <br>CLI
 <pre>
---gs-uprender=2x2
---gs-upscale=edgesmooth
 --gs-kernel-cl="h2lpool"
 --gs-kernel-cl-up="h2lpool2x2"
-
---host-display-mode=16:9
 #emu used=psychonauts v2
 </pre>
 <br>LUA
@@ -1457,7 +1407,7 @@ SLUS_215.90
 -- emu used=psychonauts v2
 local gpr = require("ee-gpr-alias")
 
-apiRequest(1.0)
+apiRequest(0.1)
 
 local eeObj = getEEObject()
 local emuObj = getEmuObject()
@@ -1499,8 +1449,6 @@ emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", {tw=8, th=8, psm=0, ztst=1
 SLUS_214.23
 <br>CLI
 <pre>
---gs-uprender=2x2
---gs-upscale=edgesmooth
 --gs-kernel-cl="h2lpool"
 --gs-kernel-cl-up="h2lpool2x2"
 --gs-h2l-list-opt=1
@@ -1518,13 +1466,7 @@ SLUS_214.23
 
 <pre>--vu0-no-clamping=0
 --vu1-no-clamping=0
---vu0-clamp-operands=1
---vu0-clamp-results=1
---vu1-clamp-operands=1
---vu1-clamp-results=1
 --cop2-no-clamping=0
---cop2-clamp-operands=1
---cop2-clamp-results=1
 
 #fix for graphical glitches, specially the missing ground.
 </pre>
@@ -1549,18 +1491,14 @@ SLUS_214.23
 </pre>
 <br>'''US'''
 <pre>
---gs-uprender=2x2
---gs-upscale=EdgeSmooth
 --gs-adaptive-frameskip=1
 --gs-kernel-cl="h2lpool"
 --gs-kernel-cl-up="h2lpool2x2"
 --gs-progressive=1
 
 --ee-cycle-scalar=2.0
-
 --vu1-mpg-cycles=2000
 --vu1-di-bits=0
---vu1=trans
 #Cdvd timing
 --iop-cycle-scalar=0.20
 --cdvd-sector-read-cycles=4000</pre>
@@ -1572,7 +1510,7 @@ SLUS_214.23
 -- 02 Latest emu removes a lot of game lag, anyway the game still suffer of shuttering in the next levels
 -- 03 Corrupted green lines around the objects, uprendering problem
 -- Slowdowns and performances patched in cli.conf file
-apiRequest(2.2)
+apiRequest(0.1)
 
 local emuObj 		= getEmuObject()
 local gsObj		= getGsObject()
@@ -1586,8 +1524,7 @@ gsObj.SetDeinterlaceShift(0)
 
 ====God of War 2====
 '''''CLI'''''
-<pre>--gs-uprender=2x2
---gs-upscale=edgesmooth
+<pre>
 --gs-adaptive-frameskip=1
 --ee-cycle-scalar=0.62
 --iop-cycle-scalar=0.10
@@ -1595,8 +1532,6 @@ gsObj.SetDeinterlaceShift(0)
 --vu1-jr-cache-policy=newprog
 --vu1-jalr-cache-policy=newprog
 --cdvd-sector-read-cycles=4000
---host-audio-latency=1.6
---host-display-mode=16:9
 
 *Jakx Emu used*</pre>
 
@@ -1604,7 +1539,7 @@ gsObj.SetDeinterlaceShift(0)
 <pre>-- God of War II  
 -- ported to PS4 
 
-apiRequest(2.2)
+apiRequest(0.1)
 
 local gpr    		= require("ee-gpr-alias")
 local cpr    		= require("ee-cpr0-alias")
@@ -1723,14 +1658,8 @@ emuObj.AddVsyncHook(patcher)
 
 <br>All Versions
 
-<pre>--gs-uprender=2x2
---gs-upscale=EdgeSmooth
-
---host-display-mode=16:9
-
+<pre>
 --vu1-no-clamping=0
-
-
 #fix for graphical glitches.
 </pre>
 
@@ -1791,7 +1720,7 @@ Config #1
 
 <pre>
 
-apiRequest(1.0)
+apiRequest(0.1)
 local eeObj = getEEObject()
 local emuObj = getEmuObject()
 local patcher = function()
@@ -1822,11 +1751,7 @@ emuObj.AddVsyncHook(patcher)
 <br>All versions
 
 <pre>--vu0-no-clamping=0
---vu0-clamp-operands=1
---vu0-clamp-results=1
 --vu1-no-clamping=0
---vu1-clamp-operands=1
---vu1-clamp-results=1
 
 #fix for flickering polygons.</pre>
 
@@ -1984,9 +1909,7 @@ emuObj.AddVsyncHook(patcher)
 ====Largo Winch - Empire Under Threat====
 <br>SLES-51093
 <br>'''''CLI'''''
-<pre>--gs-uprender=2x2
---gs-upscale=EdgeSmooth
---host-display-mode=16:9
+<pre>
 --cdvd-sector-read-cycles=5000
 #emu used=rotk v1
 </pre>
@@ -2063,7 +1986,7 @@ emuObj.AddVsyncHook(WS2)
 -- Specal Thanks to: Kozarovv, Stayhye, Scalerize --
 -- emu used=KOF2000                               --
                                                                                              
-apiRequest(1.0)                                   
+apiRequest(0.1)                                 
 
 local eeObj = getEEObject() 
 local emuObj = getEmuObject()
@@ -2180,7 +2103,7 @@ eeInsnReplace(0x2A1F80, 0x00000001, 0x00000000)</pre>
 SLUS-20671 (NTSC)
 <pre>-- emu used=kinetica v2
 
-apiRequest(1.0)   
+apiRequest(0.1)   
 
 local gpr = require("ee-gpr-alias")
 
@@ -2211,9 +2134,6 @@ emuObj.AddVsyncHook(patcher)
 ====Manhunt 2====
 '''''CLI'''''
 <pre>
---ee-kernel-hle=1
---ee-injection-kernel=1
---ee-injection-title=1
 --ee-block-validation=PageProt
 --vu1-opt-flags=2
 --vu1-jr-cache-policy=newprog
@@ -2246,13 +2166,7 @@ eeInsnReplace(0x370DA8, 0x00000000, 0x24020001)
 <pre>
 --vu0-no-clamping=0
 --vu1-no-clamping=0
---vu0-clamp-operands=1
---vu0-clamp-results=1
---vu1-clamp-operands=1
---vu1-clamp-results=1
 --cop2-no-clamping=0
---cop2-clamp-operands=1
---cop2-clamp-results=1
 # Fixed green, blue and red graphical issues. The game works better.
 </pre>
 
@@ -2362,7 +2276,7 @@ emuObj.AddVsyncHook(patcher)
 -- MD5: 4F325C12F0D07E5C138CD779E0EF2F94
 
 local gpr = require("ee-gpr-alias")
-apiRequest(1.0)
+apiRequest(0.1)
 
 local eeObj = getEEObject()
 local emuObj = getEmuObject()
@@ -2386,7 +2300,7 @@ emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", { texMode=1 } ) --texMode=
 
 <br>SLUS-21065
 
-<pre>apiRequest(1.0)
+<pre>apiRequest(0.1)
 
 local eeObj = getEEObject()
 local emuObj = getEmuObject()
@@ -2421,10 +2335,7 @@ emuObj.AddVsyncHook(patcher)
 --gs-kernel-cl="mipmap"
 --gs-kernel-cl-up="mipmap2x2"
 --vu0-no-clamping=0
---vu0-clamp-results=1
 --vu1-no-clamping=0
---vu1-clamp-results=1
---cop2-clamp-results=1
 --cop2-no-clamping=0
 #Fixes for slowdowns
 --vu1-const-prop=1
@@ -2470,10 +2381,7 @@ eeInsnReplace(0x1CF3CC, 0x4100FFFF, 0x00000000)</pre>
 '''''CLI'''''
 <br>SLES-53959
 <pre>
---gs-uprender=2x2
---gs-upscale=edgesmooth
 --cdvd-sector-read-cycles=2000
---host-display-mode=16:9
 #Fix for fmvs showing black screen with subtitles
 --fpu-accurate-range=0x3f3068,0x3f32bc
 
@@ -2644,7 +2552,7 @@ emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", { texMode=1  } )
 -- Rayman 3 Hoodlum Havoc (NTSC)
 -- emu used=KOF 2000
 
-apiRequest(1.0)   
+apiRequest(0.1)  
 
 local gpr = require("ee-gpr-alias")
 
@@ -2917,15 +2825,11 @@ eeInsnReplace(0x11e09c, 0x0c08a654, 0x00000000)</pre>
 <br>All versions
 
 <pre>--gs-upscale=point
---gs-uprender=2x2
---gs-motion-factor=25
---host-audio-latency=0.01
 --gs-ignore-dirty-page-border=1
 --gs-kernel-cl="h2lpool"
 --gs-kernel-cl-up="h2lpool2x2"
 --gs-h2l-list-opt=1
 --gs-h2l-accurate-hash=1
-
 #same as Anthology, which VI is a patched-out section of; substantial slowdown during combat has been mitigated.</pre>
 
 ====Samurai Warriors 2 Xtreme Legends====
@@ -3166,60 +3070,31 @@ emuObj.SetGsTitleFix( "globalSet",  "reserved", { waveThreshold = 90000} )
 emuObj.SetGsTitleFix( "ignoreAreaUpdate", 0, { } )
 </pre>
 
-====Shin Megami Tensei: Persona 3 FES====
-
-<br>'''NTSC'''
-<br>'''CLI'''
+====Shin Megami Tensei III: Nocturne====
+'''CLI'''
+<br>All
+<br>Emu: War of the Monsters
 <pre>
-# Misc
---host-display-mode=full
---force-frame-blend=0
---gs-progressive=1
---ee-cycle-scalar=0.62
---host-audio-latency=0.05
-# Mipmapping
---gs-use-mipmap=1
---gs-kernel-cl="mipmap"
---gs-kernel-cl-up="mipmap2x2"
-# VU Speedhacks
---vu0-const-prop=1
---vu1-const-prop=1
+#Speedhacks
 --vu1-di-bits=0
---vu0-di-bits=0
---vu1-opt-vf00=2
---vu0-opt-vf00=2
---vu1-mpg-cycles=1400
---vu-custom-min-max=0
-# IOP Speedhacks
---iop-const-folding=All
---iop-cycle-scalar=0.1
---cdvd-sector-seek-cycles=0.1
---cdvd-sector-read-cycles=0.1
-# Default Optimizations
---fpu-no-clamping=0
---fpu-clamp-operands=1
---fpu-clamp-results=1
---vu0-no-clamping=0
---vu0-clamp-operands=1
---vu0-clamp-results=1
---vu1-no-clamping=0
---vu1-clamp-operands=1
---vu1-clamp-results=1
---cop2-no-clamping=0
---cop2-clamp-operands=1
---cop2-clamp-results=1
---vu0-opt-flags=1
---vu1-opt-flags=1
---cop2-opt-flags=1
---vu1-jr-cache-policy=newprog
---vu1-jalr-cache-policy=newprog
---vu0-jr-cache-policy=newprog
---vu0-jalr-cache-policy=newprog
+--vu1-mpg-cycles=200
+#Fix fpu math
+--fpu-accurate-muldiv=1
+--fpu-accurate-mul-fast=1
+</pre>
+
+====Shin Megami Tensei: Persona 3 FES====
+'''CLI'''
+<br>'''NTSC'''
+<pre>
+# Fixes interlacing.
+--force-frame-blend=0
+# VU Speedhacks
+--vu1-di-bits=0
+--vu1-mpg-cycles=300
 
 #User Emu = kof98um
 </pre>
-
-* Config and icons [https://www.psx-place.com/threads/research-ps2-emulator-configuration-on-ps4.16131/page-243 Download]
 
 ====Shin Megami Tensei: Persona 4====
 '''''CLI'''''
@@ -3321,7 +3196,7 @@ emuObj.AddVsyncHook(patcher)
 
 '''''LUA'''''
 <br>(SLUS-20228)
-<pre>apiRequest(1.0)
+<pre>apiRequest(0.1)
 
 local eeObj = getEEObject()
 local emuObj = getEmuObject()
@@ -3374,8 +3249,7 @@ emuObj.AddVsyncHook(patcher)
 ====Soul Calibur 3====
 ALL
 <br>CLI
-<pre>--gs-uprender=2x2
---gs-upscale=edgesmooth
+<pre>
 --gs-kernel-cl-up="up2x2skipinterp"
 
 --vif1-instant-xfer=0
@@ -3394,7 +3268,7 @@ ALL
 -- ported to PS4 lua
 -- emu used=jakx v2
 
-apiRequest(2.3)
+apiRequest(0.1)
 
 local gpr    		= require("ee-gpr-alias")
 local emuObj 		= getEmuObject()
@@ -3418,6 +3292,14 @@ end
 emuObj.AddVsyncHook(WS)
 </pre>
 
+====Spider-Man: Web of Shadows====
+ALL
+<br>CLI
+<pre>
+# Fix not being able to connect hits, and summon... etc...
+--fpu-no-clamping=0
+--cop2-no-clamping=0
+</pre>
 ====Spider-Man 3 ====
 ALL
 <br>CLI
@@ -3429,8 +3311,6 @@ ALL
 
 --vu1-mpg-cycles=600
 
---host-audio-latency=2.21
-
 #Fix for slowdown and micro-freezes</pre>
 
 ====SpongeBob SquarePants: Battle for Bikini Bottom====
@@ -3441,13 +3321,7 @@ ALL
 --vu1-no-clamping=0
 #Rest might be unnecessary
 --vu0-no-clamping=0
---vu0-clamp-operands=1
---vu0-clamp-results=1
---vu1-clamp-operands=1
---vu1-clamp-results=1
 --cop2-no-clamping=0
---cop2-clamp-operands=1
---cop2-clamp-results=1
 </pre>
 
 ====Spyro: Enter The Dragonfly====
@@ -3475,9 +3349,40 @@ ALL
 <br>All versions
 <pre>
 --iop-cycle-scalar=1.8
---host-audio-latency=1.1
 
 #Use JakX v2 emu</pre>
+
+
+====SSX 3====
+<br>'''''CLI'''''
+<br>All versions
+<pre>
+#Speedhacks
+--vu1-mpg-cycles=300
+--vu1-di-bits=0
+#Gs graphics fixes
+--gs-upscale=none
+--gs-uprender=none
+
+#Use WOTM emu
+</pre>
+
+<br>'''''LUA'''''
+<br>SLUS 207.72
+<pre>
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+--Freeze fix 
+eeObj.WriteMem32(0x002EC824, 0x0)
+eeObj.WriteMem32(0x002EC68C, 0x0)
+end
+emuObj.AddVsyncHook(patcher)
+#Use WOTM emu
+</pre>
 
 ====Star Wars - Episode 3 - Die Rache der Sith====
 
@@ -3533,13 +3438,9 @@ ALL
 #Speehacks
 --vu0-di-bits=0
 --vu1-di-bits=0
---vu0-const-prop=1
---vu1-const-prop=1
 --ee-cycle-scalar=1.5
 --gs-adaptive-frameskip=1
 --vu1-injection=1
-#Misc
---host-audio-latency=0.01
 
 #PS4 Pro required for full speed
 </pre>
@@ -3554,11 +3455,11 @@ ALL
 --gs-kernel-cl-up="up2x2skipinterp"
 #Fix for graphical glitches.</pre>
 
-====Sword of etheria====
+====Sword of ETheria====
 '''CLI'''
 <br>All versions
 <pre>
-#Fix for game's graphics being missing And game crashing
+#Fixes missing graphics and crashes.
 --vu-custom-min-max=0
 #Jakv2 emu used
 </pre>
@@ -3618,8 +3519,6 @@ emuObj.AddVsyncHook(goathack)
 ====Tales of The Abyss====
 '''''CLI'''''
 <pre>
---gs-uprender=2x2
---gs-upscale=EdgeSmooth
 
 --fpu-accurate-range=0x27FFFC,0x27FFFF
 --fpu-accurate-range=0x2921F4,0x2921F8
@@ -3627,8 +3526,6 @@ emuObj.AddVsyncHook(goathack)
 --vu0-no-clamping=0
 --vu1-no-clamping=0
 --cop2-no-clamping=0
-
---host-display-mode=16:9
 </pre>
 '''''LUA file'''''
 <pre>
@@ -3901,7 +3798,7 @@ Additional LUA fix
 <br>All Regions
 <pre>
 -- Fix for thin vertical lines that separate screen picture, misallignment/tearing of screen during upscaling (was used in official PSN Red Dead Revolver)
-apiRequest(1.0)
+apiRequest(0.1)
 local emuObj = getEmuObject()
 -- psm= SCE_GS_PSMCT32 (0)
 emuObj.SetGsTitleFix( "forceSimpleFetch",  "reserved", {psm=0} )
@@ -3915,12 +3812,8 @@ emuObj.SetGsTitleFix( "fetchFromCurrBuff", "reserved", {psm=0} )
 
 <pre>--vu0-no-clamping=0
 --vu1-no-clamping=0
---vu0-clamp-results=1
---vu1-clamp-results=1
 --fpu-no-clamping=0
 --cop2-no-clamping=0
---fpu-clamp-results=1
---cop2-clamp-results=1
 
 #SPS Fix</pre>
 
@@ -4031,8 +3924,6 @@ emuObj.AddVsyncHook(patcher)
 <br>All Versions
 
 <pre>
---gs-uprender=2x2
---gs-upscale=EdgeSmooth
 
 --force-frame-blend=1
 --vif-ignore-invalid-cmd=0
@@ -4105,7 +3996,7 @@ emuObj.SetGsTitleFix( "ignoreAreaUpdate", 0, { } )
 <br>SLUS_21452
 <pre>--Proper Widescreen and No ghosting
 --Valkyrie Profile 2 - Silmeria (USA) SLUS_214.52
-apiRequest(1.0)
+apiRequest(0.1)
 local eeObj = getEEObject()
 local emuObj = getEmuObject()
 local patcher = function()
@@ -4130,7 +4021,6 @@ emuObj.AddVsyncHook(patcher)
 ALL
 <br>CLI
 <pre>--gs-motion-factor=50
---host-audio-latency=0.01
 --gs-kernel-cl="h2lpool"
 --gs-kernel-cl-up="h2lpool2x2"
 --gs-h2l-list-opt=1
@@ -4141,8 +4031,6 @@ ALL
 ALL
 <br>CLI
 <pre>
---gs-uprender=2x2
---gs-upscale=edgesmooth
 --gs-kernel-cl="h2lpool"
 --gs-kernel-cl-up="h2lpool2x2"
 --gs-adaptive-frameskip=1
@@ -4165,7 +4053,7 @@ ALL
 -- ported to PS4 Lua by Stayhye
 -- emu used=jakx v2
 
-apiRequest(2.2)
+apiRequest(0.1)
 
 local gpr    		= require("ee-gpr-alias")
 
@@ -4197,8 +4085,6 @@ emuObj.AddVsyncHook(WS)
 '''CLI'''
 <br>All Versions
 <pre>
---gs-uprender=2x2
---gs-upscale=EdgeSmooth
 --gs-progressive=1
 --gs-force-bilinear=1
 --cdvd-sector-read-cycles=2000
@@ -4222,14 +4108,8 @@ All versions
 All versions
 <br>CLI
 <pre>--vu0-no-clamping=0
---vu0-clamp-operands=1
---vu0-clamp-results=1
 --vu1-no-clamping=0
---vu1-clamp-operands=1
---vu1-clamp-results=1
 --cop2-no-clamping=0
---cop2-clamp-operands=1
---cop2-clamp-results=1
 
 #Fix for texture glitches</pre>
 ====World Series of Poker - Tournament of Champions====
@@ -4250,8 +4130,7 @@ emuObj.AddVsyncHook(patcher)
 
 ====X-Files - Resist or Serve====
 <br>'''''CLI'''''
-<pre>--gs-uprender=2x2
---gs-upscale=EdgeSmooth
+<pre>
 --gs-adaptive-frameskip=1
 
 --vu0-no-clamping=0
@@ -4266,7 +4145,6 @@ emuObj.AddVsyncHook(patcher)
 '''CLI'''
 <br>All versions
 <pre>
---gs-uprender=2x2
 --gs-upscale=motionvector
 --gs-optimize-30fps=1
 --cdvd-sector-read-cycles=2000
@@ -4292,7 +4170,7 @@ emuObj.AddVsyncHook(patcher)
 -- ported to PS4 Lua by Stayhye
 -- emu used=jakx v2
 
-apiRequest(2.2)
+apiRequest(0.1)
 
 local gpr       = require("ee-gpr-alias")
 local emuObj      = getEmuObject()
@@ -4346,7 +4224,7 @@ All
 All
 <br>CLI
 <pre>
-#Fix for freeze. RECVX emu is required.
+#Fix for freeze. Works on old emus like WOTM AND RECVX.
 --vu1=jit-sync
 </pre>
 
@@ -4362,12 +4240,8 @@ NTSC/U
 --vu0-no-clamping=0
 --vu1-no-clamping=0
 #likely unnecessary commands
---vu0-clamp-results=1
---vu1-clamp-results=1
 --cop2-no-clamping=0
---cop2-clamp-results=1
 --fpu-no-clamping=0
---fpu-clamp-results=1
 
 #Jak Emu used*</pre>
 
@@ -4404,8 +4278,6 @@ NTSC/U
 '''CLI'''
 <br>All versions
 <pre>
---gs-uprender=2x2
---gs-upscale=EdgeSmooth
 --gs-use-mipmap=1
 --gs-kernel-cl-up="mipmap2x2"
 --gs-scanout-offsetx=27
@@ -4419,7 +4291,7 @@ NTSC/U
 -- Coraline
 -- emu used=KOF 98
 
-apiRequest(1.0)   
+apiRequest(0.1)   
 
 local gpr = require("ee-gpr-alias")
 
@@ -4502,7 +4374,7 @@ emuObj.AddVsyncHook(patcher)
 -- Total Overdose (E)(SLES-53492)
 -- emu used=ADK
 
-apiRequest(1.0)
+apiRequest(0.1)
 local eeObj = getEEObject()
 local emuObj = getEmuObject()
 
@@ -4540,7 +4412,7 @@ emuObj.SetGsTitleFix( "fetchFromCurrBuff", "reserved", {psm=0} )
 <pre>
 -- Dark Summit (PAL)
 -- emu used=Fahrenheit
-apiRequest(1.2)    -- request version 0.1 API. Calling apiRequest() is mandatory.
+apiRequest(0.1)    -- request version 0.1 API. Calling apiRequest() is mandatory.
 
 local emuObj = getEmuObject()
 local eeObj  = getEEObject()
@@ -4587,7 +4459,7 @@ ALL versions
 -- Total Repair by nifengyuexia
 -- emu used=jak v2
 
-apiRequest(1.0)
+apiRequest(0.1)
 
 local eeObj = getEEObject()
 local emuObj = getEmuObject()
@@ -4613,7 +4485,7 @@ emuObj.AddVsyncHook(patcher)
 -- Total Repair by nifengyuexia
 -- emu used=jak v2
 
-apiRequest(1.0)
+apiRequest(0.1)
 
 local eeObj = getEEObject()
 local emuObj = getEmuObject()
@@ -4642,7 +4514,7 @@ emuObj.AddVsyncHook(patcher)
 -- Total Repair by nifengyuexia
 -- emu used=jak v2
 
-apiRequest(1.0)
+apiRequest(0.1)
 
 local eeObj = getEEObject()
 local emuObj = getEmuObject()
@@ -4669,7 +4541,7 @@ emuObj.AddVsyncHook(patcher)
 -- Total Repair by nifengyuexia
 -- emu used=jak v2
 
-apiRequest(1.0)
+apiRequest(0.1)
 
 local eeObj = getEEObject()
 local emuObj = getEmuObject()
@@ -4720,7 +4592,7 @@ ALL versions
 <br>
 All games using standard sceMpeg decoder will have their fmvs disabled by this patch.
 <pre>
-apiRequest(1.0)
+apiRequest(0.1)
 eeObj  = getEEObject()
 emuObj = getEmuObject()
 
@@ -4782,14 +4654,22 @@ emuObj.AddVsyncHook(patcher)
 -00142910
 </pre>
 
-====Batman begins====
+====Batman Begins====
 NTSC
 <pre>
-00382568
-0038257C
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+--Exhibits a strange DMA issue
+local patcher = function()
+eeObj.WriteMem32(0x00333A88, 0x0)
+
+eeObj.WriteMem32(0x0032C0D8, 0xA2000BC2)
+eeObj.WriteMem32(0x0032C0F4, 0x10000006)
+end
+emuObj.AddVsyncHook(patcher)
 </pre>
 
-====Bee movie====
+====Bee Movie====
 NTSC
 <br>CLI
 <br>NTSC
@@ -4926,7 +4806,7 @@ emuObj.AddVsyncHook(patcher)
 -- 23.07.2023 Added debug stuff that should print in klog.
 -- This should help us figure out why patch fail. 
 
-apiRequest(1.0)
+apiRequest(0.1)
  
 local em  = getEmuObject()
 local ee  = getEEObject()
@@ -5430,7 +5310,8 @@ emuObj.AddVsyncHook(patcher)
 '''CLI'''
 <br>NTSC
 <pre>
---vu-xgkick-delay=9
+It's supposed to -1, 0, or 1 the value of s1, but instead it's crashing the game.
+00233CB4
 </pre>
 
 ====Wild Arms 4====
@@ -5451,7 +5332,7 @@ This should print some debug info in emulog/klog, pcsx2 a like. Pattern based on
  
  -- best tty pattern for now = "0A 00 07 24 0D 00 05 24 0C 00 C4 24"
  
- apiRequest(1.0)
+apiRequest(0.1)
  
  eeObj  = getEEObject()
  emuObj = getEmuObject()
