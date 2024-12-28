@@ -844,9 +844,7 @@ All versions
 <pre>
 #Fixes slowdowns in The game
 --vu1-di-bits=0
---vu1-const-prop=1
---vu1-mpg-cycles=700
---ee-cycle-scalar=1.2
+--vu1-mpg-cycles=800
 #Fixes black screen caused by MTVU
 --vu1=jit-sync
 #Jakv2
@@ -3292,6 +3290,19 @@ end
 emuObj.AddVsyncHook(WS)
 </pre>
 
+
+====Spartan - Total Warrior====
+ALL
+<br>CLI
+<pre>
+#Speedhacks
+--ee-cycle-scalar=1.2
+# Fix black screen upon starting new game
+--vu1-mpg-cycles=1
+--vu1-no-clamping=0
+--vu0-no-clamping=0
+</pre>
+
 ====Spider-Man: Web of Shadows====
 ALL
 <br>CLI
@@ -3300,6 +3311,7 @@ ALL
 --fpu-no-clamping=0
 --cop2-no-clamping=0
 </pre>
+
 ====Spider-Man 3 ====
 ALL
 <br>CLI
