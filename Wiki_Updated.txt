@@ -13,7 +13,6 @@ Please post only custom configurations which you have actually tested and don't 
 }}
 
 
-=Custom Configuration Files=
 ====18 Wheeler - American Pro Trucker====
 <br>NTSC
 <br>LUA
@@ -275,6 +274,15 @@ emuObj.ThrottleMax()
 end
 
 emuObj.AddVsyncHook(patcher)
+</pre>
+
+====Batman Vengeance====
+<pre>
+#Speedhacks
+--ee-cycle-scalar=3
+#Upscaling fix
+--gs-upscale=none
+--gs-uprender=none
 </pre>
 
 ====Battle Engine Aquila====
@@ -899,9 +907,8 @@ All versions
 #Fix for mis-aligned glow caused by upscaling
 --gs-kernel-cl-up="up2x2simple"
 #Fix for Performance
---vu1-mpg-cycles=200
+--vu1-mpg-cycles=400
 --vu1-di-bits=0
---ee-cycle-scalar=1.2
 </pre>
 
 ====Dragon Quest VIII: Journey of the Cursed King====
@@ -1457,6 +1464,18 @@ SLUS_214.23
 --vu1-mpg-cycles=600
 
 --ee-cycle-scalar=1.3
+</pre>
+
+
+
+====Goblin Commander====
+'''''CLI'''''
+<pre>
+#Speedhacks
+--vu1-mpg-cycles=800
+--vu1-di-bits=0
+#Crash fix
+--vif1-instant-xfer=0
 </pre>
 
 ====God Hand====
@@ -2324,32 +2343,15 @@ emuObj.AddVsyncHook(patcher)
 
 ====Okami====
 '''''CLI'''''
-
 <br>All versions
-
 <pre>
---gs-use-mipmap=1
+#Fix graphical glitches
 --gs-force-bilinear=1
---gs-kernel-cl="mipmap"
---gs-kernel-cl-up="mipmap2x2"
---vu0-no-clamping=0
---vu1-no-clamping=0
---cop2-no-clamping=0
+--gs-kernel-cl-up="up2x2simple"
 #Fixes for slowdowns
---vu1-const-prop=1
 --vu1-di-bits=0
---ee-cycle-scalar=1.2		
---vu1-injection=1
+--vu1-mpg-cycles=230
 #RECVX EMU Fixes Crash Near Orochi boss fight</pre>
-
-'''''LUA file'''''
-<br>All Versions
-<pre>
-apiRequest(0.4)
-
-local emuObj = getEmuObject()
-
-emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", { texMode=1 } )</pre>
 
 ====Oni====
 '''''LUA'''''
@@ -3380,7 +3382,7 @@ ALL
 </pre>
 
 <br>'''''LUA'''''
-<br>SLUS 207.72
+<br>SLUS-20772
 <pre>
 apiRequest(0.1)
 
@@ -3391,6 +3393,23 @@ local patcher = function()
 --Freeze fix 
 eeObj.WriteMem32(0x002EC824, 0x0)
 eeObj.WriteMem32(0x002EC68C, 0x0)
+end
+emuObj.AddVsyncHook(patcher)
+#Use WOTM emu
+</pre>
+
+<br>'''''LUA'''''
+<br>SLES-51697
+<pre>
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+--Freeze fix 
+eeObj.WriteMem32(0x002EC594, 0x0)
+eeObj.WriteMem32(0x002EC5E4, 0x0)
 end
 emuObj.AddVsyncHook(patcher)
 #Use WOTM emu
@@ -4228,9 +4247,9 @@ All
 --vu1-mpg-cycles=200
 #Fix for random crashes during fights
 --ee-ignore-segfault=readwrite
+#Fix graphics during battle (SLUS-20515)
+--fpu-accurate-range=0x001FAFB0,0x001FB0A4
 </pre>
-
-
 
 ==== Yu-Gi-Oh! Capsule Monsters Colosseum====
 All
@@ -4238,6 +4257,8 @@ All
 <pre>
 #Fix for freeze. Works on old emus like WOTM AND RECVX.
 --vu1=jit-sync
+#Fix for minor lighting flickering in Odion level
+--gs-use-clut-merge=1
 </pre>
 
 ====Zatch Bell! Mamodo Battles™====
@@ -4736,6 +4757,8 @@ eeInsnReplace(0x001023E0, 0xAE020000, 0x0)
 --gs-use-mipmap=1
 --gs-kernel-cl="mipmap"
 --gs-kernel-cl-up="mipmap2x2"
+#Fix gravity and other physics
+--cop2-opt-flags=0
 #Fix VU0 sync (raise or lower it as convenient)
 --ee-hook=0x000FF904,AdvanceClock,,395
 </pre>
@@ -4787,10 +4810,6 @@ eeObj.WriteMem32(0x000FFAB4, 0xAC83015C) --First 4 vi02
 eeObj.WriteMem32(0x000FFAC0, 0xAC8302AC)
 eeObj.WriteMem32(0x000FFACC, 0xAC8303F4)
 eeObj.WriteMem32(0x000FFAD8, 0xAC830544)
---Physics (COP2 timing issues that I'm fixing through patches instead) (Camera, glove weapon, and gravity, but not ledge-hanging)
-eeObj.WriteMem32(0x000FFADC, 0x3C032401)
-eeObj.WriteMem32(0x000FFAE0, 0x346300E0)
-eeObj.WriteMem32(0x000FFAE4, 0xAC831214) --(gravity) 48418800
 --Ret
 eeObj.WriteMem32(0x000FFC0C, 0x8C44FFF4)
 eeObj.WriteMem32(0x000FFC10, 0x8C45FFF0)
@@ -4969,6 +4988,8 @@ em.AddVsyncHook(delayer)
 --gs-use-mipmap=1
 --gs-kernel-cl="mipmap"
 --gs-kernel-cl-up="mipmap2x2"
+#Fix gravity and other physics
+--cop2-opt-flags=0
 #Fix VU0 sync (raise or lower it as convenient)
 --ee-hook=0x000FF904,AdvanceClock,,395
 </pre>
@@ -5018,11 +5039,6 @@ eeObj.WriteMem32(0x000FFAB4, 0xAC83015C) --First 4 vi02
 eeObj.WriteMem32(0x000FFAC0, 0xAC8302AC)
 eeObj.WriteMem32(0x000FFACC, 0xAC8303F4)
 eeObj.WriteMem32(0x000FFAD8, 0xAC830544)
---Physics (COP2 timing issues that I'm fixing through patches instead) (Camera, glove weapon, and gravity)
-eeObj.WriteMem32(0x000FFADC, 0x3C032401)
-eeObj.WriteMem32(0x000FFAE0, 0x346300E0)
-eeObj.WriteMem32(0x000FFAE4, 0xAC8311E4) --gravity
-eeObj.WriteMem32(0x000FFAF0, 0xAC833F64) --camera, glove weapon
 --Ret
 eeObj.WriteMem32(0x000FFC0C, 0x8C44FFF4)
 eeObj.WriteMem32(0x000FFC10, 0x8C45FFF0)
@@ -5050,6 +5066,8 @@ emuObj.AddVsyncHook(patcher)
 --gs-use-mipmap=1
 --gs-kernel-cl="mipmap"
 --gs-kernel-cl-up="mipmap2x2"
+#Fix gravity and other physics
+--cop2-opt-flags=0
 #Fix VU0 sync (raise or lower it as convenient)
 --ee-hook=0x000FF904,AdvanceClock,,395
 </pre>
@@ -5100,12 +5118,6 @@ eeObj.WriteMem32(0x000FFAB4, 0xAC83015C) --First 4 vi02
 eeObj.WriteMem32(0x000FFAC0, 0xAC8302AC)
 eeObj.WriteMem32(0x000FFACC, 0xAC8303F4)
 eeObj.WriteMem32(0x000FFAD8, 0xAC830544)
---Physics (COP2 timing issues that I'm fixing through patches instead) (Camera, glove weapon, and gravity. Boxes still not fixed)
-eeObj.WriteMem32(0x000FFADC, 0x3C032401)
-eeObj.WriteMem32(0x000FFAE0, 0x346300E0)
-eeObj.WriteMem32(0x000FFAE4, 0xAC8311F4) -- (gravity) 48418800
-eeObj.WriteMem32(0x000FFAEC, 0xAC832264) -- (camera)
-eeObj.WriteMem32(0x000FFAF4, 0xAC833E24) -- (glove weapon)
 --Ret
 eeObj.WriteMem32(0x000FFC0C, 0x8C44FFF4)
 eeObj.WriteMem32(0x000FFC10, 0x8C45FFF0)
@@ -5182,10 +5194,6 @@ eeObj.WriteMem32(0x000FFA7C, 0xAC6201F8)
 eeObj.WriteMem32(0x000FFA80, 0xAC620348)
 eeObj.WriteMem32(0x000FFA84, 0xAC620490)
 eeObj.WriteMem32(0x000FFA88, 0xAC6205E0)
---Physics
-eeObj.WriteMem32(0x000FFA8C, 0x3C022401)
-eeObj.WriteMem32(0x000FFA90, 0x344200E0)
-eeObj.WriteMem32(0x000FFA94, 0xAC621290) -- (gravity) 48418800
 --Ret
 eeObj.WriteMem32(0x000FF9A8, 0x8F62FFFC)
 eeObj.WriteMem32(0x000FF9AC, 0x8F63FFF8)
@@ -5214,6 +5222,8 @@ emuObj.AddVsyncHook(patcher)
 --gs-use-mipmap=1
 --gs-kernel-cl="mipmap"
 --gs-kernel-cl-up="mipmap2x2"
+#Fix gravity and other physics
+--cop2-opt-flags=0
 #Fix VU0 sync (raise or lower it as convenient)
 --ee-hook=0x000FF904,AdvanceClock,,385
 </pre>
@@ -5265,10 +5275,6 @@ eeObj.WriteMem32(0x000FFAB4, 0xAC83015C) --First 4 vi02
 eeObj.WriteMem32(0x000FFAC0, 0xAC8302AC)
 eeObj.WriteMem32(0x000FFACC, 0xAC8303F4)
 eeObj.WriteMem32(0x000FFAD8, 0xAC830544)
---Physics (COP2 timing issues that I'm fixing through patches instead) (Camera, and gravity. Boxes and glove weapon still not fixed)
-eeObj.WriteMem32(0x000FFADC, 0x3C032401)
-eeObj.WriteMem32(0x000FFAE0, 0x346300E0)
-eeObj.WriteMem32(0x000FFAE4, 0xAC8311B0) -- 48418800 (gravity)
 --Ret
 eeObj.WriteMem32(0x000FFC0C, 0x8C44FFF4)
 eeObj.WriteMem32(0x000FFC10, 0x8C45FFF0)
