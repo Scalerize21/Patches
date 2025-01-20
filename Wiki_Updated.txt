@@ -2525,13 +2525,433 @@ emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", { texMode=1  } )
 --vu1-mpg-cycles=1000
 # Fixed low framerate. Jakv2
 </pre>
+
+====Ratchet 4 - Deadlocked====
+<br>'''CLI'''
+<br>Emu = '''War of the Monsters'''
+<pre>
+#Fix graphics
+--gs-use-mipmap=1
+--gs-kernel-cl="mipmap"
+--gs-kernel-cl-up="mipmap2x2"
+#Upscaling fix
+--gs-upscale=none
+--gs-uprender=none
+#Looping music partial fix
+--iop-cycle-scalar=0.31
+#Fix gravity and other physics
+--cop2-opt-flags=0
+#Fix passage not showing up and glitchy ledge-hanging
+--cop2-accurate-mul=1
+#Fix VU0 sync (raise or lower it as convenient. It is the fix that causes the slowdowns)
+--ee-hook=0x000FF904,AdvanceClock,,397
+</pre>
+
+<br>'''LUA'''
+<br>SCUS-97465
+<br>Author:Scalerize
+<pre>
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+--jmp
+eeObj.WriteMem32(0x0012710C, 0x0803FE80)
+
+--Check if patcher's needed
+eeObj.WriteMem32(0x000FFA00, 0x3C1B7120)
+eeObj.WriteMem32(0x000FFA04, 0x377BCDA8)
+eeObj.WriteMem32(0x000FFA08, 0x3C02000F)
+eeObj.WriteMem32(0x000FFA10, 0xAC44FFF4)
+eeObj.WriteMem32(0x000FFA0C, 0x3442FA00)
+eeObj.WriteMem32(0x000FFA14, 0xAC45FFF0)
+eeObj.WriteMem32(0x000FFA18, 0x8C44FFFC)
+eeObj.WriteMem32(0x000FFA1C, 0x8C840000)
+eeObj.WriteMem32(0x000FFA20, 0x149B0003)
+eeObj.WriteMem32(0x000FFA28, 0x08049C44)
+eeObj.WriteMem32(0x000FFA2C, 0x241B0000)
+eeObj.WriteMem32(0x000FFA34, 0xAC43FFF8)
+eeObj.WriteMem32(0x000FFA38, 0x3C040010)
+eeObj.WriteMem32(0x000FFA3C, 0x24840004)
+eeObj.WriteMem32(0x000FFA40, 0x8C830000)
+eeObj.WriteMem32(0x000FFA44, 0x107B0003)
+eeObj.WriteMem32(0x000FFA4C, 0x1000FFFB)
+--Patcher
+eeObj.WriteMem32(0x000FFA54, 0xAC44FFFC)
+eeObj.WriteMem32(0x000FFA64, 0x3C030C03)
+eeObj.WriteMem32(0x000FFA68, 0x3463FE48)
+eeObj.WriteMem32(0x000FFA6C, 0xAC8300BC) --First 6 vi01
+eeObj.WriteMem32(0x000FFA78, 0xAC8301FC)
+eeObj.WriteMem32(0x000FFA84, 0xAC830354)
+eeObj.WriteMem32(0x000FFA90, 0xAC830494)
+eeObj.WriteMem32(0x000FFA9C, 0xAC8305EC)
+eeObj.WriteMem32(0x000FFAA8, 0xAC83072C)
+eeObj.WriteMem32(0x000FFAAC, 0x3C030C03)
+eeObj.WriteMem32(0x000FFAB0, 0x3463FE4B)
+eeObj.WriteMem32(0x000FFAB4, 0xAC83015C) --First 4 vi02
+eeObj.WriteMem32(0x000FFAC0, 0xAC8302AC)
+eeObj.WriteMem32(0x000FFACC, 0xAC8303F4)
+eeObj.WriteMem32(0x000FFAD8, 0xAC830544)
+--Ret
+eeObj.WriteMem32(0x000FFC0C, 0x8C44FFF4)
+eeObj.WriteMem32(0x000FFC10, 0x8C45FFF0)
+eeObj.WriteMem32(0x000FFC14, 0x8C43FFF8)
+eeObj.WriteMem32(0x000FFC18, 0x08049C44)
+--VI01 AND VI02 to burn cycles in (000FF904) using advanceclock
+eeObj.WriteMem32(0x000FF914, 0x03E00008)
+eeObj.WriteMem32(0x000FF918, 0x241F0000)
+eeObj.WriteMem32(0x000FF920, 0x48C00800)
+eeObj.WriteMem32(0x000FF924, 0x1000FFF7)
+eeObj.WriteMem32(0x000FF92C, 0x48C01000)
+eeObj.WriteMem32(0x000FF930, 0x1000FFF4)
+end
+emuObj.AddVsyncHook(patcher)
+
+
+</pre>
+
+====Ratchet and Clank 3: Up Your Arsenal====
+<br>'''CLI'''
+<br>Emu = '''War of the Monsters'''
+<br>Author: '''Scalerize'''
+<br>SCUS-97353
+<pre>
+#Fix graphics
+--gs-use-mipmap=1
+--gs-kernel-cl="mipmap"
+--gs-kernel-cl-up="mipmap2x2"
+#Upscaling fix
+--gs-upscale=none
+--gs-uprender=none
+#Looping music partial fix
+--iop-cycle-scalar=0.31
+#Fix gravity and other physics
+--cop2-opt-flags=0
+#Fix VU0 sync (raise or lower it as convenient. It is the fix that causes the slowdowns)
+--ee-hook=0x000FF904,AdvanceClock,,395
+</pre>
+<br>Author: Scalerize
+<br>LUA
+<pre>
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+--jmp
+eeObj.WriteMem32(0x0011F38C, 0x0803FE80)
+
+--Check if patcher's needed
+eeObj.WriteMem32(0x000FFA00, 0x3C1B7120)
+eeObj.WriteMem32(0x000FFA04, 0x377BCDA8)
+eeObj.WriteMem32(0x000FFA08, 0x3C02000F)
+eeObj.WriteMem32(0x000FFA10, 0xAC44FFF4)
+eeObj.WriteMem32(0x000FFA0C, 0x3442FA00)
+eeObj.WriteMem32(0x000FFA14, 0xAC45FFF0)
+eeObj.WriteMem32(0x000FFA18, 0x8C44FFFC)
+eeObj.WriteMem32(0x000FFA1C, 0x8C840000)
+eeObj.WriteMem32(0x000FFA20, 0x149B0003)
+eeObj.WriteMem32(0x000FFA28, 0x08047CE4)
+eeObj.WriteMem32(0x000FFA2C, 0x241B0000)
+eeObj.WriteMem32(0x000FFA34, 0xAC43FFF8)
+eeObj.WriteMem32(0x000FFA38, 0x3C040010)
+eeObj.WriteMem32(0x000FFA3C, 0x24840004)
+eeObj.WriteMem32(0x000FFA40, 0x8C830000)
+eeObj.WriteMem32(0x000FFA44, 0x107B0003)
+eeObj.WriteMem32(0x000FFA4C, 0x1000FFFB)
+--Patcher
+eeObj.WriteMem32(0x000FFA54, 0xAC44FFFC)
+eeObj.WriteMem32(0x000FFA64, 0x3C030C03)
+eeObj.WriteMem32(0x000FFA68, 0x3463FE48)
+eeObj.WriteMem32(0x000FFA6C, 0xAC8300BC) --First 6 vi01
+eeObj.WriteMem32(0x000FFA78, 0xAC8301FC)
+eeObj.WriteMem32(0x000FFA84, 0xAC830354)
+eeObj.WriteMem32(0x000FFA90, 0xAC830494)
+eeObj.WriteMem32(0x000FFA9C, 0xAC8305EC)
+eeObj.WriteMem32(0x000FFAA8, 0xAC83072C)
+eeObj.WriteMem32(0x000FFAAC, 0x3C030C03)
+eeObj.WriteMem32(0x000FFAB0, 0x3463FE4B)
+eeObj.WriteMem32(0x000FFAB4, 0xAC83015C) --First 4 vi02
+eeObj.WriteMem32(0x000FFAC0, 0xAC8302AC)
+eeObj.WriteMem32(0x000FFACC, 0xAC8303F4)
+eeObj.WriteMem32(0x000FFAD8, 0xAC830544)
+--Ret
+eeObj.WriteMem32(0x000FFC0C, 0x8C44FFF4)
+eeObj.WriteMem32(0x000FFC10, 0x8C45FFF0)
+eeObj.WriteMem32(0x000FFC14, 0x8C43FFF8)
+eeObj.WriteMem32(0x000FFC18, 0x08047CE4)
+--VI01 AND VI02 to burn cycles in (000FF904) using advanceclock
+eeObj.WriteMem32(0x000FF914, 0x03E00008)
+eeObj.WriteMem32(0x000FF918, 0x241F0000)
+eeObj.WriteMem32(0x000FF920, 0x48C00800)
+eeObj.WriteMem32(0x000FF924, 0x1000FFF7)
+eeObj.WriteMem32(0x000FF92C, 0x48C01000)
+eeObj.WriteMem32(0x000FF930, 0x1000FFF4)
+end
+emuObj.AddVsyncHook(patcher)
+
+
+</pre>
+
+====Ratchet & Clank 2 - Going Commando====
+<br>'''CLI'''
+<br>Emu = '''War of the Monsters'''
+<br>SCUS-97268
+<pre>
+#Fix graphics
+--gs-use-mipmap=1
+--gs-kernel-cl="mipmap"
+--gs-kernel-cl-up="mipmap2x2"
+#Upscaling fix
+--gs-upscale=none
+--gs-uprender=none
+#Looping music partial fix
+--iop-cycle-scalar=0.31
+#Fix gravity and other physics
+--cop2-opt-flags=0
+#Fix VU0 sync (raise or lower it as convenient. It is the fix that causes the slowdowns)
+--ee-hook=0x000FF904,AdvanceClock,,395
+</pre>
+
+'''LUA'''
+<br>SCUS-97268
+<pre>
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+--jmp
+eeObj.WriteMem32(0x0011B18C, 0x0803FE80)
+
+--Check if patcher's needed
+eeObj.WriteMem32(0x000FFA00, 0x3C1B7120)
+eeObj.WriteMem32(0x000FFA04, 0x377BCDA8)
+eeObj.WriteMem32(0x000FFA08, 0x3C02000F)
+eeObj.WriteMem32(0x000FFA10, 0xAC44FFF4)
+eeObj.WriteMem32(0x000FFA0C, 0x3442FA00)
+eeObj.WriteMem32(0x000FFA14, 0xAC45FFF0)
+eeObj.WriteMem32(0x000FFA18, 0x8C44FFFC)
+eeObj.WriteMem32(0x000FFA1C, 0x8C840000)
+eeObj.WriteMem32(0x000FFA20, 0x149B0003)
+eeObj.WriteMem32(0x000FFA28, 0x08046C64)
+eeObj.WriteMem32(0x000FFA2C, 0x241B0000)
+eeObj.WriteMem32(0x000FFA34, 0xAC43FFF8)
+eeObj.WriteMem32(0x000FFA38, 0x3C040010)
+eeObj.WriteMem32(0x000FFA3C, 0x24840004)
+eeObj.WriteMem32(0x000FFA40, 0x8C830000)
+eeObj.WriteMem32(0x000FFA44, 0x107B0003)
+eeObj.WriteMem32(0x000FFA4C, 0x1000FFFB)
+--Patcher
+eeObj.WriteMem32(0x000FFA54, 0xAC44FFFC)
+eeObj.WriteMem32(0x000FFA64, 0x3C030C03)
+eeObj.WriteMem32(0x000FFA68, 0x3463FE48)
+eeObj.WriteMem32(0x000FFA6C, 0xAC8300BC) --First 6 vi01
+eeObj.WriteMem32(0x000FFA78, 0xAC8301FC)
+eeObj.WriteMem32(0x000FFA84, 0xAC830354)
+eeObj.WriteMem32(0x000FFA90, 0xAC830494)
+eeObj.WriteMem32(0x000FFA9C, 0xAC8305EC)
+eeObj.WriteMem32(0x000FFAA8, 0xAC83072C)
+eeObj.WriteMem32(0x000FFAAC, 0x3C030C03)
+eeObj.WriteMem32(0x000FFAB0, 0x3463FE4B)
+eeObj.WriteMem32(0x000FFAB4, 0xAC83015C) --First 4 vi02
+eeObj.WriteMem32(0x000FFAC0, 0xAC8302AC)
+eeObj.WriteMem32(0x000FFACC, 0xAC8303F4)
+eeObj.WriteMem32(0x000FFAD8, 0xAC830544)
+--Ret
+eeObj.WriteMem32(0x000FFC0C, 0x8C44FFF4)
+eeObj.WriteMem32(0x000FFC10, 0x8C45FFF0)
+eeObj.WriteMem32(0x000FFC14, 0x8C43FFF8)
+eeObj.WriteMem32(0x000FFC18, 0x08046C64)
+--VI01 AND VI02 to burn cycles in (000FF904) using advanceclock
+eeObj.WriteMem32(0x000FF914, 0x03E00008)
+eeObj.WriteMem32(0x000FF918, 0x241F0000)
+eeObj.WriteMem32(0x000FF920, 0x48C00800)
+eeObj.WriteMem32(0x000FF924, 0x1000FFF7)
+eeObj.WriteMem32(0x000FF92C, 0x48C01000)
+eeObj.WriteMem32(0x000FF930, 0x1000FFF4)
+end
+emuObj.AddVsyncHook(patcher)
+
+</pre>
+
+<br>'''CLI'''
+<br>Emu = '''War of the Monsters'''
+<br>SCES-51607
+<pre>
+#Fix graphics
+--gs-use-mipmap=1
+--gs-kernel-cl="mipmap"
+--gs-kernel-cl-up="mipmap2x2"
+#Upscaling fix
+--gs-upscale=none
+--gs-uprender=none
+#Looping music partial fix
+--iop-cycle-scalar=0.31
+#Fix VU0 sync (raise or lower it as convenient. It is the fix that causes the slowdowns)
+--ee-hook=0x000FF918,AdvanceClock,,386
+</pre>
+
+<br>'''LUA'''
+<br>SCES-51607
+<pre>
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+--Initial jmp
+eeObj.WriteMem32(0x0011B1AC, 0x0C03FE80)
+--Check if patcher's needed
+eeObj.WriteMem32(0x000FFA00, 0x3C1B000F)
+eeObj.WriteMem32(0x000FFA04, 0x377BFA00)
+eeObj.WriteMem32(0x000FFA08, 0xAF62FFFC)
+eeObj.WriteMem32(0x000FFA0C, 0xAF63FFF8)
+eeObj.WriteMem32(0x000FFA10, 0xAF64FFF4)
+eeObj.WriteMem32(0x000FFA14, 0x3C020C03)
+eeObj.WriteMem32(0x000FFA18, 0x3442FE53)
+eeObj.WriteMem32(0x000FFA1C, 0x8F63FFE8)
+eeObj.WriteMem32(0x000FFA20, 0x246305E0)
+eeObj.WriteMem32(0x000FFA24, 0x8C630000)
+eeObj.WriteMem32(0x000FFA28, 0x1062FFDF)
+--Create variable and start the patcher
+eeObj.WriteMem32(0x000FFA2C, 0x3C027829)
+eeObj.WriteMem32(0x000FFA30, 0x34420010)
+eeObj.WriteMem32(0x000FFA34, 0x3C030010)
+eeObj.WriteMem32(0x000FFA38, 0x8C640000)
+eeObj.WriteMem32(0x000FFA3C, 0x10820003)
+eeObj.WriteMem32(0x000FFA44, 0x24630004)
+eeObj.WriteMem32(0x000FFA48, 0x1000FFFB)
+eeObj.WriteMem32(0x000FFA50, 0xAF63FFE8)
+--VI01 patcher
+eeObj.WriteMem32(0x000FFA54, 0x3C020C03)
+eeObj.WriteMem32(0x000FFA58, 0x3442FE50)
+eeObj.WriteMem32(0x000FFA5C, 0xAC620158)
+eeObj.WriteMem32(0x000FFA60, 0xAC620298)
+eeObj.WriteMem32(0x000FFA64, 0xAC6203F0)
+eeObj.WriteMem32(0x000FFA68, 0xAC620530)
+eeObj.WriteMem32(0x000FFA6C, 0xAC620688)
+eeObj.WriteMem32(0x000FFA70, 0xAC6207C8)
+--VI02 patcher
+eeObj.WriteMem32(0x000FFA74, 0x3C020C03)
+eeObj.WriteMem32(0x000FFA78, 0x3442FE53)
+eeObj.WriteMem32(0x000FFA7C, 0xAC6201F8)
+eeObj.WriteMem32(0x000FFA80, 0xAC620348)
+eeObj.WriteMem32(0x000FFA84, 0xAC620490)
+eeObj.WriteMem32(0x000FFA88, 0xAC6205E0)
+--Ret
+eeObj.WriteMem32(0x000FF9A8, 0x8F62FFFC)
+eeObj.WriteMem32(0x000FF9AC, 0x8F63FFF8)
+eeObj.WriteMem32(0x000FF9B0, 0x8F64FFF4)
+eeObj.WriteMem32(0x000FF9BC, 0x241B0000)
+eeObj.WriteMem32(0x000FF9C0, 0x08047D78)
+--B to ret
+eeObj.WriteMem32(0x000FFABC, 0x1000FFBA)
+-- CTC2 cmnds
+eeObj.WriteMem32(0x000FF928, 0x03E00008)
+eeObj.WriteMem32(0x000FF92C, 0x241F0000)
+eeObj.WriteMem32(0x000FF940, 0x48C00800)
+eeObj.WriteMem32(0x000FF944, 0x1000FFF4)
+eeObj.WriteMem32(0x000FF94C, 0x48C01000)
+eeObj.WriteMem32(0x000FF950, 0x1000FFF1)
+end
+emuObj.AddVsyncHook(patcher)
+</pre>
+
+====Ratchet & Clank 1====
+<br>'''CLI'''
+<br>Emu = '''War of the Monsters'''
+<br>SCUS-97199
+<pre>
+#Fix graphics
+--gs-use-mipmap=1
+--gs-kernel-cl="mipmap"
+--gs-kernel-cl-up="mipmap2x2"
+#Upscaling fix
+--gs-upscale=none
+--gs-uprender=none
+#Looping music partial fix
+--iop-cycle-scalar=0.31
+#Fix gravity and other physics
+--cop2-opt-flags=0
+#Fix VU0 sync (raise or lower it as convenient. It is the fix that causes the slowdowns)
+--ee-hook=0x000FF904,AdvanceClock,,385
+</pre>
+
+'''LUA'''
+<br>SCUS-97199
+<br>Author:Scalerize
+<pre>
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+--jmp
+eeObj.WriteMem32(0x00118CAC, 0x0803FE80)
+
+--Check if patcher's needed
+eeObj.WriteMem32(0x000FFA00, 0x3C1B7120)
+eeObj.WriteMem32(0x000FFA04, 0x377BCDA8)
+eeObj.WriteMem32(0x000FFA08, 0x3C02000F)
+eeObj.WriteMem32(0x000FFA10, 0xAC44FFF4)
+eeObj.WriteMem32(0x000FFA0C, 0x3442FA00)
+eeObj.WriteMem32(0x000FFA14, 0xAC45FFF0)
+eeObj.WriteMem32(0x000FFA18, 0x8C44FFFC)
+eeObj.WriteMem32(0x000FFA1C, 0x8C840000)
+eeObj.WriteMem32(0x000FFA20, 0x149B0003)
+eeObj.WriteMem32(0x000FFA28, 0x0804632C)
+eeObj.WriteMem32(0x000FFA2C, 0x241B0000)
+eeObj.WriteMem32(0x000FFA34, 0xAC43FFF8)
+eeObj.WriteMem32(0x000FFA38, 0x3C040010)
+eeObj.WriteMem32(0x000FFA3C, 0x24840004)
+eeObj.WriteMem32(0x000FFA40, 0x8C830000)
+eeObj.WriteMem32(0x000FFA44, 0x107B0003)
+eeObj.WriteMem32(0x000FFA4C, 0x1000FFFB)
+--Patcher
+eeObj.WriteMem32(0x000FFA54, 0xAC44FFFC)
+eeObj.WriteMem32(0x000FFA64, 0x3C030C03)
+eeObj.WriteMem32(0x000FFA68, 0x3463FE48)
+eeObj.WriteMem32(0x000FFA6C, 0xAC8300BC) --First 6 vi01
+eeObj.WriteMem32(0x000FFA78, 0xAC8301FC)
+eeObj.WriteMem32(0x000FFA84, 0xAC830354)
+eeObj.WriteMem32(0x000FFA90, 0xAC830494)
+eeObj.WriteMem32(0x000FFA9C, 0xAC8305EC)
+eeObj.WriteMem32(0x000FFAA8, 0xAC83072C)
+eeObj.WriteMem32(0x000FFAAC, 0x3C030C03)
+eeObj.WriteMem32(0x000FFAB0, 0x3463FE4B)
+eeObj.WriteMem32(0x000FFAB4, 0xAC83015C) --First 4 vi02
+eeObj.WriteMem32(0x000FFAC0, 0xAC8302AC)
+eeObj.WriteMem32(0x000FFACC, 0xAC8303F4)
+eeObj.WriteMem32(0x000FFAD8, 0xAC830544)
+--Ret
+eeObj.WriteMem32(0x000FFC0C, 0x8C44FFF4)
+eeObj.WriteMem32(0x000FFC10, 0x8C45FFF0)
+eeObj.WriteMem32(0x000FFC14, 0x8C43FFF8)
+eeObj.WriteMem32(0x000FFC18, 0x0804632C)
+--VI01 AND VI02 to burn cycles in (000FF904) using advanceclock
+eeObj.WriteMem32(0x000FF914, 0x03E00008)
+eeObj.WriteMem32(0x000FF918, 0x241F0000)
+eeObj.WriteMem32(0x000FF920, 0x48C00800)
+eeObj.WriteMem32(0x000FF924, 0x1000FFF7)
+eeObj.WriteMem32(0x000FF92C, 0x48C01000)
+eeObj.WriteMem32(0x000FF930, 0x1000FFF4)
+end
+emuObj.AddVsyncHook(patcher)
+</pre>
+
 ====Ratchet And Clank Size Matters====
 '''CLI'''
 <br>All versions
 <pre>
-#Fix for audio looping at first level
---iop-cycle-scalar=0.1
---cdvd-sector-read-cycles=14000
+#Partial fix for audio looping at first level
+--iop-cycle-scalar=0.31
 </pre>
 
 ==== Rayman 3: Hoodlum havoc====
@@ -2541,7 +2961,7 @@ emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", { texMode=1  } )
 <pre>
 #Gamefix, change 1000 into 500 if you encounter gfx bugs
 --ee-hook=0x0028A578,AdvanceClock,,1000
-#Necessary Clamping
+#Necessary clamping for better timing
 --vu1-no-clamping=0
 --vu0-no-clamping=0
 #Animation timing fix
@@ -4747,548 +5167,6 @@ apiRequest(0.1)
 -- Not the best solution, but it works.
 eeInsnReplace(0x001023E0, 0xAE020000, 0x0)
 -- The graphical issues start somewhere in this function 0x00134B10
-</pre>
-
-====Ratchet 4 - Deadlocked====
-<br>'''CLI'''
-<br>Emu = '''War of the Monsters'''
-<pre>
-#Fix graphics
---gs-use-mipmap=1
---gs-kernel-cl="mipmap"
---gs-kernel-cl-up="mipmap2x2"
-#Fix gravity and other physics
---cop2-opt-flags=0
-#Fix VU0 sync (raise or lower it as convenient)
---ee-hook=0x000FF904,AdvanceClock,,395
-</pre>
-
-<br>'''LUA'''
-<br>SCUS-97465
-<br>Author:Scalerize
-<pre>
-apiRequest(0.1)
-
-local eeObj = getEEObject()
-local emuObj = getEmuObject()
-
-local patcher = function()
---jmp
-eeObj.WriteMem32(0x0012710C, 0x0803FE80)
-
---Check if patcher's needed
-eeObj.WriteMem32(0x000FFA00, 0x3C1B7120)
-eeObj.WriteMem32(0x000FFA04, 0x377BCDA8)
-eeObj.WriteMem32(0x000FFA08, 0x3C02000F)
-eeObj.WriteMem32(0x000FFA10, 0xAC44FFF4)
-eeObj.WriteMem32(0x000FFA0C, 0x3442FA00)
-eeObj.WriteMem32(0x000FFA14, 0xAC45FFF0)
-eeObj.WriteMem32(0x000FFA18, 0x8C44FFFC)
-eeObj.WriteMem32(0x000FFA1C, 0x8C840000)
-eeObj.WriteMem32(0x000FFA20, 0x149B0003)
-eeObj.WriteMem32(0x000FFA28, 0x08049C44)
-eeObj.WriteMem32(0x000FFA2C, 0x241B0000)
-eeObj.WriteMem32(0x000FFA34, 0xAC43FFF8)
-eeObj.WriteMem32(0x000FFA38, 0x3C040010)
-eeObj.WriteMem32(0x000FFA3C, 0x24840004)
-eeObj.WriteMem32(0x000FFA40, 0x8C830000)
-eeObj.WriteMem32(0x000FFA44, 0x107B0003)
-eeObj.WriteMem32(0x000FFA4C, 0x1000FFFB)
---Patcher
-eeObj.WriteMem32(0x000FFA54, 0xAC44FFFC)
-eeObj.WriteMem32(0x000FFA64, 0x3C030C03)
-eeObj.WriteMem32(0x000FFA68, 0x3463FE48)
-eeObj.WriteMem32(0x000FFA6C, 0xAC8300BC) --First 6 vi01
-eeObj.WriteMem32(0x000FFA78, 0xAC8301FC)
-eeObj.WriteMem32(0x000FFA84, 0xAC830354)
-eeObj.WriteMem32(0x000FFA90, 0xAC830494)
-eeObj.WriteMem32(0x000FFA9C, 0xAC8305EC)
-eeObj.WriteMem32(0x000FFAA8, 0xAC83072C)
-eeObj.WriteMem32(0x000FFAAC, 0x3C030C03)
-eeObj.WriteMem32(0x000FFAB0, 0x3463FE4B)
-eeObj.WriteMem32(0x000FFAB4, 0xAC83015C) --First 4 vi02
-eeObj.WriteMem32(0x000FFAC0, 0xAC8302AC)
-eeObj.WriteMem32(0x000FFACC, 0xAC8303F4)
-eeObj.WriteMem32(0x000FFAD8, 0xAC830544)
---Ret
-eeObj.WriteMem32(0x000FFC0C, 0x8C44FFF4)
-eeObj.WriteMem32(0x000FFC10, 0x8C45FFF0)
-eeObj.WriteMem32(0x000FFC14, 0x8C43FFF8)
-eeObj.WriteMem32(0x000FFC18, 0x08049C44)
---VI01 AND VI02 to burn cycles in (000FF904) using advanceclock
-eeObj.WriteMem32(0x000FF914, 0x03E00008)
-eeObj.WriteMem32(0x000FF918, 0x241F0000)
-eeObj.WriteMem32(0x000FF920, 0x48C00800)
-eeObj.WriteMem32(0x000FF924, 0x1000FFF7)
-eeObj.WriteMem32(0x000FF92C, 0x48C01000)
-eeObj.WriteMem32(0x000FF930, 0x1000FFF4)
-end
-emuObj.AddVsyncHook(patcher)
-
-
-</pre>
-
-====Ratchet and Clank 3: Up Your Arsenal====
-
-<br>SCUS97353
-<br>Author: Kozarovv
-<br>LUA
-<pre>
--- 23.07.2023 Added debug stuff that should print in klog.
--- This should help us figure out why patch fail. 
-
-apiRequest(0.1)
- 
-local em  = getEmuObject()
-local ee  = getEEObject()
- 
-local patcher = function()
-    
-    print("CONFIG: Entering patcher!")
-    local base = -1
-    local addr = -1
-    --local spmp = -1
-    
-    -- Check for SP/MP, not working yet. Only SP supported.
-    --spmp = ee.ReadMem32(0x13B3D8)
-    --if spmp == 0x0000202d then
-    --    addr = 0x13B3D8
-    --else
-    --    addr = 0x13B3D8
-    --end
- 
-    -- Search for base.
-    addr = 0x13B3D8
-    while addr < 0x1000000
-    do
-        if ee.ReadMem32(addr) == 0x8c810014 then
-            if ee.ReadMem32(addr + 4) == 0x3c067000 then
-                if ee.ReadMem32(addr + 8) == 0x7cdf1ff0 then
-                    base = addr
-                    break
-                else
-                    addr = addr + 4
-                end
-            else
-                addr = addr + 4
-            end
-        else
-            addr = addr + 4
-        end
-    end
-    
-    -- Shouldn't be the case.
-    if base == -1 then
-        print("CONFIG: Base not found!")
-        return
-    end
-    print(string.format("CONFIG: Base = %08x", base))
-    -- Patch ctc2 instances.
-    ee.WriteMem32(base + 0x490, 0x0C03FF0C) -- ctc2         $zero, vi2
-    ee.WriteMem32(base + 0x5e0, 0x0C03FF0C) -- ctc2         $zero, vi2
-    ee.WriteMem32(base + 0x728, 0x0C03FF0C) -- ctc2         $zero, vi2
-    ee.WriteMem32(base + 0x878, 0x0C03FF0C) -- ctc2         $zero, vi2
-    ee.WriteMem32(base + 0x9c0, 0x0C03FF0C) -- ctc2         $zero, vi2
-    ee.WriteMem32(base + 0xb18, 0x0C03FF0C) -- ctc2         $zero, vi2
- 
-    ee.WriteMem32(base + 0x3f0, 0x0C03FF00) -- ctc2         $zero, vi1
-    ee.WriteMem32(base + 0x530, 0x0C03FF00) -- ctc2         $zero, vi1
-    ee.WriteMem32(base + 0x688, 0x0C03FF00) -- ctc2         $zero, vi1
-    ee.WriteMem32(base + 0x7c8, 0x0C03FF00) -- ctc2         $zero, vi1
-    ee.WriteMem32(base + 0x920, 0x0C03FF00) -- ctc2         $zero, vi1
-    ee.WriteMem32(base + 0xa60, 0x0C03FF00) -- ctc2         $zero, vi1
- 
-    -- preserve ra
-    ee.WriteMem32(base + 0x22c, 0xACDF1FF4)
-    -- restore ra 
-    ee.WriteMem32(base + 0xcac, 0x8CDF1FF4)
-    -- lq --> lw
-    ee.WriteMem32(base + 0xd6c, 0x8c3f1ff0)
-    -- delay vcall by few cycles
-    ee.WriteMem32(base + 0x33c, 0x241C0020) -- modify to burn ee cycles after vcallms
-    ee.WriteMem32(base + 0x340, 0x141CFFFF)
-    ee.WriteMem32(base + 0x344, 0x279CFFFF)
-    print("CONFIG: Dynamic patches applied!")
-end
- 
-local delayer = function()
-    
-    local check = ee.ReadMem32(0x000ffc00)
-    if check ~= 0xfcd91ff8 then
-        print("CONFIG: Applying static patches!")
-    end
-    
-    -- loop vi1
-    ee.WriteMem32(0x000ffc00, 0xfcd91ff8)
-    ee.WriteMem32(0x000ffc04, 0x24190080) -- modify to burn ee cycles before ctc2
-    ee.WriteMem32(0x000ffc08, 0x1419ffff)
-    ee.WriteMem32(0x000ffc0c, 0x2739ffff)
-    ee.WriteMem32(0x000ffc10, 0x48c00800)
-    ee.WriteMem32(0x000ffc14, 0x24190020) -- modify to burn ee cycles after ctc2
-    ee.WriteMem32(0x000ffc18, 0x1419ffff)
-    ee.WriteMem32(0x000ffc1c, 0x2739ffff)
-    ee.WriteMem32(0x000ffc20, 0x03e00008)
-    ee.WriteMem32(0x000ffc24, 0xdcd91ff8)
-    
-    -- loop vi2
-    ee.WriteMem32(0x000ffc30, 0xfcd91ff8)
-    ee.WriteMem32(0x000ffc34, 0x24190080) -- modify to burn ee cycles before ctc2
-    ee.WriteMem32(0x000ffc38, 0x1419ffff)
-    ee.WriteMem32(0x000ffc3c, 0x2739ffff)
-    ee.WriteMem32(0x000ffc40, 0x48c01000)
-    ee.WriteMem32(0x000ffc44, 0x24190020) -- modify to burn ee cycles after ctc2
-    ee.WriteMem32(0x000ffc48, 0x1419ffff)
-    ee.WriteMem32(0x000ffc4c, 0x2739ffff)
-    ee.WriteMem32(0x000ffc50, 0x03e00008)
-    ee.WriteMem32(0x000ffc54, 0xdcd91ff8)
-    
-    -- This static patch is required because game don't use level loader to load main menu.
-    local new_game = ee.ReadMem32(0x3D58B8)
-    local check2   = ee.ReadMem32(0x3D5D48)
-    if new_game == 0x8c810014 and check2 ~= 0x0C03FF0C then
-        print("CONFIG: Applying static patch for new game!")
-        ee.WriteMem32(0x3D5D48, 0x0C03FF0C) -- ctc2         $zero, vi2
-        ee.WriteMem32(0x3D5E98, 0x0C03FF0C) -- ctc2         $zero, vi2
-        ee.WriteMem32(0x3D5FE0, 0x0C03FF0C) -- ctc2         $zero, vi2
-        ee.WriteMem32(0x3D6130, 0x0C03FF0C) -- ctc2         $zero, vi2
-        ee.WriteMem32(0x3D6278, 0x0C03FF0C) -- ctc2         $zero, vi2
-        ee.WriteMem32(0x3D63D0, 0x0C03FF0C) -- ctc2         $zero, vi2
- 
-        ee.WriteMem32(0x3D5CA8, 0x0C03FF00) -- ctc2         $zero, vi1
-        ee.WriteMem32(0x3D5DE8, 0x0C03FF00) -- ctc2         $zero, vi1
-        ee.WriteMem32(0x3D5F40, 0x0C03FF00) -- ctc2         $zero, vi1
-        ee.WriteMem32(0x3D6080, 0x0C03FF00) -- ctc2         $zero, vi1
-        ee.WriteMem32(0x3D61D8, 0x0C03FF00) -- ctc2         $zero, vi1
-        ee.WriteMem32(0x3D6318, 0x0C03FF00) -- ctc2         $zero, vi1
-        
-        -- preserve ra
-        ee.WriteMem32(0x3D5AE4, 0xACDF1FF4)
-        -- restore ra 
-        ee.WriteMem32(0x3D6564, 0x8CDF1FF4)
-        -- lq --> lw
-        ee.WriteMem32(0x3D6624, 0x8c3f1ff0)
-        -- vcall
-        ee.WriteMem32(0x3D5BF4, 0x241C0020) -- modify to burn ee cycles after vcallms
-        ee.WriteMem32(0x3D5BF8, 0x141CFFFF)
-        ee.WriteMem32(0x3D5BFC, 0x279CFFFF)
-    end
-end
- 
--- hook right after level loader, ideally this should be hook inside loader...
-ee.AddHook(0x13B3D8, 0x0000202D, patcher)
-em.AddVsyncHook(delayer)
-</pre>
-
-<br>'''CLI'''
-<br>Emu = '''War of the Monsters'''
-<br>Author: '''Scalerize'''
-<br>SCUS-97353
-<pre>
-#Fix graphics
---gs-use-mipmap=1
---gs-kernel-cl="mipmap"
---gs-kernel-cl-up="mipmap2x2"
-#Fix gravity and other physics
---cop2-opt-flags=0
-#Fix VU0 sync (raise or lower it as convenient)
---ee-hook=0x000FF904,AdvanceClock,,395
-</pre>
-<br>Author: Scalerize
-<br>LUA
-<pre>
-apiRequest(0.1)
-
-local eeObj = getEEObject()
-local emuObj = getEmuObject()
-
-local patcher = function()
---jmp
-eeObj.WriteMem32(0x0011F38C, 0x0803FE80)
-
---Check if patcher's needed
-eeObj.WriteMem32(0x000FFA00, 0x3C1B7120)
-eeObj.WriteMem32(0x000FFA04, 0x377BCDA8)
-eeObj.WriteMem32(0x000FFA08, 0x3C02000F)
-eeObj.WriteMem32(0x000FFA10, 0xAC44FFF4)
-eeObj.WriteMem32(0x000FFA0C, 0x3442FA00)
-eeObj.WriteMem32(0x000FFA14, 0xAC45FFF0)
-eeObj.WriteMem32(0x000FFA18, 0x8C44FFFC)
-eeObj.WriteMem32(0x000FFA1C, 0x8C840000)
-eeObj.WriteMem32(0x000FFA20, 0x149B0003)
-eeObj.WriteMem32(0x000FFA28, 0x08047CE4)
-eeObj.WriteMem32(0x000FFA2C, 0x241B0000)
-eeObj.WriteMem32(0x000FFA34, 0xAC43FFF8)
-eeObj.WriteMem32(0x000FFA38, 0x3C040010)
-eeObj.WriteMem32(0x000FFA3C, 0x24840004)
-eeObj.WriteMem32(0x000FFA40, 0x8C830000)
-eeObj.WriteMem32(0x000FFA44, 0x107B0003)
-eeObj.WriteMem32(0x000FFA4C, 0x1000FFFB)
---Patcher
-eeObj.WriteMem32(0x000FFA54, 0xAC44FFFC)
-eeObj.WriteMem32(0x000FFA64, 0x3C030C03)
-eeObj.WriteMem32(0x000FFA68, 0x3463FE48)
-eeObj.WriteMem32(0x000FFA6C, 0xAC8300BC) --First 6 vi01
-eeObj.WriteMem32(0x000FFA78, 0xAC8301FC)
-eeObj.WriteMem32(0x000FFA84, 0xAC830354)
-eeObj.WriteMem32(0x000FFA90, 0xAC830494)
-eeObj.WriteMem32(0x000FFA9C, 0xAC8305EC)
-eeObj.WriteMem32(0x000FFAA8, 0xAC83072C)
-eeObj.WriteMem32(0x000FFAAC, 0x3C030C03)
-eeObj.WriteMem32(0x000FFAB0, 0x3463FE4B)
-eeObj.WriteMem32(0x000FFAB4, 0xAC83015C) --First 4 vi02
-eeObj.WriteMem32(0x000FFAC0, 0xAC8302AC)
-eeObj.WriteMem32(0x000FFACC, 0xAC8303F4)
-eeObj.WriteMem32(0x000FFAD8, 0xAC830544)
---Ret
-eeObj.WriteMem32(0x000FFC0C, 0x8C44FFF4)
-eeObj.WriteMem32(0x000FFC10, 0x8C45FFF0)
-eeObj.WriteMem32(0x000FFC14, 0x8C43FFF8)
-eeObj.WriteMem32(0x000FFC18, 0x08047CE4)
---VI01 AND VI02 to burn cycles in (000FF904) using advanceclock
-eeObj.WriteMem32(0x000FF914, 0x03E00008)
-eeObj.WriteMem32(0x000FF918, 0x241F0000)
-eeObj.WriteMem32(0x000FF920, 0x48C00800)
-eeObj.WriteMem32(0x000FF924, 0x1000FFF7)
-eeObj.WriteMem32(0x000FF92C, 0x48C01000)
-eeObj.WriteMem32(0x000FF930, 0x1000FFF4)
-end
-emuObj.AddVsyncHook(patcher)
-
-
-</pre>
-
-====Ratchet & Clank 2 - Going Commando====
-<br>'''CLI'''
-<br>Emu = '''War of the Monsters'''
-<br>SCUS-97268
-<pre>
-#Fix graphics
---gs-use-mipmap=1
---gs-kernel-cl="mipmap"
---gs-kernel-cl-up="mipmap2x2"
-#Fix gravity and other physics
---cop2-opt-flags=0
-#Fix VU0 sync (raise or lower it as convenient)
---ee-hook=0x000FF904,AdvanceClock,,395
-</pre>
-
-'''LUA'''
-<br>SCUS-97268
-<pre>
-apiRequest(0.1)
-
-local eeObj = getEEObject()
-local emuObj = getEmuObject()
-
-local patcher = function()
---jmp
-eeObj.WriteMem32(0x0011B18C, 0x0803FE80)
-
---Check if patcher's needed
-eeObj.WriteMem32(0x000FFA00, 0x3C1B7120)
-eeObj.WriteMem32(0x000FFA04, 0x377BCDA8)
-eeObj.WriteMem32(0x000FFA08, 0x3C02000F)
-eeObj.WriteMem32(0x000FFA10, 0xAC44FFF4)
-eeObj.WriteMem32(0x000FFA0C, 0x3442FA00)
-eeObj.WriteMem32(0x000FFA14, 0xAC45FFF0)
-eeObj.WriteMem32(0x000FFA18, 0x8C44FFFC)
-eeObj.WriteMem32(0x000FFA1C, 0x8C840000)
-eeObj.WriteMem32(0x000FFA20, 0x149B0003)
-eeObj.WriteMem32(0x000FFA28, 0x08046C64)
-eeObj.WriteMem32(0x000FFA2C, 0x241B0000)
-eeObj.WriteMem32(0x000FFA34, 0xAC43FFF8)
-eeObj.WriteMem32(0x000FFA38, 0x3C040010)
-eeObj.WriteMem32(0x000FFA3C, 0x24840004)
-eeObj.WriteMem32(0x000FFA40, 0x8C830000)
-eeObj.WriteMem32(0x000FFA44, 0x107B0003)
-eeObj.WriteMem32(0x000FFA4C, 0x1000FFFB)
---Patcher
-eeObj.WriteMem32(0x000FFA54, 0xAC44FFFC)
-eeObj.WriteMem32(0x000FFA64, 0x3C030C03)
-eeObj.WriteMem32(0x000FFA68, 0x3463FE48)
-eeObj.WriteMem32(0x000FFA6C, 0xAC8300BC) --First 6 vi01
-eeObj.WriteMem32(0x000FFA78, 0xAC8301FC)
-eeObj.WriteMem32(0x000FFA84, 0xAC830354)
-eeObj.WriteMem32(0x000FFA90, 0xAC830494)
-eeObj.WriteMem32(0x000FFA9C, 0xAC8305EC)
-eeObj.WriteMem32(0x000FFAA8, 0xAC83072C)
-eeObj.WriteMem32(0x000FFAAC, 0x3C030C03)
-eeObj.WriteMem32(0x000FFAB0, 0x3463FE4B)
-eeObj.WriteMem32(0x000FFAB4, 0xAC83015C) --First 4 vi02
-eeObj.WriteMem32(0x000FFAC0, 0xAC8302AC)
-eeObj.WriteMem32(0x000FFACC, 0xAC8303F4)
-eeObj.WriteMem32(0x000FFAD8, 0xAC830544)
---Ret
-eeObj.WriteMem32(0x000FFC0C, 0x8C44FFF4)
-eeObj.WriteMem32(0x000FFC10, 0x8C45FFF0)
-eeObj.WriteMem32(0x000FFC14, 0x8C43FFF8)
-eeObj.WriteMem32(0x000FFC18, 0x08046C64)
---VI01 AND VI02 to burn cycles in (000FF904) using advanceclock
-eeObj.WriteMem32(0x000FF914, 0x03E00008)
-eeObj.WriteMem32(0x000FF918, 0x241F0000)
-eeObj.WriteMem32(0x000FF920, 0x48C00800)
-eeObj.WriteMem32(0x000FF924, 0x1000FFF7)
-eeObj.WriteMem32(0x000FF92C, 0x48C01000)
-eeObj.WriteMem32(0x000FF930, 0x1000FFF4)
-end
-emuObj.AddVsyncHook(patcher)
-
-</pre>
-
-<br>'''CLI'''
-<br>Emu = '''War of the Monsters'''
-<br>SCES-51607
-<pre>
---gs-use-mipmap=1
---gs-kernel-cl="mipmap"
---gs-kernel-cl-up="mipmap2x2"
-#Fix VU0 sync (raise or lower it as convenient)
---ee-hook=0x000FF918,AdvanceClock,,386
-</pre>
-
-<br>'''LUA'''
-<br>SCES-51607
-<pre>
-apiRequest(0.1)
-
-local eeObj = getEEObject()
-local emuObj = getEmuObject()
-
-local patcher = function()
---Initial jmp
-eeObj.WriteMem32(0x0011B1AC, 0x0C03FE80)
---Check if patcher's needed
-eeObj.WriteMem32(0x000FFA00, 0x3C1B000F)
-eeObj.WriteMem32(0x000FFA04, 0x377BFA00)
-eeObj.WriteMem32(0x000FFA08, 0xAF62FFFC)
-eeObj.WriteMem32(0x000FFA0C, 0xAF63FFF8)
-eeObj.WriteMem32(0x000FFA10, 0xAF64FFF4)
-eeObj.WriteMem32(0x000FFA14, 0x3C020C03)
-eeObj.WriteMem32(0x000FFA18, 0x3442FE53)
-eeObj.WriteMem32(0x000FFA1C, 0x8F63FFE8)
-eeObj.WriteMem32(0x000FFA20, 0x246305E0)
-eeObj.WriteMem32(0x000FFA24, 0x8C630000)
-eeObj.WriteMem32(0x000FFA28, 0x1062FFDF)
---Create variable and start the patcher
-eeObj.WriteMem32(0x000FFA2C, 0x3C027829)
-eeObj.WriteMem32(0x000FFA30, 0x34420010)
-eeObj.WriteMem32(0x000FFA34, 0x3C030010)
-eeObj.WriteMem32(0x000FFA38, 0x8C640000)
-eeObj.WriteMem32(0x000FFA3C, 0x10820003)
-eeObj.WriteMem32(0x000FFA44, 0x24630004)
-eeObj.WriteMem32(0x000FFA48, 0x1000FFFB)
-eeObj.WriteMem32(0x000FFA50, 0xAF63FFE8)
---VI01 patcher
-eeObj.WriteMem32(0x000FFA54, 0x3C020C03)
-eeObj.WriteMem32(0x000FFA58, 0x3442FE50)
-eeObj.WriteMem32(0x000FFA5C, 0xAC620158)
-eeObj.WriteMem32(0x000FFA60, 0xAC620298)
-eeObj.WriteMem32(0x000FFA64, 0xAC6203F0)
-eeObj.WriteMem32(0x000FFA68, 0xAC620530)
-eeObj.WriteMem32(0x000FFA6C, 0xAC620688)
-eeObj.WriteMem32(0x000FFA70, 0xAC6207C8)
---VI02 patcher
-eeObj.WriteMem32(0x000FFA74, 0x3C020C03)
-eeObj.WriteMem32(0x000FFA78, 0x3442FE53)
-eeObj.WriteMem32(0x000FFA7C, 0xAC6201F8)
-eeObj.WriteMem32(0x000FFA80, 0xAC620348)
-eeObj.WriteMem32(0x000FFA84, 0xAC620490)
-eeObj.WriteMem32(0x000FFA88, 0xAC6205E0)
---Ret
-eeObj.WriteMem32(0x000FF9A8, 0x8F62FFFC)
-eeObj.WriteMem32(0x000FF9AC, 0x8F63FFF8)
-eeObj.WriteMem32(0x000FF9B0, 0x8F64FFF4)
-eeObj.WriteMem32(0x000FF9BC, 0x241B0000)
-eeObj.WriteMem32(0x000FF9C0, 0x08047D78)
---B to ret
-eeObj.WriteMem32(0x000FFABC, 0x1000FFBA)
--- CTC2 cmnds
-eeObj.WriteMem32(0x000FF928, 0x03E00008)
-eeObj.WriteMem32(0x000FF92C, 0x241F0000)
-eeObj.WriteMem32(0x000FF940, 0x48C00800)
-eeObj.WriteMem32(0x000FF944, 0x1000FFF4)
-eeObj.WriteMem32(0x000FF94C, 0x48C01000)
-eeObj.WriteMem32(0x000FF950, 0x1000FFF1)
-end
-emuObj.AddVsyncHook(patcher)
-</pre>
-
-====Ratchet & Clank 1====
-<br>'''CLI'''
-<br>Emu = '''War of the Monsters'''
-<br>SCUS-97199
-<pre>
-#Fix graphics
---gs-use-mipmap=1
---gs-kernel-cl="mipmap"
---gs-kernel-cl-up="mipmap2x2"
-#Fix gravity and other physics
---cop2-opt-flags=0
-#Fix VU0 sync (raise or lower it as convenient)
---ee-hook=0x000FF904,AdvanceClock,,385
-</pre>
-
-'''LUA'''
-<br>SCUS-97199
-<br>Author:Scalerize
-<pre>
-apiRequest(0.1)
-
-local eeObj = getEEObject()
-local emuObj = getEmuObject()
-
-local patcher = function()
---jmp
-eeObj.WriteMem32(0x00118CAC, 0x0803FE80)
-
---Check if patcher's needed
-eeObj.WriteMem32(0x000FFA00, 0x3C1B7120)
-eeObj.WriteMem32(0x000FFA04, 0x377BCDA8)
-eeObj.WriteMem32(0x000FFA08, 0x3C02000F)
-eeObj.WriteMem32(0x000FFA10, 0xAC44FFF4)
-eeObj.WriteMem32(0x000FFA0C, 0x3442FA00)
-eeObj.WriteMem32(0x000FFA14, 0xAC45FFF0)
-eeObj.WriteMem32(0x000FFA18, 0x8C44FFFC)
-eeObj.WriteMem32(0x000FFA1C, 0x8C840000)
-eeObj.WriteMem32(0x000FFA20, 0x149B0003)
-eeObj.WriteMem32(0x000FFA28, 0x0804632C)
-eeObj.WriteMem32(0x000FFA2C, 0x241B0000)
-eeObj.WriteMem32(0x000FFA34, 0xAC43FFF8)
-eeObj.WriteMem32(0x000FFA38, 0x3C040010)
-eeObj.WriteMem32(0x000FFA3C, 0x24840004)
-eeObj.WriteMem32(0x000FFA40, 0x8C830000)
-eeObj.WriteMem32(0x000FFA44, 0x107B0003)
-eeObj.WriteMem32(0x000FFA4C, 0x1000FFFB)
---Patcher
-eeObj.WriteMem32(0x000FFA54, 0xAC44FFFC)
-eeObj.WriteMem32(0x000FFA64, 0x3C030C03)
-eeObj.WriteMem32(0x000FFA68, 0x3463FE48)
-eeObj.WriteMem32(0x000FFA6C, 0xAC8300BC) --First 6 vi01
-eeObj.WriteMem32(0x000FFA78, 0xAC8301FC)
-eeObj.WriteMem32(0x000FFA84, 0xAC830354)
-eeObj.WriteMem32(0x000FFA90, 0xAC830494)
-eeObj.WriteMem32(0x000FFA9C, 0xAC8305EC)
-eeObj.WriteMem32(0x000FFAA8, 0xAC83072C)
-eeObj.WriteMem32(0x000FFAAC, 0x3C030C03)
-eeObj.WriteMem32(0x000FFAB0, 0x3463FE4B)
-eeObj.WriteMem32(0x000FFAB4, 0xAC83015C) --First 4 vi02
-eeObj.WriteMem32(0x000FFAC0, 0xAC8302AC)
-eeObj.WriteMem32(0x000FFACC, 0xAC8303F4)
-eeObj.WriteMem32(0x000FFAD8, 0xAC830544)
---Ret
-eeObj.WriteMem32(0x000FFC0C, 0x8C44FFF4)
-eeObj.WriteMem32(0x000FFC10, 0x8C45FFF0)
-eeObj.WriteMem32(0x000FFC14, 0x8C43FFF8)
-eeObj.WriteMem32(0x000FFC18, 0x0804632C)
---VI01 AND VI02 to burn cycles in (000FF904) using advanceclock
-eeObj.WriteMem32(0x000FF914, 0x03E00008)
-eeObj.WriteMem32(0x000FF918, 0x241F0000)
-eeObj.WriteMem32(0x000FF920, 0x48C00800)
-eeObj.WriteMem32(0x000FF924, 0x1000FFF7)
-eeObj.WriteMem32(0x000FF92C, 0x48C01000)
-eeObj.WriteMem32(0x000FF930, 0x1000FFF4)
-end
-emuObj.AddVsyncHook(patcher)
 </pre>
 
 ====Robot Alchemic Drive====
