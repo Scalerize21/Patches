@@ -1,0 +1,5 @@
+Fifa Street 2 - SLUS-21369
+
+//Corrupted flags fix
+//SH to SW
+patch=1,EE,00331CB0,word,AC900034
