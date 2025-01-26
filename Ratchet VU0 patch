@@ -45,7 +45,7 @@ patch=1,EE,000FF9E8,word,1000FFF8
 patch=1,EE,000FF9F0,word,48C01000
 patch=1,EE,000FF9F4,word,1000FFF5
 
-#Address-specific part of the code. Use only specific one.
+#Address-specific part of the code. Use only a specific one.
 ==
 ##Ratchet (1) SCUS-97199
 
