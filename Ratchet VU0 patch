@@ -44,6 +44,11 @@ patch=1,EE,000FF9E8,word,1000FFF8
 #VI02
 patch=1,EE,000FF9F0,word,48C01000
 patch=1,EE,000FF9F4,word,1000FFF5
+#Cycle burner
+patch=1,EE,000FF9CC,word,241B00B0
+patch=1,EE,000FF9D0,word,277BFFFF
+patch=1,EE,000FF9D4,word,1760FFFE
+
 
 #Address-specific part of the code. Use only a specific one.
 ==
@@ -54,14 +59,12 @@ patch=1,EE,00118CCC,word,0C03FE80
 #Return (OPCODE must be changed from one ratchet game to another)
 patch=1,EE,000FFBA4,word,08047598
 ==
-
 ##Going commando (2) SCUS-97268
 
 #Initial jump (Address must be changed from one ratchet game to another)
 patch=1,EE,0011B1AC,word,0C03FE80
 #Return (OPCODE must be changed from one ratchet game to another)
 patch=1,EE,000FFBA4,word,08047D78
-
 
 ==
 
@@ -71,7 +74,6 @@ patch=1,EE,000FFBA4,word,08047D78
 patch=1,EE,0011F3AC,word,0C03FE80
 #Return (OPCODE must be changed from one ratchet game to another)
 patch=1,EE,000FFBA4,word,08049248
-
 
 ==
 
