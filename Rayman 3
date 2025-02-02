@@ -1,10 +1,9 @@
 VU0 sync patch
 SLUS-20601
-
-patch=1,EE,000FFA34,word,241B0090
-patch=1,EE,000FFA04,word,241B0090
-patch=1,EE,000FFA54,word,241B0090
-patch=1,EE,000FFA74,word,241B0090
+PNACH:
+patch=1,EE,000FFA34,word,241B0200
+patch=1,EE,000FFA04,word,241B0200
+patch=1,EE,000FFA54,word,241B0200
 
 patch=1,EE,000FFA00,word,48C83000
 patch=1,EE,000FFA08,word,277BFFFF
@@ -18,13 +17,40 @@ patch=1,EE,000FFA50,word,48D33000
 patch=1,EE,000FFA58,word,277BFFFF
 patch=1,EE,000FFA5C,word,1760FFFE
 patch=1,EE,000FFA64,word,080A29CA
-patch=1,EE,000FFA70,word,48C83000
-patch=1,EE,000FFA78,word,277BFFFF
-patch=1,EE,000FFA7C,word,1760FFFE
-patch=1,EE,000FFA84,word,080A2A06
 patch=1,EE,0028A4E8,word,0803FE80
 patch=1,EE,0028A57C,word,0803FE8C
 patch=1,EE,0028A720,word,0803FE94
-patch=1,EE,0028A810,word,0803FE9C
+
+
+LUA:
+
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+eeObj.WriteMem32(0x000FFA34, 0x241B0200)
+eeObj.WriteMem32(0x000FFA04, 0x241B0200)
+eeObj.WriteMem32(0x000FFA54, 0x241B0200)
+
+eeObj.WriteMem32(0x000FFA00, 0x48C83000)
+eeObj.WriteMem32(0x000FFA08, 0x277BFFFF)
+eeObj.WriteMem32(0x000FFA0C, 0x1760FFFE)
+eeObj.WriteMem32(0x000FFA14, 0x080A293C)
+eeObj.WriteMem32(0x000FFA30, 0x48C83000)
+eeObj.WriteMem32(0x000FFA38, 0x277BFFFF)
+eeObj.WriteMem32(0x000FFA3C, 0x1760FFFE)
+eeObj.WriteMem32(0x000FFA44, 0x080A2961)
+eeObj.WriteMem32(0x000FFA50, 0x48D33000)
+eeObj.WriteMem32(0x000FFA58, 0x277BFFFF)
+eeObj.WriteMem32(0x000FFA5C, 0x1760FFFE)
+eeObj.WriteMem32(0x000FFA64, 0x080A29CA)
+eeObj.WriteMem32(0x0028A4E8, 0x0803FE80) --missing gfx
+eeObj.WriteMem32(0x0028A57C, 0x0803FE8C) --freeze
+eeObj.WriteMem32(0x0028A720, 0x0803FE94) --sps
+end
+emuObj.AddVsyncHook(patcher)
+
 
 
