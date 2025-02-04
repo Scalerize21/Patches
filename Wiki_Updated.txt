@@ -463,6 +463,79 @@ emuObj.AddVsyncHook(patcher)
 
 # fix graphic and physics, there are still issue with fmv, and minor stering issue.</pre>
 
+====Coraline====
+'''CLI'''
+<br>All versions
+<pre>
+--gs-use-mipmap=1
+--gs-kernel-cl-up="mipmap2x2"
+--gs-scanout-offsetx=27
+--gs-scanout-offsety=27
+--safe-area-min=0.9
+--cdvd-sector-read-cycles=2000
+</pre>
+'''LUA'''
+<br>PAL
+<pre>
+-- Coraline
+-- emu used=KOF 98
+
+apiRequest(0.1)   
+
+local gpr = require("ee-gpr-alias")
+
+local eeObj  = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+
+--Widescreen hack 
+--Gameplay 16:9
+--eeObj.WriteMem32(0x0026432C,0x3C014440) --3C014480 (Increases hor. axis)
+
+--Render fix
+eeObj.WriteMem32(0x001A6548,0x3C013C2E) --3C013C0E
+
+--Get rid of black bar
+eeObj.WriteMem32(0x00225ea8,0x3c014000) --3c014299
+eeObj.WriteMem32(0x00225eac,0x00000000) --3421999a
+
+eeObj.WriteMem32(0x002644ec,0x3c014440) -- hor fov
+
+local pad_bits = emuObj.GetPad()
+
+local UP       = pad_bits &  0x0010
+local DOWN     = pad_bits &  0x0040
+local LEFT     = pad_bits &  0x0080
+local RIGHT    = pad_bits &  0x0020
+local Triangle = pad_bits &  0x1000
+local Cross    = pad_bits &  0x4000
+local Square   = pad_bits &  0x8000
+local Circle   = pad_bits &  0x2000
+local L1       = pad_bits &  0x0400
+local L2       = pad_bits &  0x0100
+local L3       = pad_bits &  0x0002
+local R1       = pad_bits &  0x0800
+local R2       = pad_bits &  0x0200
+local R3       = pad_bits &  0x0004
+local Select   = pad_bits &  0x0001
+local Start    = pad_bits &  0x0008
+
+if (R1 ~= 0 and LEFT ~= 0) then --L3 Normal Screen
+   eeObj.WriteMem32(0x0026432C,0x3C014480) -- original value
+end
+
+if (R1 ~= 0 and RIGHT ~= 0) then --R3 Widescreen Screen
+   eeObj.WriteMem32(0x0026432C,0x3C014440) --3C014480 (Increases hor. axis)
+end
+
+emuObj.ThrottleMax()
+
+end
+
+emuObj.AddVsyncHook(patcher)
+</pre>
+
 ====Crash Bandicoot - Wrath of Cortex====
 '''''CLI'''''
 <br>SLUS20238 
@@ -744,6 +817,52 @@ emuObj.ThrottleMax() -- No negative.
 end
 
 emuObj.AddVsyncHook(patcher)
+</pre>
+
+====Dark Summit====
+'''CLI'''
+<br>All versions
+<pre>
+--host-display-mode=16:9
+--force-pal-60hz=1
+
+# Fahrenheit Emu used
+</pre>
+
+'''LUA'''
+<br>PAL - SLES50575
+<pre>
+-- Dark Summit (PAL)
+-- emu used=Fahrenheit
+apiRequest(0.1)    -- request version 0.1 API. Calling apiRequest() is mandatory.
+
+local emuObj = getEmuObject()
+local eeObj  = getEEObject()
+
+local WS = function()
+
+--Widescreen hack 16:9
+
+--X-Fov
+--02000446 280100ae 42080546
+eeObj.WriteMem32(0x003d37d0,0x08030000)
+
+eeObj.WriteMem32(0x000c0000,0x46040002)
+eeObj.WriteMem32(0x000c0004,0x3c013f40)
+eeObj.WriteMem32(0x000c0008,0x00000000)
+eeObj.WriteMem32(0x000c000c,0x4481f000)
+eeObj.WriteMem32(0x000c0010,0x461e0002)
+eeObj.WriteMem32(0x000c0014,0x080f4df5)
+
+--Render fix
+--003f013c 00a88144 0000b07f
+eeObj.WriteMem32(0x0036444c,0x3c013f2b) --3c013f00
+
+emuObj.ThrottleMax()
+
+end
+
+emuObj.AddVsyncHook(WS)
 </pre>
 
 ====Dead or Alive 2: Hardcore====
@@ -1072,6 +1191,59 @@ eeInsnReplace(0x230c14, 0x4bc0529c, 0x4beb03bc)
 #Vertical bars upscaling graphical glitch fix
 --gs-kernel-cl-up="fantavision"
 #RECVX emu was used.
+</pre>
+
+====Fifa Street 2====
+'''CLI'''
+<pre>
+#Speedhacks
+--ee-cycle-scalar=3.5
+--vu1-mpg-cycles=850
+--vu1-di-bits=0
+</pre>
+
+NTSC
+<br>'''LUA'''
+<pre>
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+--Fix textures.
+eeObj.WriteMem32(0x00331B9C, 0x0803FE80)
+eeObj.WriteMem32(0x000FFA00, 0x0080302D)
+eeObj.WriteMem32(0x000FFA04, 0x24030001)
+eeObj.WriteMem32(0x000FFA08, 0x84C7000C)
+eeObj.WriteMem32(0x000FFA0C, 0x84C2000E)
+eeObj.WriteMem32(0x000FFA10, 0x00E2102A)
+eeObj.WriteMem32(0x000FFA14, 0x10400011)
+eeObj.WriteMem32(0x000FFA18, 0xACC3007C)
+eeObj.WriteMem32(0x000FFA1C, 0x2408FFFF)
+eeObj.WriteMem32(0x000FFA20, 0x8CC30000)
+eeObj.WriteMem32(0x000FFA28, 0x00072880)
+eeObj.WriteMem32(0x000FFA2C, 0x24E70001)
+eeObj.WriteMem32(0x000FFA30, 0x00A31821)
+eeObj.WriteMem32(0x000FFA34, 0x8C620000)
+eeObj.WriteMem32(0x000FFA38, 0xA4400004)
+eeObj.WriteMem32(0x000FFA3C, 0x8CC30000)
+eeObj.WriteMem32(0x000FFA40, 0x00A32821)
+eeObj.WriteMem32(0x000FFA44, 0x8CA40000)
+eeObj.WriteMem32(0x000FFA48, 0xA4880034)
+eeObj.WriteMem32(0x000FFA4C, 0x84C2000E)
+eeObj.WriteMem32(0x000FFA50, 0x00E2102A)
+eeObj.WriteMem32(0x000FFA54, 0x5440FFF4)
+eeObj.WriteMem32(0x000FFA58, 0x8CC30000)
+eeObj.WriteMem32(0x000FFA5C, 0x94C20014)
+eeObj.WriteMem32(0x000FFA60, 0x94C40016)
+eeObj.WriteMem32(0x000FFA64, 0x94C3000C)
+eeObj.WriteMem32(0x000FFA6C, 0xA4C3000E)
+eeObj.WriteMem32(0x000FFA70, 0x080CC6F8)
+eeObj.WriteMem32(0x000FFA74, 0xA4C40012)
+end
+emuObj.AddVsyncHook(patcher)
+
 </pre>
 
 ====Fire Pro Wrestling Z™®====
@@ -2529,6 +2701,7 @@ emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", { texMode=1  } )
 ====Ratchet 4 - Deadlocked====
 <br>'''CLI'''
 <br>Emu = '''War of the Monsters'''
+<br>SCUS-97465
 <pre>
 #Fix graphics
 --gs-use-mipmap=1
@@ -2538,7 +2711,7 @@ emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", { texMode=1  } )
 --gs-upscale=none
 --gs-uprender=none
 #Looping music partial fix
---iop-cycle-scalar=0.31
+--iop-cycle-scalar=0.38
 #Fix gravity and other physics
 --cop2-opt-flags=0
 #Fix passage not showing up and glitchy ledge-hanging
@@ -2626,7 +2799,7 @@ emuObj.AddVsyncHook(patcher)
 --gs-upscale=none
 --gs-uprender=none
 #Looping music partial fix
---iop-cycle-scalar=0.31
+--iop-cycle-scalar=0.38
 #Fix gravity and other physics
 --cop2-opt-flags=0
 #Fix VU0 sync (raise or lower it as convenient. It is the fix that causes the slowdowns)
@@ -2709,7 +2882,7 @@ emuObj.AddVsyncHook(patcher)
 --gs-upscale=none
 --gs-uprender=none
 #Looping music partial fix
---iop-cycle-scalar=0.31
+--iop-cycle-scalar=0.38
 #Fix gravity and other physics
 --cop2-opt-flags=0
 #Fix VU0 sync (raise or lower it as convenient. It is the fix that causes the slowdowns)
@@ -2791,7 +2964,7 @@ emuObj.AddVsyncHook(patcher)
 --gs-upscale=none
 --gs-uprender=none
 #Looping music partial fix
---iop-cycle-scalar=0.31
+--iop-cycle-scalar=0.38
 #Fix VU0 sync (raise or lower it as convenient. It is the fix that causes the slowdowns)
 --ee-hook=0x000FF918,AdvanceClock,,386
 </pre>
@@ -2876,7 +3049,7 @@ emuObj.AddVsyncHook(patcher)
 --gs-upscale=none
 --gs-uprender=none
 #Looping music partial fix
---iop-cycle-scalar=0.31
+--iop-cycle-scalar=0.38
 #Fix gravity and other physics
 --cop2-opt-flags=0
 #Fix VU0 sync (raise or lower it as convenient. It is the fix that causes the slowdowns)
@@ -2951,7 +3124,7 @@ emuObj.AddVsyncHook(patcher)
 <br>All versions
 <pre>
 #Partial fix for audio looping at first level
---iop-cycle-scalar=0.31
+--iop-cycle-scalar=0.38
 </pre>
 
 ==== Rayman 3: Hoodlum havoc====
@@ -3051,6 +3224,62 @@ emuObj.AddVsyncHook(patcher)
 </pre>
 
 ====Rayman M (Arena)====
+<br>'''CLI'''
+<br>SLUS-20272
+<pre>
+#Fix sps
+--vu0-no-clamping=0
+--vu1-no-clamping=0
+</pre>
+
+<br>'''LUA'''
+<br>SLUS-20272
+<pre>
+apiRequest(0.1)
+
+local eeObj = getEEObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+--Fix VU0 timing.
+eeObj.WriteMem32(0x000FFA04, 0x24080200)
+eeObj.WriteMem32(0x000FFA24, 0x24080200)
+eeObj.WriteMem32(0x000FFA44, 0x24080200)
+eeObj.WriteMem32(0x000FFA64, 0x24080200)
+eeObj.WriteMem32(0x000FFA88, 0x24080200)
+eeObj.WriteMem32(0x001DEB94, 0x0803FE80)
+eeObj.WriteMem32(0x001DEC54, 0x0803FE88)
+eeObj.WriteMem32(0x001DF078, 0x0803FE90)
+eeObj.WriteMem32(0x001DF07C, 0x00000000)
+eeObj.WriteMem32(0x001DF0B4, 0x0803FE98)
+eeObj.WriteMem32(0x001DF150, 0x0803FEA0)
+eeObj.WriteMem32(0x001DF154, 0x00000000)
+eeObj.WriteMem32(0x000FFA00, 0x48C83000)
+eeObj.WriteMem32(0x000FFA08, 0x2508FFFF)
+eeObj.WriteMem32(0x000FFA0C, 0x1500FFFE)
+eeObj.WriteMem32(0x000FFA14, 0x08077AE7)
+eeObj.WriteMem32(0x000FFA20, 0x48C83000)
+eeObj.WriteMem32(0x000FFA28, 0x2508FFFF)
+eeObj.WriteMem32(0x000FFA2C, 0x1500FFFE)
+eeObj.WriteMem32(0x000FFA34, 0x08077B16)
+eeObj.WriteMem32(0x000FFA40, 0x48C83000)
+eeObj.WriteMem32(0x000FFA48, 0x2508FFFF)
+eeObj.WriteMem32(0x000FFA4C, 0x1500FFFE)
+eeObj.WriteMem32(0x000FFA54, 0x08077C20)
+eeObj.WriteMem32(0x000FFA58, 0x0000000F)
+eeObj.WriteMem32(0x000FFA60, 0x48C83000)
+eeObj.WriteMem32(0x000FFA68, 0x2508FFFF)
+eeObj.WriteMem32(0x000FFA6C, 0x1500FFFE)
+eeObj.WriteMem32(0x000FFA74, 0x08077C2F)
+eeObj.WriteMem32(0x000FFA80, 0x24080002)
+eeObj.WriteMem32(0x000FFA84, 0x48C83000)
+eeObj.WriteMem32(0x000FFA8C, 0x2508FFFF)
+eeObj.WriteMem32(0x000FFA90, 0x1500FFFE)
+eeObj.WriteMem32(0x000FFA98, 0x08077C57)
+end
+emuObj.AddVsyncHook(patcher)
+</pre>
+
 <br>'''SLES-50457'''
 <br>'''CLI'''
 <pre>
@@ -3060,7 +3289,7 @@ emuObj.AddVsyncHook(patcher)
 --mtap1=always
 </pre>
 <br>'''LUA'''
-<br>Pal
+<br>SLES-50457
 <pre>
 -- Rayman M (SLES-50457)
 -- Fix by Kozarovv
@@ -3906,6 +4135,19 @@ ALL
 --gs-kernel-cl-up="up2x2skipinterp"
 #Fix for graphical glitches.</pre>
 
+====Superman - Shadow of Apokolips====
+'''CLI'''
+<br>Emu = Jak X
+<pre>
+#Freeze fix
+--vu0-no-clamping=0
+--cop2-opt-vf00=0
+#Miscolored cape fix
+--vu1-no-clamping=0
+#Sps fix
+--gs-vert-precision=8
+</pre>
+
 ====Sword of ETheria====
 '''CLI'''
 <br>All versions
@@ -4555,6 +4797,24 @@ All versions
 --gs-use-mipmap=1
 #Fix for texture glitches</pre>
 
+====Wild Arms 4====
+'''CLI'''
+<br>NTSC
+<pre>
+#Fatal Fury emu
+#Gamefixes
+--vu-hack-triace=1
+--iop-hook=0xAD808,AdvanceClock,,3000
+</pre>
+
+====Wild Arms 5====
+'''CLI'''
+<br>SLUS-21615
+<pre>
+#Emu = Destroy All Humans
+--iop-hook=0x000AD968,AdvanceClock,3000
+</pre>
+
 ====WinBack: Covert Operations====
 All versions
 <br>CLI
@@ -4563,6 +4823,7 @@ All versions
 --cop2-no-clamping=0
 
 #Fix for texture glitches</pre>
+
 ====World Series of Poker - Tournament of Champions====
 <br>LUA
 <br>SLUS-21491
@@ -4727,79 +4988,6 @@ NTSC/U
 --gs-kernel-cl-up="clutmerge2x2"
 </pre>
 
-====Coraline====
-'''CLI'''
-<br>All versions
-<pre>
---gs-use-mipmap=1
---gs-kernel-cl-up="mipmap2x2"
---gs-scanout-offsetx=27
---gs-scanout-offsety=27
---safe-area-min=0.9
---cdvd-sector-read-cycles=2000
-</pre>
-'''LUA'''
-<br>PAL
-<pre>
--- Coraline
--- emu used=KOF 98
-
-apiRequest(0.1)   
-
-local gpr = require("ee-gpr-alias")
-
-local eeObj  = getEEObject()
-local emuObj = getEmuObject()
-
-local patcher = function()
-
---Widescreen hack 
---Gameplay 16:9
---eeObj.WriteMem32(0x0026432C,0x3C014440) --3C014480 (Increases hor. axis)
-
---Render fix
-eeObj.WriteMem32(0x001A6548,0x3C013C2E) --3C013C0E
-
---Get rid of black bar
-eeObj.WriteMem32(0x00225ea8,0x3c014000) --3c014299
-eeObj.WriteMem32(0x00225eac,0x00000000) --3421999a
-
-eeObj.WriteMem32(0x002644ec,0x3c014440) -- hor fov
-
-local pad_bits = emuObj.GetPad()
-
-local UP       = pad_bits &  0x0010
-local DOWN     = pad_bits &  0x0040
-local LEFT     = pad_bits &  0x0080
-local RIGHT    = pad_bits &  0x0020
-local Triangle = pad_bits &  0x1000
-local Cross    = pad_bits &  0x4000
-local Square   = pad_bits &  0x8000
-local Circle   = pad_bits &  0x2000
-local L1       = pad_bits &  0x0400
-local L2       = pad_bits &  0x0100
-local L3       = pad_bits &  0x0002
-local R1       = pad_bits &  0x0800
-local R2       = pad_bits &  0x0200
-local R3       = pad_bits &  0x0004
-local Select   = pad_bits &  0x0001
-local Start    = pad_bits &  0x0008
-
-if (R1 ~= 0 and LEFT ~= 0) then --L3 Normal Screen
-   eeObj.WriteMem32(0x0026432C,0x3C014480) -- original value
-end
-
-if (R1 ~= 0 and RIGHT ~= 0) then --R3 Widescreen Screen
-   eeObj.WriteMem32(0x0026432C,0x3C014440) --3C014480 (Increases hor. axis)
-end
-
-emuObj.ThrottleMax()
-
-end
-
-emuObj.AddVsyncHook(patcher)
-</pre>
-
 ====Total Overdose====
 '''CLI'''
 <br>All versions
@@ -4848,52 +5036,6 @@ emuObj.SetGsTitleFix( "forceSimpleFetch", "reserved", { texMode=2 } )
 
 emuObj.SetGsTitleFix( "forceSimpleFetch",  "reserved", {psm=0} )
 emuObj.SetGsTitleFix( "fetchFromCurrBuff", "reserved", {psm=0} )
-</pre>
-
-====Dark Summit====
-'''CLI'''
-<br>All versions
-<pre>
---host-display-mode=16:9
---force-pal-60hz=1
-
-# Fahrenheit Emu used
-</pre>
-
-'''LUA'''
-<br>PAL - SLES50575
-<pre>
--- Dark Summit (PAL)
--- emu used=Fahrenheit
-apiRequest(0.1)    -- request version 0.1 API. Calling apiRequest() is mandatory.
-
-local emuObj = getEmuObject()
-local eeObj  = getEEObject()
-
-local WS = function()
-
---Widescreen hack 16:9
-
---X-Fov
---02000446 280100ae 42080546
-eeObj.WriteMem32(0x003d37d0,0x08030000)
-
-eeObj.WriteMem32(0x000c0000,0x46040002)
-eeObj.WriteMem32(0x000c0004,0x3c013f40)
-eeObj.WriteMem32(0x000c0008,0x00000000)
-eeObj.WriteMem32(0x000c000c,0x4481f000)
-eeObj.WriteMem32(0x000c0010,0x461e0002)
-eeObj.WriteMem32(0x000c0014,0x080f4df5)
-
---Render fix
---003f013c 00a88144 0000b07f
-eeObj.WriteMem32(0x0036444c,0x3c013f2b) --3c013f00
-
-emuObj.ThrottleMax()
-
-end
-
-emuObj.AddVsyncHook(WS)
 </pre>
 
 ====Nightshade====
@@ -5210,14 +5352,6 @@ It's supposed to -1, 0, or 1 the value of s1, but instead it's crashing the game
 00233CB4
 </pre>
 
-====Wild Arms 4====
-'''CLI'''
-<pre>
-#Fatal Fury emu
-#Gamefixes
---vu-hack-triace=1
---iop-hook=0xAD808,AdvanceClock,,3000
-</pre>
 
 ===sceTtyPrint===
 This should print some debug info in emulog/klog, pcsx2 a like. Pattern based on Smugglers Run 2 and Spiderman 3. So first test should be done with those games. Spiderman should print something like "Legal screen is 512 x 256." first. Smugglers Run 2 "Timezone=60". Assuming it work, this can give some valuable info about VIF1/GIF hangs, which are 50% of issues in those crappy emus. 
