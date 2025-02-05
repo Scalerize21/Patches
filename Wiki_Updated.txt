@@ -1934,6 +1934,15 @@ emuObj.AddVsyncHook(patcher)
 --ee-cycle-scalar=1.2
 </pre>
 
+====Jurassic Park - Operation Genesis====
+'''CLI'''
+<pre>
+#Fix some graphical corruptions
+--gs-kernel-cl="mipmap"
+--gs-kernel-cl-up="mipmap2x2"
+--gs-use-mipmap=1
+</pre>
+
 ====Killer7====
 '''''CLI'''''
 
@@ -2588,31 +2597,16 @@ emuObj.AddVsyncHook(patcher)
 </pre>
 
 ====Pac-Man World Rally====
+'''CLI'''
 <br>SLUS-21328
-<br>CLI
+<br>Emu = Jakv2
 <pre>
---vu1-no-clamping=1
---vu0-no-clamping=1
-</pre>
-SLUS-21328
-<br>LUA
-<pre>
-local gpr = require("ee-gpr-alias")
-
-apiRequest(0.1)
-
-local eeObj = getEEObject()
-local emuObj = getEmuObject()
-
-local patcher = function()
-eeObj.WriteMem32(0x0016DDE4,0x4A80AADC)
-eeObj.WriteMem32(0x0016DDEC,0x4B7103BC)
-eeObj.WriteMem32(0x0016DDD0,0x4B00A29C)
-eeObj.WriteMem32(0x0016DDD8,0x4AF103BC)
-
-end
-
-emuObj.AddVsyncHook(patcher)
+#Fix moving text
+--gs-force-bilinear=1
+#Fix missing graphics
+--vu1-no-clamping=0
+#Fix crashes
+--vu1-jr-cache-policy=newprog
 </pre>
 
 ====Phantasy Star Universe====
@@ -3242,18 +3236,15 @@ local emuObj = getEmuObject()
 
 local patcher = function()
 --Fix VU0 timing.
-eeObj.WriteMem32(0x000FFA04, 0x24080200)
-eeObj.WriteMem32(0x000FFA24, 0x24080200)
-eeObj.WriteMem32(0x000FFA44, 0x24080200)
-eeObj.WriteMem32(0x000FFA64, 0x24080200)
-eeObj.WriteMem32(0x000FFA88, 0x24080200)
+eeObj.WriteMem32(0x000FFA04, 0x240801B0)
+eeObj.WriteMem32(0x000FFA24, 0x240801B0)
+eeObj.WriteMem32(0x000FFA44, 0x240801B0)
+eeObj.WriteMem32(0x000FFA64, 0x240801B0)
 eeObj.WriteMem32(0x001DEB94, 0x0803FE80)
 eeObj.WriteMem32(0x001DEC54, 0x0803FE88)
 eeObj.WriteMem32(0x001DF078, 0x0803FE90)
 eeObj.WriteMem32(0x001DF07C, 0x00000000)
 eeObj.WriteMem32(0x001DF0B4, 0x0803FE98)
-eeObj.WriteMem32(0x001DF150, 0x0803FEA0)
-eeObj.WriteMem32(0x001DF154, 0x00000000)
 eeObj.WriteMem32(0x000FFA00, 0x48C83000)
 eeObj.WriteMem32(0x000FFA08, 0x2508FFFF)
 eeObj.WriteMem32(0x000FFA0C, 0x1500FFFE)
@@ -3271,11 +3262,6 @@ eeObj.WriteMem32(0x000FFA60, 0x48C83000)
 eeObj.WriteMem32(0x000FFA68, 0x2508FFFF)
 eeObj.WriteMem32(0x000FFA6C, 0x1500FFFE)
 eeObj.WriteMem32(0x000FFA74, 0x08077C2F)
-eeObj.WriteMem32(0x000FFA80, 0x24080002)
-eeObj.WriteMem32(0x000FFA84, 0x48C83000)
-eeObj.WriteMem32(0x000FFA8C, 0x2508FFFF)
-eeObj.WriteMem32(0x000FFA90, 0x1500FFFE)
-eeObj.WriteMem32(0x000FFA98, 0x08077C57)
 end
 emuObj.AddVsyncHook(patcher)
 </pre>
@@ -4808,11 +4794,19 @@ All versions
 </pre>
 
 ====Wild Arms 5====
-'''CLI'''
+'''LUA'''
 <br>SLUS-21615
 <pre>
-#Emu = Destroy All Humans
---iop-hook=0x000AD968,AdvanceClock,3000
+apiRequest(0.1)
+
+local iopObj = getIOPObject()
+local emuObj = getEmuObject()
+
+local patcher = function()
+--Just skip that part.
+iopObj.WriteMem32(0x000AC2BC, 0x100000DD)
+end
+emuObj.AddVsyncHook(patcher)
 </pre>
 
 ====WinBack: Covert Operations====
@@ -5339,11 +5333,12 @@ local emuObj = getEmuObject()
 local patcher = function()
 
 --Once it reaches to the TEQ, the game crashes.
-eeObj.WriteMem32(0x00231AF0, 0x0808C6AF)
+eeObj.WriteMem32(0x001D24E8, 0x0)
 
 end
 emuObj.AddVsyncHook(patcher)
 </pre>
+
 ====Forbidden Siren 2====
 '''CLI'''
 <br>NTSC
