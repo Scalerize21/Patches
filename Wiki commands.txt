@@ -144,6 +144,8 @@ Every PS2 emulator is programmed differently. Sometimes choosing the right emula
 |-
 | Jak and Daxter: The Precursor Legacy || Good compatibility with most PS2 games. It has a very high api version which means more Lua commands are supported. In addition, Jak emulators are one of the few that can use the '''--gs-adaptive-frameskip=1''' command. It is often referred to as "Jak v2"|| 2.2 || '''JakX,''' '''Jak 2,''' '''Jak 3,''' 
 |-
+| Jak x || Useful for games with GS issues. It fixed Superman - Shadow of Apokolips's sps. || || '''Jak,''' '''Jak 2,''' '''Jak 3,''' 
+|-
 | Art of Fighting Anthology || Similar to RECVX. It was successful in fixing "'''Coraline'''." Sometimes called "AOFA" || 2.0 ||
 |-
 | Resident Evil - Code: Veronica || Fixes games like '''Jackie chan Adventures, SpongeBob SquarePants: Creature From the Krust Krab, Pac-man World 3, Yu-Gi-Oh: Capsule monsters, SpongeBob's Atlantis SquarePantis''' freezing at a black/splash screen. Additionally, games requiring '''OPL's mode 2''' tend to have a higher chance of being playable under it. Often referred to as "RECVX" || 1.7 || '''Fatal Fury,''' '''Redfaction,''' '''AOFA.'''
@@ -158,7 +160,7 @@ Every PS2 emulator is programmed differently. Sometimes choosing the right emula
 |-
 | The King of Fighters 2000 || Seemingly one of the most GIF-accurate emus, it '''prevents Koei Tecmo games (Dynasty Warriors 5: Empires and Samurai Warriors 2) from suddenly freezing when battle starts. Moreover, it is likely the only emulator where '''Batman Begins''' does not crash.''' Often referred to as "KOF2000"|| 1.2 || '''Roguev1''', '''KOF98''', '''Okage'''
 |-
-| Destroy All Humans! || Fixed '''Tenchu: Fatal Shadows'''', and Veggietales crashing, as well as Bratz The Movie from freezing. || 0.1 || 
+| Destroy All Humans! || Fixed '''Tenchu: Fatal Shadows'''', and Veggietales crashing, as well as Bratz The Movie from freezing. This may be a result of a good GIF/VIF timing. || 0.1 || 
 |-
 | Destroy All Humans! 2 ||  || 0.7 || 
 |-
@@ -322,16 +324,16 @@ Some CLI commands have no effect, as they were added to the eboot.bin without be
 |-
 | --ee-cycle-scalar  || {{Universal}} ||Slowest cycles speed: 5.0<br>Normal cycles speed: 1.0<br>Fastest cycles speed: 0.1 || {{Float}} || Changes the cycle speed of the EE. It can benefit core sync or performance (lowering the cycle rate may affect FMVS). The default value for most emulators is ~1.0. It is highly sensitive, as any slight change may break or fix the game. (Dividing 100 with the entered value is how to find what EE clock speed percentage % the value is setting. For example, 100/5.00 = 20%) || --ee-cycle-scalar=1.0 
 |-
-| --ee-context-switch-cycles  || {{Exclusive}} || Accelerate cycles (360 => 0) <br>Decelerate cycles (361 => ∞ ) || {{4 Bytes}}||Its effects are mysterious. Possibly configures how many CPU cycles the emulator should run before switching between different tasks or threads. Does not work on Jak emulators. Default value is 360. Seems to be useful for Bee Movie, Metal Gear Solid 3, as well as others with IPU issues. It bears no effect on VU timing, but it may alter the core's timing with some DMA channels. || --ee-context-switch-cycles=2700?
+| --ee-context-switch-cycles  || {{Exclusive}} || Accelerate cycles (359 => 0) <br>Decelerate cycles (361 => ∞ ) || {{4 Bytes}}||Its effects are mysterious. Possibly delays EE startup when starting new tasks. Does not work on Jak emulators. Default value is 360. Seems to be useful for Bee Movie, Metal Gear Solid 3, as well as others with IPU issues. It bears no effect on VU timing, but it may alter the core's timing with some DMA channels. || --ee-context-switch-cycles=2700?
 |-
-| --ee-hook  || {{Variable}} || AdvanceClock<br>FastForwardClock<br>Mfifodrain || style="background:#212d9c; color:#ffffff;|4 Byte hex (offset),string,4 Byte hex (opcode),4 Byte Decimals (advanceclock value)|| Runs the specified functionality each time a selected EE offset is reached. FastForwardClock and AdvanceClock help fix core sync issues, but can be used as a speedhack. It is believed that AdvanceClock stalls the EE for a specified amount of cycles (numbers likely valued akin to eecyclescalar's), while FastForwardClock behaves similarly. They are commonly used on the offset directly succeeding an affected CTC2 instruction. For a mysterious reason, some offsets are ignored by AdvanceClock - it could be that this function only works on instructions reached after processing a branch instruction, likely specifically designed to work at both the start or end of a branch instruction (a loop). However, this is only the case for old emulators like King Of Fighters 2000 and War Of The Monsters. Newer ones such as Jak operate differently, where AdvanceClock only works at the end of a branch instruction (when it's false).<pre>
+| --ee-hook  || {{Variable}} || AdvanceClock<br>FastForwardClock<br>MfifoDrain<br>ForceEOB || style="background:#212d9c; color:#ffffff;|4 Byte hex (offset),string,4 Byte hex (opcode),4 Byte Decimals (advanceclock value)|| Runs the specified functionality each time a selected EE offset is reached. FastForwardClock and AdvanceClock help fix core sync issues, but can be used as a speedhack. AdvanceClock stalls the EE for a specified amount of cycles (in decimals), while FastForwardClock behaves similarly. They are commonly used on CTC2 instructions. FastoForwardClock can be used on any offset. However, some offsets are ignored by AdvanceClock - it could be that this function only works on instructions reached after processing a branch instruction, likely specifically designed to work at both the start or end of a branch instruction (a loop). However, this is only the case for old emulators like King Of Fighters 2000 and War Of The Monsters. Newer ones such as Jak operate differently, where AdvanceClock only works at the end of a branch instruction (when it's false).<pre>
 Advanceclock usage example:
 
 0x0 nop <-- Advancelock can work here on old emulators ✓
 0x4 nop <-- Advancelock cannot work here ✗
 0x8 beq zero,v1,0x0 <-- Advancelock cannot work here ✗
 0xC nop <-- Advancelock cannot work here ✗
-0x10 nop <-- Advancelock can work here on both old and new emulators ✓.</pre> Mfifodrain is still unknown, but only works on modern emus such as Jakv2. ||--ee-hook=0x0025A9F2,AdvanceClock,,500 <br>--ee-hook=0x0019F0AD,FastForwardClock
+0x10 nop <-- Advancelock can work here on both old and new emulators ✓.</pre> MfifoDrain is still unknown, but only works on modern emus such as Jakv2. However, it seems to somehow negatively impact performance. On Red Dead Revolver, it was used on two LW instructions grabbing data from 0x1000D010 and 0x1000D000. Both instructions were located at the start of a loop. ||--ee-hook=0x0025A9F2,AdvanceClock,,500 <br>--ee-hook=0x0019F0AD,FastForwardClock
 |-
 |-style="background-color:#D7EF54"
 |  ||  || || Game fixes || ||
@@ -467,9 +469,9 @@ Advanceclock usage example:
 |-style="background-color:#7698FF"
 |  || || || Speedhacks || ||
 |-
-| --cop2-opt-flags || {{Universal}} || 0, 1 ,2 || {{Semi-Binary}} || Optimize flags upon recompilation. 0 is the accurate option, 1 is mostly safe, 2 is unsafe. Setting it 0 improves FPU accuracy. For example, it fixed Ratchet's gravity issues. [https://github.com/PCSX2/pcsx2/blob/58f5a5b915915293b90e7e8f34c33f9c0424d1e8/pcsx2/x86/microVU_Misc.h#L280 More Info] || --cop2-opt-flags=0
+| --cop2-opt-flags || {{Universal}} || 0, 1 ,2 || {{Semi-Binary}} || Optimize flags upon recompilation. 0 is the accurate option, 1 is mostly safe, 2 is unsafe. Setting it to 0 improves FPU accuracy. For example, it fixed Ratchet's gravity issues. It is an insignificant speedhack which should always be set to 0. [https://github.com/PCSX2/pcsx2/blob/58f5a5b915915293b90e7e8f34c33f9c0424d1e8/pcsx2/x86/microVU_Misc.h#L280 More Info] || --cop2-opt-flags=0
 |- 
-| --cop2-opt-vf00 || {{Universal}} || 0, 1, 2 || {{Semi-Binary}} || Seems to be a hacky way of optimization through the vf00 register. || --cop2-opt-vf00=0
+| --cop2-opt-vf00 || {{Universal}} || 0, 1, 2 || {{Semi-Binary}} || Seems to be a hacky way of optimization through the vf00 register. Set to 1 by default, setting it to 0 fixed Superman Shadow of Apokolips freezing. It is an insignificant speedhack which should always be set to 0. || --cop2-opt-vf00=0
 |- 
 | --cop2-const-prop || {{Universal}} || 0, 1 || {{Binary}} || Disables or enables constant propagation. Can Be Used as speedhack for COP2 hungry games when set to 1 [https://github.com/PCSX2/pcsx2/blob/58f5a5b915915293b90e7e8f34c33f9c0424d1e8/pcsx2/x86/microVU_Misc.h#L312 More info] || --cop2-const-prop=1
 |- 
@@ -485,7 +487,7 @@ Advanceclock usage example:
 |- 
 | --cop2-accurate-mul-range || {{Universal}} || start,end offset (0x0 - 0x1FFFFFF) || style="background:#5c32a8; color:#ffffff;"|Hex combination || Accurate multiplication instructions for the COP2 in the specified range by using software floats rather than hardware floats (Offset range seems not to directly match EE's) || --cop2-accurate-mul-range=0x123456,0x134567
 |- 
-| --cop2-accurate-mul || {{Universal}} || 1 = Enabled<br>0 = Disabled || {{Binary}} || Allows the COP2 to accurately multiply for all offsets by using software floats rather than hardware floats. (Extremely slow) || --cop2-accurate-mul=1
+| --cop2-accurate-mul || {{Universal}} || 1 = Enabled<br>0 = Disabled || {{Binary}} || Allows the COP2 to accurately multiply for all offsets by using software floats rather than hardware floats. It is slightly slow. || --cop2-accurate-mul=1
 |- 
 | --cop2-accurate-addsub|| {{Universal}} ||  1 = Enabled<br>0 = Disabled || {{Binary}} || Allows the COP2 to accurately Add/Subtract for all offsets by using software floats rather than hardware floats. (Extremely slow) || --cop2-accurate-addsub=1
 |-
@@ -523,12 +525,12 @@ Advanceclock usage example:
 |-
 | --vu-xgkick-delay  || {{Universal}} || Default = 1<br>Limit is between (0 => 31)  || {{1 Byte}}|| Delay xgkick instruction execution. PCSX2 uses 6 cycles, PS3 uses 2-8 cycles depending on the game. A game with missing graphics will require a low value such as 0, while one that crashes might require a high value such as 7.|| --vu-xgkick-delay=8
 |-
-| --vu-custom-min-max   || {{Universal}} || 0, 1 || {{binary}} || Custom Max/Mini logic for denormals. Disabled on pcsx2 by default but enabled by default on a couple of emus such as jakv2. Disabling it could potentially restore missing graphics, as it tends to adjust VU timing.|| --vu-custom-min-max=0
+| --vu-custom-min-max   || {{Universal}} || 0, 1 || {{binary}} || Custom Max/Mini logic for denormals. Disabled on pcsx2 by default but enabled by default on a couple of emus such as jakv2. Disabling it could potentially restore missing graphics.|| --vu-custom-min-max=0
 |-
 |-style="background-color:#D7EF54"
 |  ||  || || Game fixes || ||
 |-
-| --vu-hack-triace   || {{Universal}} || 0, 1 || {{binary}} || A hack designed specifically for games developed by Tri Ace. Corrects the VU's addi calculation. Without it, the result will be one bit off, which is enough to break the game's decryption algo. || --vu-hack-triace=1
+| --vu-hack-triace   || {{Universal}} || 0, 1 || {{binary}} || A hack designed specifically for games developed by Tri Ace. Corrects the VU's addi calculation. Without it, the result will be one bit off, which is enough to break the game's decryption algo. Named by PCSX2 as "VuAddSubHack". || --vu-hack-triace=1
 |- 
 | --vu-branch-hazard  || {{Universal}} || 0, 1 || {{binary}} || This command relates to how the emulator handles branch hazards in the Vector Units (VU). Setting it to 0 might fix freezes at the expense of causing SPS in some games, while 1 might improve performance. Seems to be enabled by default. Disabling it prevented "'''Batman - Rise of Sin Tzu'''" from crashing|| --vu-branch-hazard=0
 |- 
@@ -572,7 +574,7 @@ Advanceclock usage example:
 |-style="background-color:#7698FF"
 |  || || Speedhacks || ||  ||
 |-
-| --vu1-mpg-cycles  || {{Universal}} || 1 - 65535 || {{2 Bytes}}||  Set initial speed for VU1 Micro-programs. 100 is the default value. Generally, if VU1 requirements were a bottleneck, increasing it will result in better performance while possibly breaking graphics and lowering internal frame rates, and decreasing it might result in the opposite. There is no one-size-fits-all solution, as lowering or raising could yield differing results. || --vu1-mpg-cycles=1000<br><pre> Symbols (They change values close to VU1-mpg-cycles' offset):
+| --vu1-mpg-cycles  || {{Universal}} || 1 - 65535 || {{2 Bytes}}||  Set initial speed for VU1 Micro-programs (delay VIF1 startup). 100 is the default value. Generally, if VU1 requirements were a bottleneck, increasing it will result in better performance while possibly breaking graphics and lowering internal frame rates, and decreasing it might result in the opposite. There is no one-size-fits-all solution, as lowering or raising could yield differing results. || --vu1-mpg-cycles=1000<br><pre> Symbols change values close to VU1-mpg-cycles' offset. Potentially, the vu1mpgcycles command sets the speed for every portion of the mpg. Thus, by using symbols, one could specify the speed for different specific portions of the mpg rather than the whole mpg. However, this is not limited to only altering the vu1mpgcycles' speed, as going further can change other parts of the emulator, such as eecyclescalar.
 
 $ goes to the specified succeeding offsets. $0 will go 2 bytes forward and change them. $1 will go 4 bytes forward and change the 2 bytes specified. For example, $0,$1 will change the 4 bytes ahead as the specified 2 bytes' value.
 
@@ -584,9 +586,9 @@ $ goes to the specified succeeding offsets. $0 will go 2 bytes forward and chang
 |-
 | --vu1-const-prop || {{Universal}} || 0, 1|| {{binary}} || Enabled by default. 0 will disable it and cause performance issues but with higher compatability.[https://github.com/PCSX2/pcsx2/blob/58f5a5b915915293b90e7e8f34c33f9c0424d1e8/pcsx2/x86/microVU_Misc.h#L312 More info] || --vu1-const-prop=1
 |-
-| --vu1-opt-flags || {{Universal}} || 0, 1, 2 ||  {{Semi-Binary}} || Optimize flags upon recompilation. 0 is the accurate option, 1 is mostly safe, 2 is unsafe. Setting it to 0 may fix crashes or sps. [https://github.com/PCSX2/pcsx2/blob/58f5a5b915915293b90e7e8f34c33f9c0424d1e8/pcsx2/x86/microVU_Misc.h#L280 More Info] || --vu1-opt-flags=0
+| --vu1-opt-flags || {{Universal}} || 0, 1, 2 ||  {{Semi-Binary}} || Optimize flags upon recompilation. 0 is the accurate option, 1 is mostly safe, 2 is unsafe. Setting it to 0 may fix crashes or sps. It is an insignificant speedhack which should always be set to 0. [https://github.com/PCSX2/pcsx2/blob/58f5a5b915915293b90e7e8f34c33f9c0424d1e8/pcsx2/x86/microVU_Misc.h#L280 More Info] || --vu1-opt-flags=0
 |- 
-| --vu1-opt-vf00 || {{Universal}} || 0, 1, 2 || {{Semi-Binary}} || Seems to be a hacky way of optimization through the vf00 register. || --vu1-opt-vf00=0
+| --vu1-opt-vf00 || {{Universal}} || 0, 1, 2 || {{Semi-Binary}} || Seems to be a hacky way of optimization through the vf00 register. It is an insignificant speedhack which should always be set to 0. || --vu1-opt-vf00=0
 |- 
 | --vu1-jr-cache-policy || {{Exclusive}} || newprog, sameprog, auto, new, same || {{string}} || PCSX2 uses newprog as the default setting. Setting it into newprog has been proven to fix some crashes, and reduce stuttering. [https://github.com/PCSX2/pcsx2/blob/58f5a5b915915293b90e7e8f34c33f9c0424d1e8/pcsx2/x86/microVU_Misc.h#L319 Info] || --vu1-jr-cache-policy=newprog
 |-
@@ -637,7 +639,7 @@ $ goes to the specified succeeding offsets. $0 will go 2 bytes forward and chang
 |-style="background-color:#7698FF"
 |  || || Speedhacks || || ||
 |-
-| --vu0-mpg-cycles||  {{Exclusive}} || 1 - 65535  || {{2 Bytes}} || Set initial cycle speed for VU0 Micro-programs. 100 is the default value. It is not available in older emulators such as War of the Monsters. Raising the value helps COP2 timing, while lowering does the opposite.|| --vu0-mpg-cycles=1000<br><pre> Symbols (They change values close to VU0-mpg-cycles' offset):
+| --vu0-mpg-cycles||  {{Exclusive}} || 1 - 65535  || {{2 Bytes}} || Set initial cycle speed for VU0 Micro-programs (delay VIF0 startup). 100 is the default value. It is not available in older emulators such as War of the Monsters. Raising the value helps COP2 timing, while lowering does the opposite.|| --vu0-mpg-cycles=1000<br><pre> Symbols (They change values close to VU0-mpg-cycles' offset):
 
 $ goes to the specified succeeding offsets. $0 will go 2 bytes forward and changes them. $1 will go 4 bytes forward and changes the 2 bytes specified. For example, $0,$1 will change the 4 bytes ahead as the specified 2 bytes value.
 
@@ -649,9 +651,9 @@ $ goes to the specified succeeding offsets. $0 will go 2 bytes forward and chang
 |-
 | --vu0-const-prop || {{Universal}} || 0, 1 || {{binary}} || Constant propagation, can be used as speedhack for VU0 hungry games when set to 1 [https://github.com/PCSX2/pcsx2/blob/58f5a5b915915293b90e7e8f34c33f9c0424d1e8/pcsx2/x86/microVU_Misc.h#L312 More info] || --vu0-const-prop=1
 |- 
-| --vu0-opt-vf00 || {{Universal}} || 0, 1, 2 || {{Semi-Binary}} || Seems to be a hacky way of optimization through the vf00 register. || --vu0-opt-vf00=0
+| --vu0-opt-vf00 || {{Universal}} || 0, 1, 2 || {{Semi-Binary}} || Seems to be a hacky way of optimization through the vf00 register. It is an insignificant speedhack which should always be set to 0. || --vu0-opt-vf00=0
 |- 
-| --vu0-opt-flags || {{Universal}} || 0, 1, 2 || {{Semi-Binary}} || Optimize flags upon recompilation. 0 is the accurate option, 1 is mostly safe, 2 is unsafe. Setting it to 0 may fix crashes or sps.[https://github.com/PCSX2/pcsx2/blob/58f5a5b915915293b90e7e8f34c33f9c0424d1e8/pcsx2/x86/microVU_Misc.h#L280 More Info] || --vu0-opt-flags=0
+| --vu0-opt-flags || {{Universal}} || 0, 1, 2 || {{Semi-Binary}} || Optimize flags upon recompilation. 0 is the accurate option, 1 is mostly safe, 2 is unsafe. Setting it to 0 may fix crashes or sps. It is an insignificant speedhack which should always be set to 0. [https://github.com/PCSX2/pcsx2/blob/58f5a5b915915293b90e7e8f34c33f9c0424d1e8/pcsx2/x86/microVU_Misc.h#L280 More Info] || --vu0-opt-flags=0
 |- 
 | --vu0-jr-cache-policy || {{Exclusive}} || newprog, sameprog, auto, new, same || {{string}} || PCSX2 uses newprog as the default setting [https://github.com/PCSX2/pcsx2/blob/58f5a5b915915293b90e7e8f34c33f9c0424d1e8/pcsx2/x86/microVU_Misc.h#L319 Info] || --vu0-jr-cache-policy=sameprog
 |-
@@ -707,7 +709,7 @@ $ goes to the specified succeeding offsets. $0 will go 2 bytes forward and chang
 |-
 | --vif1-ignore-cmd-ints || {{Exclusive}} || 0, 1 ||  {{Binary}} ||  Set to 1 to ignore command interrupt bit. ([https://psi-rockin.github.io/ps2tek/#vifcommands info] , explanation of int bit is right before command list). Can in some cases fix games that freeze while showing the same frame if set to 1. Games likes "Men in Black II - Alien Escape" and "Test Drive Unlimited" Will always need it. || --vif1-ignore-cmd-ints=1
 |-
-| --vif1-instant-xfer || {{Universal}} ||  1 = Instant VIF1<br>0 = Delayed VIF1 || {{Binary}} || Changes VIF1 timing. 0 slows its timing and is the compatible option for most games, while 1 speeds up its timing, and being more compatible with a small fraction of games. It can be used to fix graphical glitches or potentially prevent games from freezing and crashing. || --vif1-instant-xfer=0
+| --vif1-instant-xfer || {{Universal}} ||  1 = Instant VIF1<br>0 = Delayed VIF1 || {{Binary}} || Changes VIF1 transfer speed. 0 slows its timing and is the compatible option for most games, while 1 speeds up its timing, and being more compatible with a small fraction of games. It can be used to fix graphical glitches or potentially prevent games from freezing and crashing. || --vif1-instant-xfer=0
 |}
 
 ===== SIF =====
@@ -775,7 +777,7 @@ $ goes to the specified succeeding offsets. $0 will go 2 bytes forward and chang
 |-
 | --gs-uprender || {{Universal}} || none,2x2 ||  {{string}} || Internal resolution upscaler. || --gs-uprender=2x2
 |- 
-| --gs-upscale || {{Universal}} || none, gpu, edgesmooth, smooth, motion, motionvec, motionvector, point || {{string}} ||  Upscaling type Selector || --gs-upscale=EdgeSmooth
+| --gs-upscale || {{Universal}} || none, gpu, edgesmooth, smooth, motion, motionvec, motionvector, point || {{string}} ||  Upscaling type selector || --gs-upscale=EdgeSmooth
 |- 
 | --gs-kernel-cl-up || {{Variable}} || "DarkCloud2" "fantavision" "h2lpool2x2", "OptRightTri", "clutmerge2x2", "mipmap2x2", "up2x2simple", "up2x2skipinterp", "up2x2tc", "up2x2", default ||  {{string}} ||  Kernel Variant Color lookup Upscaler (?), mipmap and clutmerge and h2l need to be enabled before their options become usable|| --gs-kernel-cl-up="clutmerge2x2"
 |- 
@@ -862,7 +864,7 @@ $ goes to the specified succeeding offsets. $0 will go 2 bytes forward and chang
 |-
 | --iop-const-folding || {{Universal}}|| None,Gpr,All || {{string}} || IOP constant folding [https://en.wikipedia.org/wiki/Constant_folding More info] || --iop-const-folding=All
 |-
-| --iop-tight-slice-count || {{Exclusive}} || Fastest = 0<br>Default = 8<br>Slowest=65534 || {{4 Bytes}} || Seems to slow down the iop the higher the value. Can be used to fix CDVD timing issues. || --iop-tight-slice-count=12
+| --iop-tight-slice-count || {{Exclusive}} || Fastest = 0<br>Default = 8<br>Slowest=65534 || {{2 Bytes}} || Seems to slow down the iop the higher the value. Can be used to fix CDVD timing issues. || --iop-tight-slice-count=12
 |-
 | --iop-hook || {{Variable}} || AdvanceClock<br>FastForwardClock<br>Mfifodrain || style="background:#212d9c; color:#ffffff;|4 Byte hex (offset),string,4 Byte hex (opcode),4 Byte Decimals (advanceclock value) || IOP native hook, Sony uses it on their official release of Red Dead Revolver. It helps fix timing issues. It runs the specified functionality each time a selected IOP offset is reached. FastForwardClock and AdvanceClock help fix core sync issues. It is believed that AdvanceClock stalls the IOP for a specified amount of cycles, while FastForwardClock behaves similarly. For a mysterious reason, some offsets are ignored by AdvanceClock - it could be that this function only works on instructions 2 cycles ahead of a branch, likely specifically designed to work at both the start or end of a branch (on newer emus, only the end of a branch works). Mfifodrain is still unknown, but only works on modern emus such as Jakv2. || --iop-hook=0x0086ac,FastForwardClock
 |-
@@ -899,7 +901,9 @@ $ goes to the specified succeeding offsets. $0 will go 2 bytes forward and chang
 |-
 | --boot-disc-id || {{Universal}} || 1-5  ||  {{1 Byte}} || sets boot disc for multi-disc pkg || --boot-disc-id=0
 |-
-| --switch-disc-reset || {{Exclusive}}||  1 = Enables resetting the game upon disc swap,<br>0 = Disables resetting the game upon disc swap|| {{Binary}} || 0 Can be used to prevent resetting the game when switching multiple discs. Useful for games like Samurai Warriors 2 that include an import data feature. Sadly this command isn't supported by many emulators, but jakv2 is confirmed to support it || --switch-disc-reset=1
+| --switch-disc-reset || {{Exclusive}} ||  1 = Enables resetting the game upon disc swap,<br>0 = Disables resetting the game upon disc swap|| {{Binary}} || 0 Can be used to prevent resetting the game when switching multiple discs. Useful for games like Samurai Warriors 2 that include an import data feature. Sadly this command isn't supported by many emulators, but jakv2 is confirmed to support it || --switch-disc-reset=1
+|-
+| --cdvd-determinism || {{Exclusive}} || || || || Unknown
 |-style="background-color:#46a4e8"
 |  || || Timing || || ||
 |-
@@ -1055,7 +1059,11 @@ $ goes to the specified succeeding offsets. $0 will go 2 bytes forward and chang
 --cop2-opt-flags=0
 --vu0-opt-flags=0
 --vu1-opt-flags=0
+--cop2-opt-vf00=0
+--vu0-opt-vf00=0
+--vu1-opt-vf00=0
 --vu-custom-min-max=0
+--vu-xgkick-delay=0
 --gs-use-mipmap=1
 --gs-kernel-cl="mipmap"
 --gs-use-clut-merge=1
@@ -1090,11 +1098,11 @@ Calling api is mandatory. some commands require higher version. Highest known ve
 <pre> Commands for the emulator</pre>
 
 {| cellspacing="0" cellpadding="2" border="1" class="wikitable" style="text-align: center; font-size:small;"
-! Command !! Usage !! Notes
+! Command !! Emulator Support !! Usage !! Notes
 |-style="background-color:#D7EF54"
-|  || Object calling class ||
+|  || || Object calling class ||
 |-
-| getEmuObject || local emuObj = getEmuObject() || Required for all functions using emuObj, that include: <div align="left"><pre>LoadConfig SaveConfig GetPad AddVsyncHook
+| getEmuObject || || local emuObj = getEmuObject() || Required for all functions using emuObj, that include: <div align="left"><pre>LoadConfig SaveConfig GetPad AddVsyncHook
 RemoveVsyncHook AddEntryPointHook RemoveEntryPointHook
 AddLoginHook RemoveLoginHook AddLogoutHook RemoveLogoutHook
 CheckEntitlement AddImageHook AddGifTagHook SwapMemCard
@@ -1108,85 +1116,92 @@ AddPadHook PadPressureStickRemap SetVolumes GetVolumes
 SetAudioRoute GetAudioRoute AddSnapshotLoadedHook
 RemoveSnapshotLoadedHook IsNeoMode IsToolingVerbose emuMediaPatch </pre></div>
 |-style="background-color:#c6ecd9"
-|  || Hooks ||
+|  || || Hooks ||
 |-
-|AddVsyncHook || emuObj.AddVsyncHook(<task to be done every vsync>) || emuObj.AddVsyncHook(my_function) 
+|AddVsyncHook || {{Universal}} || emuObj.AddVsyncHook(<task to be done every vsync>) || emuObj.AddVsyncHook(my_function) 
 my_function can be anything, from simple patches, to extensive hook.
 Example usage can be found in SLUS-21550 features file. some games are not compatible with it and will crash upon startup.
 |-
-|RemoveVsyncHook || emuObj.RemoveVsyncHook(<previously added task to be removed>) || emuObj.RemoveVsyncHook(my_function)
+|RemoveVsyncHook ||  || emuObj.RemoveVsyncHook(<previously added task to be removed>) || emuObj.RemoveVsyncHook(my_function)
 |-
-|AddEntryPointHook || emuObj.AddEntryPointHook(<task>) || Task to be done at ps2 game main elf entry point (right where game is loaded).
+|AddEntryPointHook ||  || emuObj.AddEntryPointHook(<task>) || Task to be done at ps2 game main elf entry point (right where game is loaded).
 |-
-|RemoveEntryPointHook || ||
+|RemoveEntryPointHook  || || ||
 |-
-|AddLoginHook || ||
+|AddLoginHook  || || ||
 |-
-|RemoveLoginHook || ||
+|RemoveLoginHook ||  || ||
 |-
-|AddLogoutHook || ||
+|AddLogoutHook  || || ||
 |-
-|RemoveLogoutHook || ||
+|RemoveLogoutHook  || || ||
 |-
-|AddImageHook || ||
+|AddImageHook  || || ||
 |-
-|AddGifTagHook || ||
+|AddGifTagHook  || || ||
 |-
-| AddSectorReadHook || emuObj.AddSectorReadHook(<sector, unk, task>) || Hook to do task when disc image sector is read. Not all values are known (ex. emuObj.AddSectorReadHook(776480, 32, <task/function>) )
+| AddSectorReadHook  || || emuObj.AddSectorReadHook(<sector, unk, task>) || Hook to do task when disc image sector is read. Not all values are known (ex. emuObj.AddSectorReadHook(776480, 32, <task/function>) )
 |-
-|AddMCWriteHook ||emuObj.AddMCWriteHook() ||
+|AddMCWriteHook  || ||emuObj.AddMCWriteHook() ||
 |-
-|AddAssertionHook ||emuObj.AddAssertionHook() ||
+|AddAssertionHook  || ||emuObj.AddAssertionHook() ||
 |-
-|AddSnapshotLoadedHook || ||
+|AddSnapshotLoadedHook  || || ||
 |-
-|RemoveSnapshotLoadedHook || ||
+|RemoveSnapshotLoadedHook  || || ||
 |-
-|AddPadHook ||emuObj.AddPadHook() ||
+|AddPadHook  ||  ||emuObj.AddPadHook() ||
 |-
 |-style="background-color:#ff8080"
-|  || Audio || 
+|  ||  ||  Audio || 
 |-
-|SetVolumes || emuObj.SetVolumes('global', 'main', 'bgm') || Set volume, usually setting global is enough. Example: emuObj.SetVolumes(0.31, 1.0, 1.0) values, in floats 1.0 = 100%
+|SetVolumes ||  || emuObj.SetVolumes('global', 'main', 'bgm') || Set volume, usually setting global is enough. Example: emuObj.SetVolumes(0.31, 1.0, 1.0) values, in floats 1.0 = 100%
 |-
-|GetVolumes || emuObj.GetVolumes() || Return current volume levels for ('global', 'main', 'bgm') in floating point values.
+|GetVolumes ||  || emuObj.GetVolumes() || Return current volume levels for ('global', 'main', 'bgm') in floating point values.
 |-
-|SetAudioRoute || ||
+|SetAudioRoute  || || ||
 |-
-|GetAudioRoute || ||
+|GetAudioRoute  || || ||
 |-style="background-color:#c2c2d6"
-|  || Game loading speed || 
+|  ||  || Game speed || 
 |-
-|ThrottleNorm ||emuObj.ThrottleNorm() || Enable default framelimiter (50/60 fps depend on region).
+|ThrottleNorm || {{Exclusive}} || emuObj.ThrottleNorm() || Enable default framelimiter (50/60 fps depend on region).
 |-
-|ThrottleFast || emuObj.ThrottleFast() || Faster than default, but exact value is unknown.
+|ThrottleFast ||  {{Exclusive}} || emuObj.ThrottleFast() || Faster than default, but exact value is unknown.
 |-
-|ThrottleMax || emuObj.ThrottleMax() || Disable framelimiter during loading screens. 
+|ThrottleMax ||  {{Exclusive}} || emuObj.ThrottleMax() || Disable framelimiter during loading screens. 
+|-
+| SetFrameLimiter || {{Exclusive}} || emuObj.SetFrameLimiter() || Disable framelimiter when left empty, enable when any value is added to it. <pre>
+local Nolimit = emuObj.SetFrameLimiter()
+local LimitFrames = emuObj.SetFrameLimiter(1)
+eeObj.AddHook(0x000FF904, 0x0, Nolimit)
+eeObj.AddHook(0x000FF90C, 0x0, LimitFrames)
+</pre>
 |-style="background-color:#ffe680"
-|  || CDVD || 
+|  ||  || CDVD || 
 |-
-|OpenDiscTray || ||
+|OpenDiscTray  || || ||
 |-
-|CloseDiscTray || ||
+|CloseDiscTray  || || ||
 |-
-|SwitchDisc || emuObj.SwitchDisc(<disc ID>) || ID can be provided as is, or for example read from memory or register when needed.
+|SwitchDisc  || || emuObj.SwitchDisc(<disc ID>) || ID can be provided as is, or for example read from memory or register when needed.
 |-
-| GetDiscId || emuObj.GetDiscId() || Return DiscId in XXXX_YYY.ZZ format
+| GetDiscId  || || emuObj.GetDiscId() || Return DiscId in XXXX_YYY.ZZ format
 |-
-| GetDiscTitleId || ||
+| GetDiscTitleId || ||  ||
 |-
-|ShowDiscSwitchInfo || emuObj.ShowDiscSwitchInfo() ||
+|ShowDiscSwitchInfo || ||  emuObj.ShowDiscSwitchInfo() ||
 |-
 |-style="background-color:#FEA15C"
-|  || Other || 
+|  ||  || Other || 
 |-
-| EnableImposeMenu || emuObj.EnableImposeMenu(<true/false>) || EnableImposeMenu(false)
+| EnableImposeMenu ||  || emuObj.EnableImposeMenu(<true/false>) || EnableImposeMenu(false)
 |-
-|LoadConfig || emuObj.LoadConfig( 0 or 1 )|| emuObj.LoadConfig(0)
+|LoadConfig ||  || emuObj.LoadConfig( 0 or 1 )|| emuObj.LoadConfig(0)
 |-
-|SaveConfig || emuObj.LoadConfig( 0 or 1 ) || emuObj.LoadConfig(0)
+|SaveConfig ||  || emuObj.LoadConfig( 0 or 1 ) || emuObj.LoadConfig(0)
 |-
-|GetPad || emuObj.GetPad(<gamepad button by bits>)|| example usage for reading input: 
+|GetPad ||  || emuObj.GetPad(<gamepad button by bits>)|| example usage for reading input: 
 <div align="left"><pre>local CheckInputs = function()
 
 local pad_bits = emuObj.GetPad()
@@ -1215,14 +1230,14 @@ end
 
 emuObj.AddVsyncHook(CheckInputs) <to trigger check at every vsync></pre></div>
 |-
-|SwapMemCard || ||
+|SwapMemCard  || || ||
 |-
-|SetFormattedCard || emuObj.SetFormattedCard(<"file name">) || emuObj.SetFormattedCard("custom_formatted.card")
+|SetFormattedCard  || || emuObj.SetFormattedCard(<"file name">) || emuObj.SetFormattedCard("custom_formatted.card")
  Allow to use custom memory card. 
 |-
-| GetPs4SystemLang || emuObj.GetPs4SystemLang() || Return PS4 system language (in unknown format).
+| GetPs4SystemLang  || || emuObj.GetPs4SystemLang() || Return PS4 system language (in unknown format).
 |-
-| SetPs2Lang || emuObj.SetPs2Lang(<Lang ID>) || Set emulated PS2 language, correct Lang IDs are 0-18. In some cases, games will hang on a black screen with some other language settings (eg Japanese) - Example for usage: emuObj.SetPs2Lang(1)
+| SetPs2Lang  || || emuObj.SetPs2Lang(<Lang ID>) || Set emulated PS2 language, correct Lang IDs are 0-18. In some cases, games will hang on a black screen with some other language settings (eg Japanese) - Example for usage: emuObj.SetPs2Lang(1)
 <div align="left"><pre>0 - japanese
 1 - english
 2 - french
@@ -1243,31 +1258,31 @@ emuObj.AddVsyncHook(CheckInputs) <to trigger check at every vsync></pre></div>
 17 - portuguese-brazil
 18 - english-uk</pre></div>
 |-
-|PadSetLightBar || emuObj.PadSetLightBar(<port, red, green, blue>) || Set DS4 light bar color. The correct port values are 0-3, correct light values are 0-255.
+|PadSetLightBar  || || emuObj.PadSetLightBar(<port, red, green, blue>) || Set DS4 light bar color. The correct port values are 0-3, correct light values are 0-255.
 |-
-|PadPressureStickRemap || emuObj.PadPressureStickRemap()||
+|PadPressureStickRemap  || || emuObj.PadPressureStickRemap()||
 |-
-| IsNeoMode || emuObj.IsNeoMode() || Check that PS4 run in NEO (PRO) mode. Return 1/0
+| IsNeoMode  || || emuObj.IsNeoMode() || Check that PS4 run in NEO (PRO) mode. Return 1/0
 |-
-| IsToolingVerbose || ||
+| IsToolingVerbose  || || ||
 |-
-|CheckEntitlement || ||
+|CheckEntitlement  || || ||
 |-
-| emuMediaPatch || emuMediaPatch(disc sector, 12/24 + offset, { original data }, { replace data }) || Replace 4 bytes from loaded iso file. For unknown reason we always need to add 12 to real offset for DVD game, and 24 for CD game. 
+| emuMediaPatch  || || emuMediaPatch(disc sector, 12/24 + offset, { original data }, { replace data }) || Replace 4 bytes from loaded iso file. For unknown reason we always need to add 12 to real offset for DVD game, and 24 for CD game. 
 |-style="background-color:#c6ecd9"
-|  || GS related ||
+|  ||  || GS related ||
 |-
-| CountFrameOnPS2 || emuObj.CountFrameOnPS2() || updates FRAPS/Actual FPS reading in olympus
+| CountFrameOnPS2  || || emuObj.CountFrameOnPS2() || updates FRAPS/Actual FPS reading in olympus
 |-
-| SetGsTitleFix || emuObj.SetGsTitleFix() ||  [[PS2_Emulation#SetGsTitleFix|More info]]
+| SetGsTitleFix  || || emuObj.SetGsTitleFix() ||  [[PS2_Emulation#SetGsTitleFix|More info]]
 |-
-|SetDisplayAspectWide || emuObj.SetDisplayAspectWide() || Force display area to 16:9 (If game not support widescreen, it will be stretched).
+|SetDisplayAspectWide  || || emuObj.SetDisplayAspectWide() || Force display area to 16:9 (If game not support widescreen, it will be stretched).
 |-
-|SetDisplayAspectNormal || emuObj.SetDisplayAspectNormal() || Force display area to 4:3.
+|SetDisplayAspectNormal  || || emuObj.SetDisplayAspectNormal() || Force display area to 4:3.
 |-
-|ForceRefreshRate || emuObj.ForceRefreshRate(<hz>) || emuObj.ForceRefreshRate(50) correct values are 0, 50, 60 where 0 = default. 
+|ForceRefreshRate  || || emuObj.ForceRefreshRate(<hz>) || emuObj.ForceRefreshRate(50) correct values are 0, 50, 60 where 0 = default. 
 |-
-|LoadFsShader || emuObj.LoadFsShader(<slot?>, "<path>") || <div align="left"><pre>Shaders must be loaded right after GS has been initialized. 
+|LoadFsShader  || || emuObj.LoadFsShader(<slot?>, "<path>") || <div align="left"><pre>Shaders must be loaded right after GS has been initialized. 
 Example:
 Global_InitGpuResources = function()
 	emuObj.LoadFsShader(1, "./shader.sb")
@@ -1276,7 +1291,7 @@ end
 That only load Fragment Shader to program memory, to use it we need BindFragmentShader, 
 and if depend on shader SetShaderParams.</pre></div>
 |-
-|SetDisplaySafeArea || ||
+|SetDisplaySafeArea  || || ||
 |-
 |}
 
@@ -1285,123 +1300,123 @@ and if depend on shader SetShaderParams.</pre></div>
 <pre>Commands for the emulated Emotion Engine</pre>
 
 {| cellspacing="0" cellpadding="2" border="1" class="wikitable" style="text-align: center; font-size:small;"
-! Command !! Usage !! Notes
+! Command !! Emulator Support !! Usage !! Notes
 |-style="background-color:#D7EF54"
-|  || Object calling class ||
+|  || || Object calling class ||
 |-
-| getEEObject || local eeObj = getEEObject() || Required for all functions using eeObj
+| getEEObject ||  || local eeObj = getEEObject() || Required for all functions using eeObj
 |-style="background-color:#7698FF"
-|  || Memory editing || 
+|  ||  ||  Memory editing || 
 |-
-|ReplaceMem64 || eeObj.ReplaceMem64(<address>, <value>)||
+|ReplaceMem64 ||  || eeObj.ReplaceMem64(<address>, <value>)||
 |-
-|ReplaceMem32 || eeObj.ReplaceMem32(<address>, <value>) || Permanently replace an offset without needing addvsynchook?
+|ReplaceMem32 ||  || eeObj.ReplaceMem32(<address>, <value>) || Permanently replace an offset without needing addvsynchook?
 |-
-|ReplaceMem16 || eeObj.ReplaceMem16(<address>, <value>)||
+|ReplaceMem16 ||  || eeObj.ReplaceMem16(<address>, <value>)||
 |-
-|ReplaceMem8 ||eeObj.ReplaceMem8(<address>, <value>) ||
+|ReplaceMem8 || ||  eeObj.ReplaceMem8(<address>, <value>) ||
 |-
-|ReadMemFloat || eeObj.ReadMemFloat(<address>) || eeObj.ReadMemFloat(0x258c3c)
+|ReadMemFloat ||  || eeObj.ReadMemFloat(<address>) || eeObj.ReadMemFloat(0x258c3c)
 |-
-|WriteMemFloat || eeObj.WriteMemFloat(<address>, <value>) || eeObj.WriteMemFloat(0x365364, 1.3333333)
+|WriteMemFloat ||  || eeObj.WriteMemFloat(<address>, <value>) || eeObj.WriteMemFloat(0x365364, 1.3333333)
 |-
-|ReadMem128 || <pre>eeObj.ReadMem128(<ee memory offset>)</pre> || Read 16 bytes from offset, examples: eeObj.ReadMem128(0x100198)
+|ReadMem128 ||  || <pre>eeObj.ReadMem128(<ee memory offset>)</pre> || Read 16 bytes from offset, examples: eeObj.ReadMem128(0x100198)
 |-
-|ReadMemFloat128 || <pre>eeObj.ReadMemFloat128(<ee memory offset>)</pre> || return 16 bytes from offset in float form
+|ReadMemFloat128 ||  || <pre>eeObj.ReadMemFloat128(<ee memory offset>)</pre> || return 16 bytes from offset in float form
 |-
-|WriteMem128 || ||
+|WriteMem128 || ||  ||
 |-
-|WriteMemFloat128 || ||
+|WriteMemFloat128 ||  || ||
 |-
-| ReadMem64 || <pre>eeObj.ReadMem64(<ee memory offset>)</pre> || Read 8 bytes from offset, examples: eeObj.ReadMem64(0x100198)
+| ReadMem64 ||  || <pre>eeObj.ReadMem64(<ee memory offset>)</pre> || Read 8 bytes from offset, examples: eeObj.ReadMem64(0x100198)
 |-
-| WriteMem64 || <pre>eeObj.WriteMem64(<ee memory offset>, <data>)</pre> || 
+| WriteMem64 ||  || <pre>eeObj.WriteMem64(<ee memory offset>, <data>)</pre> || 
 |-
-| ReadMem32 || <pre>eeObj.ReadMem32(<ee memory offset>)</pre> || Read 4 bytes from offset, examples: eeObj.ReadMem32(0x100198)
+| ReadMem32 ||  || <pre>eeObj.ReadMem32(<ee memory offset>)</pre> || Read 4 bytes from offset, examples: eeObj.ReadMem32(0x100198)
 eeObj.ReadMem32(gp - 31348)
 |-
-| WriteMem32 || <pre>eeObj.WriteMem32(<ee memory offset>, <data>)</pre> || Write 4 bytes to offset, example: eeObj.WriteMem32(0x2c89ac, 0x001b70f0)
+| WriteMem32 ||  {{Universal}} || <pre>eeObj.WriteMem32(<ee memory offset>, <data>)</pre> || Write 4 bytes to offset, example: eeObj.WriteMem32(0x2c89ac, 0x001b70f0)
 |-
-| ReadMem16 || <pre>eeObj.ReadMem16(<ee memory offset>)</pre> || Read 2 bytes from offset, example: eeObj.ReadMem16(0x100198)
+| ReadMem16 ||  || <pre>eeObj.ReadMem16(<ee memory offset>)</pre> || Read 2 bytes from offset, example: eeObj.ReadMem16(0x100198)
 |-
-| WriteMem16 || <pre>eeObj.WriteMem16(<ee memory offset>, <data>)</pre> || Write 2 bytes to offset, example: eeObj.WriteMem16(0x2c89ac, 0x70f0)
+| WriteMem16 ||  || <pre>eeObj.WriteMem16(<ee memory offset>, <data>)</pre> || Write 2 bytes to offset, example: eeObj.WriteMem16(0x2c89ac, 0x70f0)
 |-
-| ReadMem8 || <pre>eeObj.ReadMem8(<ee memory offset>)</pre> || Read 1 byte from offset, example: eeObj.ReadMem8(0x100198)
+| ReadMem8 ||  || <pre>eeObj.ReadMem8(<ee memory offset>)</pre> || Read 1 byte from offset, example: eeObj.ReadMem8(0x100198)
 |-
-| WriteMem8 || <pre>eeObj.WriteMem8(<ee memory offset>, <data>)</pre> || Write 1 byte to offset, example: eeObj.WriteMem8(0x2c89ac, 0xf0)
+| WriteMem8 ||  || <pre>eeObj.WriteMem8(<ee memory offset>, <data>)</pre> || Write 1 byte to offset, example: eeObj.WriteMem8(0x2c89ac, 0xf0)
 |-
-|ReadMemStr || eeObj.ReadMemStr(address/register) || Read string from address until null terminator
+|ReadMemStr ||  || eeObj.ReadMemStr(address/register) || Read string from address until null terminator
 |-
-|WriteMemStr || eeObj.WriteMemStr(address, string) || 
+|WriteMemStr ||  || eeObj.WriteMemStr(address, string) || 
 |-
-|WriteMemStrZ ||  || eeObj.WriteMemStrZ(string pointer, string) .  Pointer can be read from GPR
+|WriteMemStrZ  || ||  || eeObj.WriteMemStrZ(string pointer, string) .  Pointer can be read from GPR
 |-style="background-color:#ff9999"
-|  || GPR require (Necessary for register related commands)|| 
+|  ||  || GPR require (Necessary for register related commands)|| 
 |-
-| || local gpr = require( "ee-gpr-alias" )
+| ||  || local gpr = require( "ee-gpr-alias" )  || 
 |-
-|GetGpr64 || eeObj.GetGPR64(<gpr register>) || example: eeObj.GetGPR64(t3)
+|GetGpr64 ||  || eeObj.GetGPR64(<gpr register>) || example: eeObj.GetGPR64(t3)
 |-
-|SetGpr64 || ||
+|SetGpr64 ||  || ||
 |-
-| GetGprFloat || || Get gpr value as float value
+| GetGprFloat ||  || || Get gpr value as float value
 |-
-| SetGprFloat || || Set gpr value as float value
+| SetGprFloat ||  || || Set gpr value as float value
 |-
-|GetGpr || eeObj.GetGPR(<gpr register>) || eeObj.GetGPR(t3)
+|GetGpr ||  || eeObj.GetGPR(<gpr register>) || eeObj.GetGPR(t3)
 |-
-|SetGpr|| eeObj.SetGPR(<gpr register> ,<value>) || example: eeObj.SetGPR(gpr.a3 ,1)
+|SetGpr||  || eeObj.SetGPR(<gpr register> ,<value>) || example: eeObj.SetGPR(gpr.a3 ,1)
 Require defined getEEObject() as eeObj
 |-
-| GetFprHex || eeObj.GetFprHex(<FPU register (0-31)>)|| Get/return floating point register value as hex string
+| GetFprHex ||  || eeObj.GetFprHex(<FPU register (0-31)>)|| Get/return floating point register value as hex string
 |-
-| SetFprHex || eeObj.SetFprHex(<FPU register (0-31), value (u32)>)|| Set floating point register value as hex string
+| SetFprHex ||  || eeObj.SetFprHex(<FPU register (0-31), value (u32)>)|| Set floating point register value as hex string
 |-
-| GetFpr || eeObj.GetFpr(<register number>) || example eeObj.GetFpr(14)
+| GetFpr ||  || eeObj.GetFpr(<register number>) || example eeObj.GetFpr(14)
 |-
-| SetFpr  || eeObj.SetFpr(<fpr register number>, <value>) || Simple example eeObj.SetFpr(14, 50.0) will set frp 14 to 50.0
+| SetFpr  ||  || eeObj.SetFpr(<fpr register number>, <value>) || Simple example eeObj.SetFpr(14, 50.0) will set frp 14 to 50.0
 But we can also combine commands to add/sub from registers
 eeObj.SetFpr(14, eeObj.GetFpr(14) + 50.0) this will add 50.0 to current fpr 14 value
 |-
-|GetPc || eeObj.GetPc() ||This command is very helpful as it will return to you the current EE address that's being read. Can be used also with additional var. like eeObj.GetPc()+4
+|GetPc ||  || eeObj.GetPc() ||This command is very helpful as it will return to you the current EE address that's being read. Can be used also with additional var. like eeObj.GetPc()+4
 |-
-|SetPc || eeObj.SetPC(<PC>) ||eeObj.SetPC(0x266B80)
+|SetPc ||  || eeObj.SetPC(<PC>) ||eeObj.SetPC(0x266B80)
 |-
-|GetCPR0 || eeObj.GetCPR0(<COP0 register>) || 
+|GetCPR0 ||  || eeObj.GetCPR0(<COP0 register>) || 
 |-
-|SetCPR0 || eeObj.SetCPR0(<COP0 register>) || 
+|SetCPR0 ||  || eeObj.SetCPR0(<COP0 register>) || 
 |-style="background-color:#c6ecd9"
-|  || Hooks ||
+|  ||  || Hooks ||
 |-
-| AddHook || eeObj.AddHook(<ee offset>, <original opcode>, <definied hook name>) || example: <div align="left"><pre>local W1 = 
+| AddHook ||  {{Universal}} || eeObj.AddHook(<ee offset>, <original opcode>, <definied hook name>) || example: <div align="left"><pre>local W1 = 
 	function()
 		emuObj.SetDisplayAspectNormal()
 	end
 
 local ws1 = eeObj.AddHook(0x1c9840, 0xaf808c78, W1)</pre></div>
 |-
-|RemoveHook || || 
+|RemoveHook  || || || 
 |-
-|AddPreHook || ||
+|AddPreHook  || || ||
 |-
-|AddPostHook || ||
+|AddPostHook  || || ||
 |-
-|RemovePreHook || ||
+|RemovePreHook  || || ||
 |-
-|RemovePostHook || ||
+|RemovePostHook  || || ||
 |-
-|AddJitResetHook || ||
+|AddJitResetHook  || || ||
 |-
-|RemoveJitResetHook || ||
+|RemoveJitResetHook  || || ||
 |-
-| AddHookJT || eeObj.AddHookJT(Offset, offset opcode, function) || Seems be a hook related to the jit 
+| AddHookJT ||  || eeObj.AddHookJT(Offset, offset opcode, function) || Seems be a hook related to the jit 
 |-
 |-style="background-color:#ffb3b3"
-|  || Dma || 
+|  ||  || Dma || 
 |-
-| SetVifDataCycleScalar ||  || Used in Jak3 = eeObj.SetVifDataCycleScalar(1, 1.80)
+| SetVifDataCycleScalar  || {{Exclusive}} ||  || Used in Jak3 = eeObj.SetVifDataCycleScalar(1, 1.80)
 |-
-|DmaAddHook || <pre>eeobj.DmaAddHook(channel=%d key=%x)</pre> || Possible Dma channel numbers (?)
+|DmaAddHook || {{Universal}} || <pre>eeobj.DmaAddHook(channel=%d key=%x)</pre> || Possible Dma channel numbers (?)
 <pre> GIF = 0 VIF0 = 1 
 VIF1 = 2 SIF0 = 4 
 SIF1 = 5 IPU0 = 6
@@ -1409,45 +1424,45 @@ IPU1 = 7  </pre>
 Possible values for hooks
 <pre>DmaTransfer [VIF0/VIF1], RaiseIntc [VIF0/VIF1], NormalTransfer [SIF0/SIF1]. </pre>
 |-
-|DmaRemoveHook || ||
+|DmaRemoveHook  || {{Universal}} || ||
 |-
 |-style="background-color:#b3f0ff"
-|  || Speedhacks || 
+|  ||  || Speedhacks || 
 |-
-|FastForwardClock || eeObj.FastForwardClock() || Skip Emotion Engine cycles?
+|FastForwardClock  || {{Universal}} || eeObj.FastForwardClock() || Skip Emotion Engine cycles?
 <pre>
 eeObj.AddHook(0x002cc350, 0x78a30000, function()
           eeObj.FastForwardClock()
 end)
 </pre>
 |-
-|AdvanceClock || eeObj.AdvanceClock() || Likely skips an allocated amount of EE cycles. Can only be attached to the start or end of a branch loop (on newer emus, only the end of a branch works)
+|AdvanceClock ||  {{Universal}} || eeObj.AdvanceClock() || Likely skips an allocated amount of EE cycles. Can only be attached to the start or end of a branch loop (on newer emus, only the end of a branch works)
 <pre>
 eeObj.AddHook(0x002cc350, 0x78a30000, function()
           eeObj.AdvanceClock(21000)
 end)</pre>
 |-
-| GetClock || eeObj.GetClock() || Returns the value of how many cycles the EE is ahead of normal clock (?)
+| GetClock ||  {{Exclusive}} || eeObj.GetClock() || Returns the value of how many cycles the EE is ahead of normal clock (?)
 |-
-|Vu1MpgCycles || eeObj.Vu1MpgCycles(<cycles>) || Works just like the cli command --vu1-mpg-cycles=
+|Vu1MpgCycles ||  {{Exclusive}} || eeObj.Vu1MpgCycles(<cycles>) || Works just like the cli command --vu1-mpg-cycles=
 |-style="background-color:#FEA15C"
-|  || Other || 
+|  ||  ||  Other || 
 |-
-| CallPredicate
+|  CallPredicate  ||  {{Exclusive}} ||  || 
 |-
-|SchedulerDelayEvent || eeObj.SchedulerDelayEvent("event", cycles)<br>Example:<br>eeObj.AddHook(0x0033A4DC,0xAC430000, function() eeObj.SchedulerDelayEvent("gif.dma", 0x10500) end) || Parrapa use eeObj.SchedulerDelayEvent("vif1.dma", 0x6500) other events are gif.dma, vif0.dma, vif1.dma, sif0.dma, Sif0-NormalTransfer, sif1.dma, Sif1-NormalTransfer, ipu0.dma, ipu1.dma . This command allows for the delayment of certain DMA transfer by cycles. 
+|SchedulerDelayEvent || {{Universal}} || eeObj.SchedulerDelayEvent("event", cycles)<br>Example:<br>eeObj.AddHook(0x0033A4DC,0xAC430000, function() eeObj.SchedulerDelayEvent("gif.dma", 0x10500) end) || Parrapa use eeObj.SchedulerDelayEvent("vif1.dma", 0x6500) other events are gif.dma, vif0.dma, vif1.dma, sif0.dma, Sif0-NormalTransfer, sif1.dma, Sif1-NormalTransfer, ipu0.dma, ipu1.dma . This command adds a delay for certain DMA channels by cycles. It can be added inside a vsynchook or an ee hook. It is not a one-time application. Rather, a cyclical one.
 |-
-|WaitVu1 || eeObj.WaitVu1() || Likely to be the lua equivalent of "--vu1=jit-sync".
+|WaitVu1 ||  {{exclusive}} || eeObj.WaitVu1() || Likely to be the lua equivalent of "--vu1=jit-sync".
 |-
-|GetPcRingBuffer || ||
+|GetPcRingBuffer  || {{exclusive}}|| ||
 |-
-|Precompile || || Requires unknown values
+|Precompile  || {{universal}} || || Requires unknown values
 |-
-|CalcInsnHash || ||
+|CalcInsnHash  || {{exclusive}} || ||
 |-
-|getOverlayObject || eeObj.getOverlayObject() || local eeOverlay = eeObj.getOverlayObject()
+| getOverlayObject  || {{exclusive}} || eeObj.getOverlayObject() || local eeOverlay = eeObj.getOverlayObject()
 |-
-| GetVif1Cycles || eeObj.GetVif1Cycles() || local vif1_cycles = eeObj.GetVif1Cycles() create vif_cycles value that can be used later. You can rename it as you wish.
+| GetVif1Cycles  || {{exclusive}} || eeObj.GetVif1Cycles() || local vif1_cycles = eeObj.GetVif1Cycles() create vif_cycles value that can be used later. You can rename it as you wish.
 |-
 |}
 
@@ -2707,9 +2722,13 @@ Same goes for command 0x11 (--vu0-accurate-addsub-range can be used).
 |-
 | Incorrect GIF speed || Taz Wanted, The Matrix, Batman Begins, Dynasty warriors 5 Empires, others. || For a fast GIF: eeObj.SchedulerDelayEvent("gif.dma", 0x10500) end). For a slow GIF, there is seemingly no solution. || Some games need a fast GIF timing, and others need a slow one.
 |-
-| Unknown IOP issues || Genji - Dawn of the Samurai, Wild Arms 4 ||  A number of issues can be at play here; IOP's cycle speed, for example, is 2x overclocked, CDVD's read speed and the SIF's speed are unknown.|| 
-|-
 | Unknown GS crashes || Star Wars - Battlefront II ||  Different combinations of GS commands. ||
+|-
+| Clamping is not PS2-perfect  || Surf's Up (VU1), Tiger Woods PGA Tour, Castlevania COD, others. || Manually clamp values using LUA. || 
+|-
+| IOP-CDVD desync || Genji - Dawn of the Samurai, Wild Arms 4, Wild Arms 5, Official Releases such as War of the Monsters and Kinetica, unofficial releases such as every Ratchet game, God of War, as well as others.  || LUA patches as seen in official releases. Setting iopcyclescalar to 0.38 yielded the best results, but still wrong. ||  The least significant effect would be a restarting music track. The most significant would be a game freezing at a single image with looping audio.
+|-
+| The default IOP clock speed is 16x faster than it should be. || || ||
 |-
 |}
 
