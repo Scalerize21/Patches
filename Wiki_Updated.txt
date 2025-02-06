@@ -330,6 +330,15 @@ emuObj.AddVsyncHook(patcher)
 --cop2-no-clamping=0
 
 #SPS Fix</pre>
+====Brave - The Search for Spirit Dancer====
+'''CLI'''
+<br>Emu = Samurai Shodown
+<pre>
+#Fix gravity
+--cop2-opt-flags=0
+#Fix upscaling lines
+--gs-kernel-cl-up="fantavision"
+</pre>
 
 ====Burnout 2: POI====
 <br>'''''LUA file'''''
