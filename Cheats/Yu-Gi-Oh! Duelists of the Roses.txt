@@ -8,3 +8,12 @@ patch=1,EE,001DF840,word,E4A2000C
 
 //No DC limitations for battling enemies
 patch=1,EE,00215F74,word,24020000
+
+//Multiply exp
+patch=1,EE,00215B10,word,0803FEC0
+patch=1,EE,000FFB00,word,3C010035
+//Change 2402000*2* to 4, 8, or whatever.
+patch=1,EE,000FFB04,word,24020002
+patch=1,EE,000FFB08,word,00E20018
+patch=1,EE,000FFB0C,word,00003812
+patch=1,EE,000FFB10,word,080856C5
