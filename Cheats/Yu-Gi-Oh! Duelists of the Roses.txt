@@ -7,7 +7,7 @@ patch=1,EE,001DF83C,word,E4A20008
 patch=1,EE,001DF840,word,E4A2000C
 
 //No DC limitations for battling enemies
-patch=1,EE,00234AE8,word,00000000
+patch=1,EE,00239E34,word,24030000
 
 //Multiply exp
 patch=1,EE,00215B10,word,0803FEC0
