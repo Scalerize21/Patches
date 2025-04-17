@@ -16,10 +16,12 @@ patch=1,EE,000FFA00,word,00E33822
 
 //2x
 patch=1,EE,000FFA04,word,00E73821
-//Another 2x
+//Another 2x, making them 4x.
 patch=1,EE,000FFA08,word,00E73821
 //Another 2x, making them 8x.
 patch=1,EE,000FFA0C,word,00E73821
+//Another 2x, making them 16x.
+patch=1,EE,000FFA10,word,00E73821
 
 patch=1,EE,000FFA28,word,00673821
 patch=1,EE,000FFA2C,word,A487004A
