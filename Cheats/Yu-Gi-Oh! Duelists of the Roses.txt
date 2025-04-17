@@ -10,13 +10,17 @@ patch=1,EE,001DF840,word,E4A2000C
 patch=1,EE,00239E34,word,24030000
 
 //Multiply exp
-patch=1,EE,00215C10,word,0803FE80
+patch=1,EE,00215C30,word,0803FE80
+patch=1,EE,00215C34,word,00000000
+patch=1,EE,000FFA00,word,00E33822
+
 //2x
-patch=1,EE,000FFA00,word,00E73821
-//4x
 patch=1,EE,000FFA04,word,00E73821
-//8x
+//Another 2x
 patch=1,EE,000FFA08,word,00E73821
-/ret
-patch=1,EE,000FFA20,word,70E01628
-patch=1,EE,000FFA24,word,08085705
+//Another 2x, making them 8x.
+patch=1,EE,000FFA0C,word,00E73821
+
+patch=1,EE,000FFA28,word,00673821
+patch=1,EE,000FFA2C,word,A487004A
+patch=1,EE,000FFA30,word,03E00008
