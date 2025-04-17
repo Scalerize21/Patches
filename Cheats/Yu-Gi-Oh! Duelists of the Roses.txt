@@ -12,10 +12,11 @@ patch=1,EE,00239E34,word,24030000
 //Multiply exp
 patch=1,EE,00215B10,word,0803FFE0
 patch=1,EE,000FFF80,word,3C010035
+patch=1,EE,000FFF84,word,18E00007
 patch=1,EE,000FFFA4,word,080856C5
 //2x
-patch=1,EE,000FFF84,word,00E73821
-//4x
-patch=1,EE,000FFF88,word,00E73821
-//8x
 patch=1,EE,000FFF8C,word,00E73821
+//4x
+patch=1,EE,000FFF90,word,00E73821
+//8x
+patch=1,EE,000FFF94,word,00E73821
