@@ -1,0 +1,6 @@
+SLUS-20014
+
+one-hit kill
+patch=1,EE,001628C0,word,AE000064
+invincible
+patch=1,EE,00140264,word,00000000
