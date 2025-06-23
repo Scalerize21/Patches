@@ -4,6 +4,9 @@ patch=1,EE,00103C50,word,00000000
 patch=1,EE,64975C,extended,1
 --50000 victory is 30000
 patch=1,EE,626E64,word,34027530
+--PLayers start with 2500 gold
+patch=1,EE,0031A878,word,240C09C4
+
 
 --Load merge menus
 patch=1,EE,00397E80,word,00000001
