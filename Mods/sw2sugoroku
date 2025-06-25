@@ -6,7 +6,7 @@ patch=1,EE,64975C,extended,1
 patch=1,EE,626E64,word,34027530
 --PLayers start with 2500 gold
 patch=1,EE,0031A878,word,240C09C4
---Sugoroku music is cherry
+--Sugoroku music is city of flowers
 patch=1,EE,00183F9C,word,0C03FE80
 patch=1,EE,000FFA00,word,2404001D
 patch=1,EE,000FFA04,word,14900002
