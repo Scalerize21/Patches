@@ -4,6 +4,7 @@ patch=1,EE,00103C50,word,00000000
 --No Player 3:
 patch=1,EE,64972C,extended,1
 patch=1,EE,649727,extended,F4
+patch=1,EE,0031A908,extended,28A70002
 
 --No Player 4:
 patch=1,EE,64975C,extended,1
