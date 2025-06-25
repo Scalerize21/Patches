@@ -1,7 +1,10 @@
 --No exit (start+select):
 patch=1,EE,00103C50,word,00000000
+
 --No Player 4:
 patch=1,EE,64975C,extended,1
+patch=1,EE,649757,extended,F
+
 --50000 victory is 30000
 patch=1,EE,626E64,word,34027530
 --PLayers start with 2500 gold
