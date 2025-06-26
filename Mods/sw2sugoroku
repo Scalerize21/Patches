@@ -21,6 +21,9 @@ patch=1,EE,000FFA0C,word,24100012 --change 12 to whatever other value
 patch=1,EE,000FFA10,word,08060F90
 
 
+--No random player spot selection
+patch=1,EE,0031A598,word,00000000
+
 --Load merge menus
 patch=1,EE,00397E80,word,00000001
 --Merge's Data
