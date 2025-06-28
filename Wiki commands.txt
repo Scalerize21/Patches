@@ -7,13 +7,13 @@
 * Arc the Lad: Twilight of the Spirits UP9000-CUSA02205_00-SCUS972310000001 or EP9000-CUSA02279_00-SCES519100000001 "2016-01-12"
 * Art of Fighting Anthology UP0576-CUSA03754_00-SLUS214870000001 or EP0576-CUSA04152_00-SLES547900000001
 * Ape Escape 2 UP9000-CUSA02194_00-SCES508850000001 or EP9000-CUSA02269_00-SCES508850000001 2016-08-02
-* Blood Omen: Legacy of Kain UP8489-CUSA49771_00-SLUS000270000000 (PS5: UP8489-PPSA24270_00-0499283180274839) 2024-11-19 PS4 12.00
-* Blood Omen 2: Legacy of Kain UP8489-CUSA49769_00-SLUS200240000000 (PS5: UP8489-PPSA24268_00-0200966777747783) 2024-11-19 PS4 12.00
+* Blood Omen 2: Legacy of Kain UP8489-CUSA49769_00-SLUS200240000000 (PS5: UP8489-PPSA24268_00-0200966777747783 or UP8489-PPSA24268_00-SLUS200240000000) 2024-11-19 PS4 12.00 PS5 10.01
 * Bully (Canis Canem Edit) UP1004-CUSA03507_00-SLUS212690000001 or EP1004-CUSA03551_00-SLES535610000001 "2016-03-22"
 * Dark Chronicle (Dark Cloud 2) UP9000-CUSA02037_00-SCUS972130000001 or EP9000-CUSA02075_00-SCES511900000001 "2016-01-19"
 * Dark Cloud UP9000-CUSA01728_00-SCUS971110000001 or EP9000-CUSA01944_00-SCES502950000001 "2015-12-05"
 * Destroy All Humans! (2005) (not to be confused with the remake EP4389-CUSA14910_00-DAH1REMAKEEU0000) UP4389-CUSA05232_00-SLUS209450000001 or EP4389-CUSA06353_00-SLES531960000001 2016-10-18
 * Destroy All Humans! 2 (2006) UP4389-CUSA05233_00-SLUS214390000001 or EP4389-CUSA06355_00-SLES543840000001 2016-11-29
+* Dropship: United Peace Force UP9000-CUSA49384_00-SLUS204630000000 (PS5: UP9000-PPSA23797_00-SLUS204630000000) 2025-02-11 PS4 12.02 or PS5 10.60. Enhanced with up-rendering, rewind, quick save, and custom video filters.
 * Eternal Ring UP1022-CUSA04654_00-SLUS200150000001 requires PS4 4.70
 * FantaVision JP9000-CUSA02407_00-SCPS150300000001 or UP9000-CUSA01724_00-SCUS971050000001 or EP9000-CUSA01949_00-SCES500020000001 "2015-12-22"
 * Fatal Fury Battle Archives Vol. 2 UP0576-CUSA03750_00-SLUS217230000001 or EP0576-CUSA04153_00-SLUS217230000001 "2017-03-27"
@@ -25,6 +25,7 @@
 * Harvest Moon: Save the Homeland UP1014-CUSA06585_00-SLUS202510000001 or EP1014-CUSA06610_00-SLUS202510000001
 * Harvest Moon: A Wonderful Life Special Edition UP1014-CUSA06584_00-SLUS211710000001 or EP1014-CUSA06609_00-SLUS211710000001 "2017-03-28"
 * Hot Shots® Tennis (Everybody's Tennis) UP9000-CUSA02193_00-SCUS976100000001 or EP9000-CUSA02270_00-SCES545350000001 "2016-09-13"
+* Indiana Jones and the Staff of Kings UP1082-CUSA41353_00-SLUS218850000000 (PS5: UP1082-PPSA14388_00-SLUS218850000000 or UP1082-PPSA14388_00-0064394372965033) 2024-11-26 PS4 12.00 or PS5 10.40
 * Indigo Prophecy (aka Fahrenheit 2005) UP1642-CUSA04798_00-SLUS211960000001 or EP1628-CUSA05760_00-SLES535390000001 "2016-08-09"
 * Jak and Daxter: The Precursor Legacy HP9000-CUSA08427_00-SCPS560030000001 patch 1.01 requires PS4 4.73
 * Jak and Daxter: The Precursor Legacy™ UP9000-CUSA02522_00-SCUS971240000001 patch 1.01 requires PS4 4.73
@@ -60,15 +61,17 @@
 * Samurai Shodown VI UP0576-CUSA03787_00-SLUS216290000001 or EP0576-CUSA04158_00-SLES552920000001 "2016-11-22"
 * Siren (Forbidden Siren) UP9000-CUSA02198_00-SCUS973550000001 or EP9000-CUSA02274_00-SCES519200000001 (PS5: UP9000-PPSA22947_00-SCUS973550000000) PS4 patch 1.02 requires PS4 3.00 and 2024-10-15 PS5 patch 1.00 requires PS5 9.40 "2016-06-14"
 * SkyGunner UP9000-CUSA49210_00-SLUS203840000000 (PS5: UP9000-PPSA23535_00-SLUS203840000000) 2024-09-17 patch 1.03 requires PS4 11.52 or PS5 9.60
-* Sly Raccoon (2002), Sly Cooper and the Thievius Raccoonus UP9000-CUSA47431_00-SCUS971980000000 (PS5: UP9000-PPSA21300_00-SCUS971980000000) 2024-06-11 PS4 11.50
+* Sly Raccoon (2002), Sly Cooper and the Thievius Raccoonus UP9000-CUSA47431_00-SCUS971980000000 (PS5: UP9000-PPSA21300_00-SCUS971980000000) 2024-06-04 PS4 11.50 or PS5 9.20
+* Sly 2: Band of Thieves™ UP9000-CUSA48241_00-SCUS973160000000 (PS5: UP9000-PPSA22287_00-SCUS973160000000) 2024-12-10 PS4 12.02 or PS5 10.01
+* Sly 3: Honour Among Thieves™ UP9000-CUSA48242_00-SCUS974640000000 (PS5: UP9000-PPSA22288_00-SCUS974640000000) 2024-12-10 PS4 12.02 or PS5 10.01
 * Star Ocean Till The End Of Time UP0082-CUSA04778_00-SLUS204880000001 or JP0082-CUSA04842_00-SLPM654380000001 or EP0082-CUSA06379_00-SLES820280000001
 * Star Wars Bounty Hunter UP1082-CUSA03472_00-SLUS204200000001 or EP1006-CUSA03493_00-SLES508310000001 2016-01-15
-* Star Wars Racer Revenge UP1082-CUSA03474_00-SLUS202680000001 or EP1006-CUSA03492_00-SLES503660000001 2016-01-15
+* Star Wars™: Racer Revenge™ UP1082-CUSA03474_00-SLUS202680000001 or EP1006-CUSA03492_00-SLES503660000001 2016-01-15
 * STAR WARS: Jedi Starfighter UP1082-CUSA03473_00-SLUS202930000001 or EP1006-CUSA03494_00-SLES503710000001 2016-01-15
 * STAR WARS The Clone Wars UP1082-CUSA48010_00-SLUS205100000000 (PS5: UP1082-PPSA21985_00-SLUS205100000000 or UP1082-PPSA21985_00-0384550355606536) 2024-06-11 PS4 11.50
 * Summoner PS2 Emulation (2000) UP4389-CUSA48889_00-SLUS200740000000 (PS5: UP4389-PPSA23124_00-SLUS200740000000 or UP4389-PPSA23124_00-EMUPS2SUMMONER00) 2024-07-16 PS4 patch 1.01 requires PS4 11.50, PS5 patch 1.02 requires PS5 9.40
 * The King of Fighters Collection: The Orochi Saga UP0576-CUSA03753_00-SLUS215540000001 or EP0576-CUSA04164_00-SLUS215540000001 2018-06-26
-* The King of Fighters '98 Ultimate Match UP0576-CUSA03751_00-SLUS218160000001 or EP0576-CUSA04159_00-SLES552800000001
+* The King of Fighters '98 Ultimate Match (not to be confused with the Final Edition) UP0576-CUSA03751_00-SLUS218160000001 or EP0576-CUSA04159_00-SLES552800000001 2018-03-20
 * The King of Fighters 2000 UP0576-CUSA03748_00-SLUS208340000001 or UP4002-CUSA03748_00-SLUS208340000001 or EP0576-CUSA04160_00-SLUS208340000001 "2016-05-03"
 * The Mark of Kri UP9000-CUSA01729_00-SCUS971400000001 or EP9000-CUSA01945_00-SCES511640000001 "2015-12-05"
 * The Warriors UP1004-CUSA03515_00-SLUS212150000001 or EP1004-CUSA03548_00-SLES534430000001 "2016-07-05"
@@ -89,7 +92,7 @@
 * Fu'un Super Combo UP0576-CUSA03784_00-SLPS257810000001
 * Indigo Prophecy™ (aka Fahrenheit 2005, by Limited Run #331) UP1642-CUSA04798_00-SLUS211960000001 or EP1628-CUSA05760_00-SLES535390000001 "2016-08-09"
 * Jak and Daxter: The Precursor Legacy™ (US version, by Limited Run #184) UP9000-CUSA02522_00-SCUS971240000001
-* Jak X Combat Racing™® (US version, by Limited Run #292) UP9000-CUSA07842_00-SCUS974290000001
+* Jak X: Combat Racing (US version, by Limited Run #292) UP9000-CUSA07842_00-SCUS974290000001. The disc contains patch version 1.03 so requires PS4 6.20 at least.
 * Jak II (US version, by Limited Run #212) UP9000-CUSA07840_00-SCUS972650000001
 * Jak 3 (US version, by Limited Run #258) UP9000-CUSA07841_00-SCUS973300000001
 * METAL SLUG ANTHOLOGY™ (US version by Limited Run #364) UP0576-CUSA03749_00-SLUS215500000001 "2016-07-05"
@@ -98,21 +101,24 @@
 * Red Faction (by Limited Run #281) UP4389-CUSA06402_00-SLUS200730000001 "2016-12-06"
 * Samurai Shodown VI (by Limited Run #329) UP0576-CUSA03787_00-SLUS216290000001 or EP0576-CUSA04158_00-SLES552920000001
 * STAR WARS™ BOUNTY HUNTER™ (US version, by Limited Run #273) UP1082-CUSA03472_00-SLUS204200000001 2016-01-15
-* Star Wars Racer Revenge UP1082-CUSA03474_00-SLUS202680000001, requires PS4 FW version ?3.15?, although it was compiled with SDK version 3.008.000
-* The King of Fighters '98 Ultimate Match (by Limited Run #344) UP0576-CUSA03751_00-SLUS218160000001
+* Star Wars™: Racer Revenge™ (US version, by Limited Run #290) UP1082-CUSA03474_00-SLUS202680000001. The disc contains patch version 1.02 so requires PS4 4.05 at least.
+* The King of Fighters '98 Ultimate Match (by Limited Run #344, not to be confused with the Final Edition) UP0576-CUSA03751_00-SLUS218160000001
 * The King of Fighters 2000 (by Limited Run #386) UP0576-CUSA03748_00-SLUS208340000001 or UP4002-CUSA03748_00-SLUS208340000001 "2016-05-03"
 * The King of Fighters™ Collection: the Orochi Saga (by Limited Run #393) UP0576-CUSA03753_00-SLUS215540000001 2018-06-26
 
-These PS2onPS4 games can be bought online directly via Limited Run Games for brand new or for example on Ebay for second hand or like new.
+These PS2 Classics games for PS4 can be bought online directly via Limited Run Games for brand new items or for example on Ebay for second hand or like new.
 
 == PS2 remaster games available on PS4 PS Store ==
 
-* Destroy All Humans! UP4389-CUSA14899_00-DAH1REMAKEUS0000, JP2880-CUSA19492_00-DAH1REMAKEJP0000, EP4389-CUSA14910_00-DAH1REMAKEEU0000, PS4 7.50
-* Samurai Shodown V Special
-* Metal Gear Solid Collection Vol 1
-* Tales of Symphonia Remastered UP0700-CUSA29214_00-TALESOFSYMPHONIA 2023-02-17
-* Legacy of Kain™ Soul Reaver 1&2 Remastered PS4 & PS5 (PS5: UP1032-PPSA18153_00-SOULREAVER120824) 2024-12-10
+* Destroy All Humans! UP4389-CUSA14899_00-DAH1REMAKEUS0000 or JP2880-CUSA19492_00-DAH1REMAKEJP0000 or EP4389-CUSA14910_00-DAH1REMAKEEU0000, PS4 7.50 2020-07-28
+* Destroy All Humans! 2 (in Destroy All Humans! 2 - Reprobed) (PS5: UP4389-PPSA05398_00-DAH2REPRODBEDUS0) 2022-08-30
+* Metal Gear Solid 2: Sons of Liberty (HD Collection version i.e. Metal Gear Solid 2: Substance) (in METAL GEAR SOLID: MASTER COLLECTION Vol.1 PS4 & PS5) 2023-10-24
+* Metal Gear Solid 3: Snake Eater (HD Collection version i.e. Metal Gear Solid 3: Subsistence) (in METAL GEAR SOLID: MASTER COLLECTION Vol.1 PS4 & PS5) 2023-10-24
+* Tales of Symphonia (in Tales of Symphonia Remastered) UP0700-CUSA29214_00-TALESOFSYMPHONIA 2023-02-17
+* Legacy of Kain™ Soul Reaver 2 (in Legacy of Kain™ Soul Reaver 1&2 Remastered PS4 & PS5) (PS5: UP1032-PPSA18153_00-SOULREAVER120824) 2024-12-10
 * Tomb Raider: The Angel of Darkness (in Tomb Raider IV-VI Remastered PS4 & PS5) (PS5: UP1032-PPSA18154_00-TOMBRAIDER456225) 2025-02-14
+* Tony Hawk's™ Pro Skater™ 3 + 4 (PS5: UP0002-PPSA18010_00-TH34RSTNDBUNDL01) Announced to be released on 2025-07-10
+* The King of Fighters '98 Ultimate Match (in The King of Fighters '98 Ultimate Match Final Edition) UP0576-CUSA29364_00-KOF98UMFE00000US or EP0576-CUSA29365_00-KOF98UMFE00000EU 2022-06-21
 
 = Description =
 
@@ -126,11 +132,11 @@ The PS2 BIOS is included in the game's pkg file. It is the same PS2 BIOS as used
 
 This is first time Sony cared about floats in its emulators. Compared to the PS3 CPU, x86-64 is doing a worse job in mimicking FPU and VU floats calculation behavior. This is resolved by clamping, accurate math used per memory offset, and/or converting floats to double precision. The emulator uses OpenCL for GS, and likely other components as well.
 
-From old emulators like WOTM, up until new ones like Jak, the PS2 emulator underwent many changes from one game to the next. This complicates documenting and predicting the emu's behavior.
+From old emulators like WOTM, up until new ones like Jak, the PS2 emulator underwent many changes from one game to the next. This complicates documenting and predicting the emulator's behavior.
 
 = Emulators =
 
-Every PS2 emulator is programmed differently. Sometimes choosing the right emulator is the only way to fix a game. Emulators are not provided pre-installed in the PS4 OS, but instead they have to be unpacked from an official PS2 CLASSICS PKG file signed by Sony. This list includes the typical usage of those emulators. Emus with apis below 1.5 are considered old, Emus with apis above 1.5 and below 2.0 are considered in-between, and 2.0 and above are modern.
+Every PS2 emulator is programmed differently. Sometimes choosing the right emulator is the only way to fix a game. Emulators are not provided pre-installed in the PS4 OS, but instead they have to be unpacked from an official PS2 Classics PKG file signed by Sony. This list includes the typical usage of those emulators. Emus with APIs below 1.5 are considered old, Emus with APIs above 1.5 and below 2.0 are considered in-between, and 2.0 and above are modern.
 
 {| cellspacing="0" cellpadding="2" border="1" class="wikitable" style="text-align: center; font-size:small;"
 ! Emulator name !! Typical usage - Info !! API Version !! Similar emulators
@@ -142,21 +148,21 @@ Every PS2 emulator is programmed differently. Sometimes choosing the right emula
 |-style="background-color:#D7EF54"
 |  || 2017 || ||
 |-
-| Jak and Daxter: The Precursor Legacy || Good compatibility with most PS2 games. It has a very high api version which means more Lua commands are supported. In addition, Jak emulators are one of the few that can use the '''--gs-adaptive-frameskip=1''' command. It is often referred to as "Jak v2"|| 2.2 || '''JakX,''' '''Jak 2,''' '''Jak 3,''' 
+| Jak and Daxter: The Precursor Legacy || Good compatibility with most PS2 games. It has a very high api version which means more Lua commands are supported. In addition, Jak emulators are among the few that can use the '''--gs-adaptive-frameskip=1''' command. It is often referred to as "Jak v2". || 2.2 || '''Jak X,''' '''Jak 2,''' '''Jak 3,''' 
 |-
-| Jak x || Useful for games with GS issues. It fixed Superman - Shadow of Apokolips's sps. || || '''Jak,''' '''Jak 2,''' '''Jak 3,''' 
+| Jak X || Useful for games with COP2 issues. It fixed Superman - Shadow of Apokolips's sps. || || '''Jak,''' '''Jak 2,''' '''Jak 3,''' 
 |-
 | Art of Fighting Anthology || Similar to RECVX. It was successful in fixing "'''Coraline'''." Sometimes called "AOFA" || 2.0 ||
 |-
-| Resident Evil - Code: Veronica || Fixes games like '''Jackie chan Adventures, SpongeBob SquarePants: Creature From the Krust Krab, Pac-man World 3, Yu-Gi-Oh: Capsule monsters, SpongeBob's Atlantis SquarePantis''' freezing at a black/splash screen. Additionally, games requiring '''OPL's mode 2''' tend to have a higher chance of being playable under it. Often referred to as "RECVX" || 1.7 || '''Fatal Fury,''' '''Redfaction,''' '''AOFA.'''
+| Resident Evil - Code: Veronica || Fixes games like '''Jackie chan Adventures, SpongeBob SquarePants: Creature From the Krust Krab, Pac-man World 3, Yu-Gi-Oh: Capsule monsters, SpongeBob's Atlantis SquarePantis''' freezing at a black/splash screen. Additionally, games requiring '''OPL's mode 2''' tend to have a higher chance of being playable under it. Often referred to as "RECVX" || 1.7 || '''Fatal Fury,''' '''Samurai Showdown,''' '''Red Faction,''' '''AOFA.''' 
 |-
 | Fatal Fury Battle Archives: Volume 2 || Similarly to RECVX, it is often used to fix frozen games. ||  || 
 |-style="background-color:#D7EF54"
 |  || 2016 || ||
 |-
-| Red Faction || It is prominently used to fix VU1/VIF1 sensitive games. It was used to fix '''Tony Hawk games''' suddenly crashing, as well as MTVU sensitive games such as '''Star Wars Battlefront II'''.|| 1.6 || '''Max payne''' 
+| Red Faction || It is prominently used to fix VU1/VIF1 sensitive games. It was used to fix '''Tony Hawk games''' suddenly crashing, as well as MTVU sensitive games such as '''Star Wars Battlefront II'''.|| 1.6 || '''Max Payne'''
 |-
-| Forbidden Siren || The only emulator to fix '''Ice age 2''' being stuck at splash screen. It also fixed '''Gran turismo 4''' running abysmally slow. || 0.1 ||
+| Forbidden Siren || The only emulator to fix '''Ice age 2''' being stuck at splash screen. It also fixed '''Gran Turismo 4''' running abysmally slowly. || 0.1 ||
 |-
 | The King of Fighters 2000 || Seemingly one of the most GIF-accurate emus, it '''prevents Koei Tecmo games (Dynasty Warriors 5: Empires and Samurai Warriors 2) from suddenly freezing when battle starts. Moreover, it is likely the only emulator where '''Batman Begins''' does not crash.''' Often referred to as "KOF2000"|| 1.2 || '''Roguev1''', '''KOF98''', '''Okage'''
 |-
@@ -169,13 +175,13 @@ Every PS2 emulator is programmed differently. Sometimes choosing the right emula
 |-style="background-color:#D7EF54"
 |  || 2015 || ||
 |-
-| War of the Monsters v1 || Subjectively the best emulator to use. Used as PS2CLASSICSGUI's default emulator, it is the best one around for accurate GS emulation, as some graphical issues on the Ratchet series and Tekken 5 can only be fixed by it. Another interesting case is GTA SA's lack of need for auto flush on it, and being natively performant. Additionally, its VU0 timing as well as performance is much better than Jakv2's, as can be seen in the case of Spyro Enter the Dragonfly running comparatively better on it, and the Ratchet series requiring a lower EE delay amount in patches to work, making it one of the best emulators on the PS4. || 0.1 || '''Rogue v1 and v2, Arc the Lad, Star Wars Jedi Starfighter'''
+| War of the Monsters v1 || Subjectively the best emulator to use. Used as PS2CLASSICSGUI's default emulator, it is the best one around for accurate GS emulation, as some graphical issues on the Ratchet series and Tekken 5 can only be fixed by it. Another interesting case is GTA San Andreas' lack of need for auto flush on it, and being natively performant. Additionally, its VU0 timing as well as performance is much better than Jakv2's, as can be seen in the case of Spyro Enter the Dragonfly running comparatively better on it, and the Ratchet series requiring a lower EE delay amount in patches to work, making it one of the best emulators on the PS4. || 0.1 || '''Rogue v1 and v2, Arc the Lad, Star Wars Jedi Starfighter'''
 |-
 | GTA III || Fixed the PAL version of '''Genji: Dawn of the Samurai'''. || 0.6 ||
 |-
 | PaRappa The Rapper 2 || The only emulator to boot '''Spyro: A Hero's Tail'''. || 0.1 ||
 |-
-| Star Wars Racer Revenge || Seemingly the closest emulator to the PS3's. Useful for debugging games as it also shows useful information such as pagefault. || 0.4 || 
+| Star Wars: Racer Revenge || Seemingly the closest emulator to the PS3's. Useful for debugging games as it also shows useful information such as pagefault. || 0.4 || 
 |}
 
 = Emulator Configuration =
@@ -322,11 +328,11 @@ Some CLI commands have no effect, as they were added to the eboot.bin without be
 |-style="background-color:#7698FF"
 |  || || || Speedhacks / Desync Fixes|| ||
 |-
-| --ee-cycle-scalar  || {{Universal}} ||Slowest cycles speed: 5.0<br>Normal cycles speed: 1.0<br>Fastest cycles speed: 0.1 || {{Float}} || Changes the cycle speed of the EE. It can benefit core sync or performance (lowering the cycle rate may affect FMVS). The default value for most emulators is ~1.0. It is highly sensitive, as any slight change may break or fix the game. (Dividing 100 with the entered value is how to find what EE clock speed percentage % the value is setting. For example, 100/5.00 = 20%) || --ee-cycle-scalar=1.0 
+| --ee-cycle-scalar  || {{Universal}} ||Slowest cycles speed: 5.0<br>Normal cycles speed: 1.0<br>Fastest cycles speed: 0.1 || {{Float}} || Changes the cycle speed of the EE. It can benefit core sync or performance (lowering the cycle rate may affect FMVS). The default value for most emulators is ~1.0. It is highly sensitive, as any slight change may break or fix the game. || --ee-cycle-scalar=1.0 
 |-
 | --ee-context-switch-cycles  || {{Exclusive}} || Accelerate cycles (359 => 0) <br>Decelerate cycles (361 => ∞ ) || {{4 Bytes}}||Its effects are mysterious. Possibly delays EE startup when starting new tasks. Does not work on Jak emulators. Default value is 360. Seems to be useful for Bee Movie, Metal Gear Solid 3, as well as others with IPU issues. It bears no effect on VU timing, but it may alter the core's timing with some DMA channels. || --ee-context-switch-cycles=2700?
 |-
-| --ee-hook  || {{Variable}} || AdvanceClock<br>FastForwardClock<br>MfifoDrain<br>ForceEOB || style="background:#212d9c; color:#ffffff;|4 Byte hex (offset),string,4 Byte hex (opcode),4 Byte Decimals (advanceclock value)|| Runs the specified functionality each time a selected EE offset is reached. FastForwardClock and AdvanceClock help fix core sync issues, but can be used as a speedhack. AdvanceClock stalls the EE for a specified amount of cycles (in decimals), while FastForwardClock behaves similarly. They are commonly used on CTC2 instructions. FastoForwardClock can be used on any offset. However, some offsets are ignored by AdvanceClock - it could be that this function only works on instructions reached after processing a branch instruction, likely specifically designed to work at both the start or end of a branch instruction (a loop). However, this is only the case for old emulators like King Of Fighters 2000 and War Of The Monsters. Newer ones such as Jak operate differently, where AdvanceClock only works at the end of a branch instruction (when it's false).<pre>
+| --ee-hook  || {{Variable}} || AdvanceClock<br>FastForwardClock<br>MfifoDrain<br>ForceEOB<br>SO3_AudioRequest<br>SO3_AudioWriteBack || style="background:#212d9c; color:#ffffff;|4 Byte hex (offset),string,4 Byte hex (opcode),4 Byte Decimals (advanceclock value)|| Runs the specified functionality each time a selected EE offset is reached. FastForwardClock and AdvanceClock help fix core sync issues, but can be used as a speedhack. AdvanceClock stalls the EE for a specified amount of cycles (in decimals), while FastForwardClock behaves similarly. They are commonly used on CTC2 instructions. FastoForwardClock can be used on any offset. However, some offsets are ignored by AdvanceClock - it could be that this function only works on instructions reached after processing a branch instruction, likely specifically designed to work at both the start or end of a branch instruction (a loop). However, this is only the case for old emulators like King Of Fighters 2000 and War Of The Monsters. Newer ones such as Jak operate differently, where AdvanceClock only works at the end of a branch instruction (when it's false).<pre>
 Advanceclock usage example:
 
 0x0 nop <-- Advancelock can work here on old emulators ✓
@@ -465,51 +471,86 @@ Advanceclock usage example:
 <pre>VU0 Macro-mode. These commands assist the FPU.</pre>
 
 {| cellspacing="0" cellpadding="2" border="1" class="wikitable" style="text-align: center; font-size:small;"
-! Command !! Emulator Support !! Values !! Value Type !! Notes !! Usage 
+! Command !! Emulator Support !! Values !! Value Type !! Notes !! Correct PS2 Behavior !! Usage Example 
 |-style="background-color:#7698FF"
-|  || || || Speedhacks || ||
+|  || || || Speedhacks || || || 
 |-
-| --cop2-opt-flags || {{Universal}} || 0, 1 ,2 || {{Semi-Binary}} || Optimize flags upon recompilation. 0 is the accurate option, 1 is mostly safe, 2 is unsafe. Setting it to 0 improves FPU accuracy. For example, it fixed Ratchet's gravity issues. It is an insignificant speedhack which should always be set to 0. [https://github.com/PCSX2/pcsx2/blob/58f5a5b915915293b90e7e8f34c33f9c0424d1e8/pcsx2/x86/microVU_Misc.h#L280 More Info] || --cop2-opt-flags=0
+| --cop2-opt-flags || {{Universal}} || 0, 1 ,2 || {{Semi-Binary}} || Optimize flags upon recompilation. 0 is the accurate option, 1 is mostly safe, 2 is unsafe. Setting it to 0 improves FPU accuracy. For example, it fixed gravity issues (falling through the floor) in Ratchet, DT Carnage, and Brave - The Search for Spirit Dancer. It is an insignificant speedhack which should always be set to 0. [https://github.com/PCSX2/pcsx2/blob/58f5a5b915915293b90e7e8f34c33f9c0424d1e8/pcsx2/x86/microVU_Misc.h#L280 More Info] || 0 ||--cop2-opt-flags=0
 |- 
-| --cop2-opt-vf00 || {{Universal}} || 0, 1, 2 || {{Semi-Binary}} || Seems to be a hacky way of optimization through the vf00 register. Set to 1 by default, setting it to 0 fixed Superman Shadow of Apokolips freezing. It is an insignificant speedhack which should always be set to 0. || --cop2-opt-vf00=0
+| --cop2-opt-vf00 || {{Universal}} || 0, 1, 2 || {{Semi-Binary}} || Seems to be a hacky way of optimization through the vf00 register. Set to 1 by default, setting it to 0 fixed Superman Shadow of Apokolips freezing. It is an insignificant speedhack which should always be set to 0. || 0 || --cop2-opt-vf00=0
 |- 
-| --cop2-const-prop || {{Universal}} || 0, 1 || {{Binary}} || Disables or enables constant propagation. Can Be Used as speedhack for COP2 hungry games when set to 1 [https://github.com/PCSX2/pcsx2/blob/58f5a5b915915293b90e7e8f34c33f9c0424d1e8/pcsx2/x86/microVU_Misc.h#L312 More info] || --cop2-const-prop=1
+| --cop2-const-prop || {{Universal}} || 0, 1 || {{Binary}} || Disables or enables constant propagation. Can Be Used as speedhack for COP2 hungry games when set to 1 [https://github.com/PCSX2/pcsx2/blob/58f5a5b915915293b90e7e8f34c33f9c0424d1e8/pcsx2/x86/microVU_Misc.h#L312 More info] || 0 || --cop2-const-prop=1
 |- 
-| --cop2-di-bits || {{Universal}} || 0, 1 || {{Binary}} || 0 to skip setting invalid, and div by Zero flags in status register, and therefore improve performance. Can be used as a speedhack to skip costly calculations. || --cop2-di-bits=0
+| --cop2-di-bits || {{Universal}} || 0, 1 || {{Binary}} || 0 to skip setting invalid, and div by Zero flags in status register, and therefore improve performance. Can be used as a speedhack to skip costly calculations. || 1 || --cop2-di-bits=0
 |-style="background-color:#D7EF54"
-|  || || || Game fixes || ||
+|  || || || Game fixes || || || 
 |-
-| --cop2-no-clamping || {{Universal}} ||  Enabled = 0<br>Disabled = 1 || {{Binary}} || Changes the clamping behavior of the COP2. The default value is set to 1. It may slightly adjust COP2 timing. || --cop2-no-clamping=0
+| --cop2-no-clamping || {{Universal}} ||  Enabled = 0<br>Disabled = 1 || {{Binary}} || Changes the clamping behavior of the COP2. The default value is set to 1. It may slightly adjust COP2 timing. ||  ||  --cop2-no-clamping=0
 |-
-| --cop2-accurate-range || {{Universal}} || start,end offset (0x0 - 0x1FFFFFF) || style="background:#5c32a8; color:#ffffff;"|Hex combination|| Accurate Mul/Div/Add/Sub math instructions for the COP2 by using software floats rather than hardware floats. Can be used for full COP2 mathematical accuracy in the specified range. || --cop2-accurate-range=0x123456,0x134567
+| --cop2-accurate-range || {{Universal}} || start,end offset (0x0 - 0x1FFFFFF) || style="background:#5c32a8; color:#ffffff;"|Hex combination|| Accurate Mul/Div/Add/Sub math instructions for the COP2 by using software floats rather than hardware floats. Can be used for full COP2 mathematical accuracy in the specified range. ||  ||  --cop2-accurate-range=0x123456,0x134567
 |- 
-| --cop2-no-clamp-range || {{Exclusive}} || start,end offset (0x0 - 0x1FFFFFF) || style="background:#5c32a8; color:#ffffff;"|Hex combination || Per-range clamping for COP2. || --cop2-no-clamp-range=0x123456,0x134567
+| --cop2-no-clamp-range || {{Exclusive}} || start,end offset (0x0 - 0x1FFFFFF) || style="background:#5c32a8; color:#ffffff;"|Hex combination || Per-range clamping for COP2. ||  || --cop2-no-clamp-range=0x123456,0x134567
 |- 
-| --cop2-accurate-mul-range || {{Universal}} || start,end offset (0x0 - 0x1FFFFFF) || style="background:#5c32a8; color:#ffffff;"|Hex combination || Accurate multiplication instructions for the COP2 in the specified range by using software floats rather than hardware floats (Offset range seems not to directly match EE's) || --cop2-accurate-mul-range=0x123456,0x134567
+| --cop2-accurate-mul-range || {{Universal}} || start,end offset (0x0 - 0x1FFFFFF) || style="background:#5c32a8; color:#ffffff;"|Hex combination || Accurate multiplication instructions for the COP2 in the specified range by using software floats rather than hardware floats (Offset range seems not to directly match EE's) ||  || --cop2-accurate-mul-range=0x123456,0x134567
 |- 
-| --cop2-accurate-mul || {{Universal}} || 1 = Enabled<br>0 = Disabled || {{Binary}} || Allows the COP2 to accurately multiply for all offsets by using software floats rather than hardware floats. It is slightly slow. || --cop2-accurate-mul=1
+| --cop2-accurate-mul || {{Universal}} || 1 = Enabled<br>0 = Disabled || {{Binary}} || Allows the COP2 to accurately multiply for all offsets by using software floats rather than hardware floats. It is slightly slow. || 1 || --cop2-accurate-mul=1
 |- 
-| --cop2-accurate-addsub|| {{Universal}} ||  1 = Enabled<br>0 = Disabled || {{Binary}} || Allows the COP2 to accurately Add/Subtract for all offsets by using software floats rather than hardware floats. (Extremely slow) || --cop2-accurate-addsub=1
+| --cop2-accurate-addsub|| {{Universal}} ||  1 = Enabled<br>0 = Disabled || {{Binary}} || Allows the COP2 to accurately Add/Subtract for all offsets by using software floats rather than hardware floats. (Extremely slow) || 1 || --cop2-accurate-addsub=1
 |-
-| --cop2-accurate-addsub-range || {{Universal}} || start,end offset (0x0 - 0x1FFFFFF) || style="background:#5c32a8; color:#ffffff;"|Hex combination || Allows the COP2 to accurately Add/Sub in the specified ee memory range by using software floats rather than hardware floats. (Offset range seems not to directly match EE's. It is possibly 0x95400~ behind(?) || --cop2-accurate-addsub-range=0x123456,0x134567
+| --cop2-accurate-addsub-range || {{Universal}} || start,end offset (0x0 - 0x1FFFFFF) || style="background:#5c32a8; color:#ffffff;"|Hex combination || Allows the COP2 to accurately Add/Sub in the specified ee memory range by using software floats rather than hardware floats. (Offset range seems not to directly match EE's. It is possibly 0x95400~ behind(?) ||  || --cop2-accurate-addsub-range=0x123456,0x134567
 |-
 |-style="background-color:#FFAA00"
-|  || || || Other || ||
+|  || || || Other || || || 
 |-
-| --cop2-regalloc || {{Universal}} || 0, 1 || {{Binary}} || Optimized Register Allocation(?). PCSX2 seems to have this enabled by default. Seems to slow down COP2 when disabled. ||
+| --cop2-regalloc || {{Universal}} || 0, 1 || {{Binary}} ||   Optimized Register Allocation(?). PCSX2 seems to have this enabled by default. Seems to slow down COP2 when disabled. ||  || 
 |- 
-| --cop2-inst-q || {{Universal}} || 0, 1 || {{Binary}} || instant Q, no stalling on VWAITQ, or instances of Q. Crashes some games when enabled. ||
+| --cop2-inst-q || {{Universal}} || 0, 1 || {{Binary}} ||   instant Q, no stalling on VWAITQ, or instances of Q. Crashes some games when enabled. ||  || 
 |- 
-| --cop2-inst-p || {{Universal}} || 0, 1 || {{Binary}} || instant P, no stalling on VWAITP, or instances of P. ||
+| --cop2-inst-p || {{Universal}} || 0, 1 || {{Binary}} ||   instant P, no stalling on VWAITP, or instances of P. ||  || 
 |- 
-| --cop2-use-rcp || {{Universal}} || 0, 1 || {{Binary}} || Enables SSE RCP. Disabled by default ||
+| --cop2-use-rcp || {{Universal}} || 0, 1 || {{Binary}} ||   Enables SSE RCP. Disabled by default ||  || 
 |- 
-| --cop2-use-rsqrt ||  {{Universal}} || 0, 1 || {{Binary}} || Enables SSE RSQRT || --cop2-use-rsqrt=0
+| --cop2-use-rsqrt ||  {{Universal}} || 0, 1 || {{Binary}}  ||  Enables SSE RSQRT ||  || --cop2-use-rsqrt=0
 |- 
-| --cop2-clamp-operands ||  {{Universal}} || 0, 1 || {{Binary}} || Affects the COP2's clamping behavior|| --cop2-clamp-operands=1
+| --cop2-clamp-operands ||  {{Universal}} || 0, 1 || {{Binary}} || Affects the COP2's clamping behavior||  || --cop2-clamp-operands=1
 |- 
-| --cop2-clamp-results || {{Universal}} || 0, 1 || {{Binary}} || Affects the COP2's clamping behavior  || --cop2-clamp-results=1
+| --cop2-clamp-results || {{Universal}} || 0, 1 || {{Binary}} || Affects the COP2's clamping behavior  ||  || --cop2-clamp-results=1
 |- 
+|}
+
+===== VFPU =====
+
+<pre>Likely COP2/VU0 commands merged into one. These were introduced with the PS Plus emulators.</pre>
+
+{| cellspacing="0" cellpadding="2" border="1" class="wikitable" style="text-align: center; font-size:small;"
+! Command !! Emulator Support !! Values !! Value Type !! Notes !! Correct PS2 Behavior !! Usage Example 
+|-
+| --vfpu-clamp-operands || {{Exclusive}} ||  ||  ||   ||  ||
+|-
+| --vfpu-clamp-results || {{Exclusive}} ||  ||  ||   ||  ||
+|-
+| --vfpu-accurate-range || {{Exclusive}} ||  ||  ||   ||  ||
+|-
+| --vfpu-accurate-muldiv || {{Exclusive}} ||  ||  ||   ||  ||
+|-
+| --vfpu-native-rcp || {{Exclusive}} ||  ||  ||   ||  ||
+|-
+| --vfpu-accurate-muldiv-range || {{Exclusive}} ||  ||  ||   ||  ||
+|-
+| --vfpu-accurate-mul-fast || {{Exclusive}} ||  ||  ||   ||  ||
+|-
+| --vfpu-accurate-addsub || {{Exclusive}} ||  ||  ||   ||  ||
+|-
+| --vfpu-accurate-addsub-range || {{Exclusive}} ||  ||  ||   ||  ||
+|-
+| --vfpu-no-clamp-range || {{Exclusive}} ||  ||  ||   ||  ||
+|-
+| --vfpu-clamp-range || {{Exclusive}} ||  ||  ||   ||  ||
+|-
+| --vfpu-update-sticky || {{Exclusive}} ||  ||  ||   ||  ||
+|-
+| --vfpu-update-sticky-range || {{Exclusive}} ||  ||  ||   ||  ||
+|-
 |}
 
 ==== Vector Units (VU) ====
@@ -519,49 +560,49 @@ Advanceclock usage example:
 <pre>Custom DSPs used to process vertex data, physics calculations, and other related tasks. Settings found here affect VU1, VU0, and COP2. They fix broken or missing geometry, black screens, and crashes.</pre>
 
 {| cellspacing="0" cellpadding="2" border="1" class="wikitable" style="text-align: center; font-size:small;"
-! Command !! Emulator Support !! Values !! Value Type !! Notes !! Usage 
+! Command !! Emulator Support !! Values !! Value Type !! Notes !! Correct PS2 Behavior !! Usage Example 
 |-style="background-color:#ff99c2"
-| || || || Graphical fixes  || ||
+| || || || Graphical fixes  || || || 
 |-
-| --vu-xgkick-delay  || {{Universal}} || Default = 1<br>Limit is between (0 => 31)  || {{1 Byte}}|| Delay xgkick instruction execution. PCSX2 uses 6 cycles, PS3 uses 2-8 cycles depending on the game. A game with missing graphics will require a low value such as 0, while one that crashes might require a high value such as 7.|| --vu-xgkick-delay=8
+| --vu-xgkick-delay  || {{Universal}} || Default = 1<br>Limit is between (0 => 31)  || {{1 Byte}}|| Delay xgkick instruction execution. PCSX2 uses 6 cycles, PS3 uses 2-8 cycles depending on the game. A game with missing graphics will require a low value such as 0, while one that crashes might require a high value such as 7. || 0 || --vu-xgkick-delay=8
 |-
-| --vu-custom-min-max   || {{Universal}} || 0, 1 || {{binary}} || Custom Max/Mini logic for denormals. Disabled on pcsx2 by default but enabled by default on a couple of emus such as jakv2. Disabling it could potentially restore missing graphics.|| --vu-custom-min-max=0
+| --vu-custom-min-max   || {{Universal}} || 0, 1 || {{binary}} || Custom Max/Mini logic for denormals. Disabled on pcsx2 by default but enabled by default on a couple of emus such as jakv2. Disabling it could potentially restore missing graphics.||   || --vu-custom-min-max=0
 |-
 |-style="background-color:#D7EF54"
-|  ||  || || Game fixes || ||
+|  ||  || || Game fixes || || || 
 |-
-| --vu-hack-triace   || {{Universal}} || 0, 1 || {{binary}} || A hack designed specifically for games developed by Tri Ace. Corrects the VU's addi calculation. Without it, the result will be one bit off, which is enough to break the game's decryption algo. Named by PCSX2 as "VuAddSubHack". || --vu-hack-triace=1
+| --vu-hack-triace   || {{Universal}} || 0, 1 || {{binary}} || A hack designed specifically for games developed by Tri Ace. Corrects the VU's addi calculation. Without it, the result will be one bit off, which is enough to break the game's decryption algo. Named by PCSX2 as "VuAddSubHack". ||  || --vu-hack-triace=1
 |- 
-| --vu-branch-hazard  || {{Universal}} || 0, 1 || {{binary}} || This command relates to how the emulator handles branch hazards in the Vector Units (VU). Setting it to 0 might fix freezes at the expense of causing SPS in some games, while 1 might improve performance. Seems to be enabled by default. Disabling it prevented "'''Batman - Rise of Sin Tzu'''" from crashing|| --vu-branch-hazard=0
+| --vu-branch-hazard  || {{Universal}} || 0, 1 || {{binary}} || This command relates to how the emulator handles branch hazards in the Vector Units (VU). Setting it to 0 might fix freezes at the expense of causing SPS in some games, while 1 might improve performance. Seems to be enabled by default. Disabling it prevented "'''Batman - Rise of Sin Tzu'''" from crashing||   || --vu-branch-hazard=0
 |- 
-| --vu-evil-branches  || {{Universal}} || 0, 1 || {{binary}} || Take in count branch in delay slot, or not. Set to 1 for the correct behavior. [https://github.com/PCSX2/pcsx2/blob/58f5a5b915915293b90e7e8f34c33f9c0424d1e8/pcsx2/x86/microVU_Misc.h#L306 More Info]|| --vu-evil-branches=1
+| --vu-evil-branches  || {{Universal}} || 0, 1 || {{binary}} || Take in count branch in delay slot, or not. Set to 1 for the correct behavior. [https://github.com/PCSX2/pcsx2/blob/58f5a5b915915293b90e7e8f34c33f9c0424d1e8/pcsx2/x86/microVU_Misc.h#L306 More Info] ||  || --vu-evil-branches=1
 |- 
-| --vu-to-double  || {{Universal}} || 0, 1 || {{binary}} || Converts floats to double. Enabling it is the accurate option.  || --vu-to-double=1
+| --vu-to-double  || {{Universal}} || 0, 1 || {{binary}} || Converts floats to double. Enabling it is the accurate option.  || 1 || --vu-to-double=1
 |-
-| --vu-custom-fused-madd   || {{Universal}} || 0, 1 || {{binary}} || Custom FMA (fused multiply-add). Disabled by default || --vu-custom-fused-madd=1
+| --vu-custom-fused-madd   || {{Universal}} || 0, 1 || {{binary}} || Custom FMA (fused multiply-add). Disabled by default ||  || --vu-custom-fused-madd=1
 |- 
 |-style="background-color:#7698FF"
-|  || ||  || Speedhacks || ||
+|  || ||  || Speedhacks || || || 
 |-
-| --vu-opt-sf-check   || {{Exclusive}} || 0, 1 || {{binary}} || Updates status flags only on blocks which will read them. Known in pcsx2 as mVU flag hack. Won't work with most emulators, but will work on old emus such as War of the Monsters, GTA 3, and Arc Twilight of the Spirits™ || --vu-opt-sf-check=1
+| --vu-opt-sf-check   || {{Exclusive}} || 0, 1 || {{binary}} || Updates status flags only on blocks which will read them. Known in pcsx2 as mVU flag hack. Won't work with most emulators, but will work on old emus such as War of the Monsters, GTA 3, and Arc Twilight of the Spirits™ ||  || --vu-opt-sf-check=1
 |-  
-| --vu-opt-jr-caching   || {{Exclusive}} || 0, 1 || {{binary}} || Optimize Jump Register caching. (vi15). Won't work with most emulators but will work on old emus such as War of the Monsters, GTA 3, and Arc Twilight of the Spirits™ || --vu-opt-jr-caching=1
+| --vu-opt-jr-caching   || {{Exclusive}} || 0, 1 || {{binary}} || Optimize Jump Register caching. (vi15). Won't work with most emulators but will work on old emus such as War of the Monsters, GTA 3, and Arc Twilight of the Spirits™ || 0 ||  --vu-opt-jr-caching=1
 |-style="background-color:#FEA15C"
-|  ||  || || Other || ||
+|  ||  || || Other || || || 
 |-
-| --vu-d-bit   || {{Universal}} || 0, 1 || {{binary}} || Debug break. Halts the VU and sends an interrupt to the EE. ||  --vu-d-bit=0
+| --vu-d-bit   || {{Universal}} || 0, 1 || {{binary}} || Debug break. Halts the VU and sends an interrupt to the EE. ||   || --vu-d-bit=0
 |- 
-| --vu-t-bit  || {{Universal}} || 0, 1 || {{binary}} || Debug halt. Acts similarly to D-bit ||  --vu-t-bit=0
+| --vu-t-bit  || {{Universal}} || 0, 1 || {{binary}} || Debug halt. Acts similarly to D-bit ||   || --vu-t-bit=0
 |- 
-| --vu-inst-mflag   || {{Universal}} || 0, 1 || {{binary}} || Instant macflag? It's enabled by default. When disabled in some games, SPS springs out. || --vu-inst-mflag=1
+| --vu-inst-mflag   || {{Universal}} || 0, 1 || {{binary}} || Instant macflag? It's enabled by default. When disabled in some games, SPS springs out. ||  || --vu-inst-mflag=1
 |- 
-| --vu-inst-cflag  || {{Universal}} || 0, 1 || {{binary}} || Instant cflag?  || --vu-inst-cflag=1
+| --vu-inst-cflag  || {{Universal}} || 0, 1 || {{binary}} || Instant cflag?  ||  || --vu-inst-cflag=1
 |- 
-| --vtune-vu   || {{Universal}} || ? || ? ||
+| --vtune-vu   || {{Universal}} || ? || ? || || 
 |- 
-| --vu-jit-disasm   || {{Universal}} || 0, 1, 2 || {{Semi-Binary}} || ? || --vu-jit-disasm=1
+| --vu-jit-disasm   || {{Universal}} || 0, 1, 2 || {{Semi-Binary}} || ? ||  || --vu-jit-disasm=1
 |- 
-| --vu-range-merge  || {{Exclusive}} || Default = 0<br>Max = 255 || {{1 Byte}} ||  vu_inst_cnt || --vu-range-merge=255
+| --vu-range-merge  || {{Exclusive}} || Default = 0<br>Max = 255 || {{1 Byte}} ||  vu_inst_cnt ||  || --vu-range-merge=255
 |- 
 |}
 
@@ -584,6 +625,10 @@ $ goes to the specified succeeding offsets. $0 will go 2 bytes forward and chang
 |-
 | --vu1-di-bits || {{Universal}} || Default value = 1<br> 0, 1 || {{binary}} ||  0 Skips setting invalid, and Divides by zero flags in status register. A speedhack that vastly improves performance; it can skip costly calculations. But at the same time, it can cause issues such as broken geometry. || --vu1-di-bits=0
 |-
+| --vu1-force-synchronous || {{Exclusive}} ||  || Possibly a renamed --vu1=jit-sync ||  || 
+|-
+| --vu1-skip-redundant-code-writes || {{Exclusive}} ||  ||  ||  || 
+|-
 | --vu1-const-prop || {{Universal}} || 0, 1|| {{binary}} || Enabled by default. 0 will disable it and cause performance issues but with higher compatability.[https://github.com/PCSX2/pcsx2/blob/58f5a5b915915293b90e7e8f34c33f9c0424d1e8/pcsx2/x86/microVU_Misc.h#L312 More info] || --vu1-const-prop=1
 |-
 | --vu1-opt-flags || {{Universal}} || 0, 1, 2 ||  {{Semi-Binary}} || Optimize flags upon recompilation. 0 is the accurate option, 1 is mostly safe, 2 is unsafe. Setting it to 0 may fix crashes or sps. It is an insignificant speedhack which should always be set to 0. [https://github.com/PCSX2/pcsx2/blob/58f5a5b915915293b90e7e8f34c33f9c0424d1e8/pcsx2/x86/microVU_Misc.h#L280 More Info] || --vu1-opt-flags=0
@@ -599,7 +644,7 @@ $ goes to the specified succeeding offsets. $0 will go 2 bytes forward and chang
 |-
 | --vu1 || {{Universal}} || jit-sync || {{string}}  || Selector between IR/JIT and it modes. Jit-sync works similarly to disabling MTVU. jit, trans, and jit-async are unimplemented functions that do not change anything. || --vu1=jit-sync
 |-
-| --vu1-no-clamping || {{Universal}} ||  Enabled = 0<br>Disabled = 1 || {{binary}} || Changes the clamping behavior of the VU1. Setting specific to PS4 emulators, (unimplemented in PCSX2) with 0 resembling PCSX2's extra, and 1 extra + preserve sign. The default emulator's value is 1. It may slightly adjust VU1 timing. || --vu1-no-clamping=0
+| --vu1-no-clamping || {{Universal}} ||  Enabled = 0<br>Disabled = 1 || {{binary}} || Changes the clamping behavior of the VU1. Setting specific to PS4 emulators, (unimplemented in PCSX2). It's not perfect, as some games such as Midnight Club 3, Shrek The Third, and Surf's Up do not work well with it. The default emulator's value is 1. It may slightly adjust VU1 timing. || --vu1-no-clamping=0
 |- 
 | --vu1-clamp-range || {{Exclusive}} || vu1 memory offset start,end (0x0 - 0x800) ||  style="background:#5c32a8; color:#ffffff;"|Hex combination || Values must not exceed 0x800 ||
 |-
@@ -689,7 +734,13 @@ $ goes to the specified succeeding offsets. $0 will go 2 bytes forward and chang
 |}
 
 ==== DMA Channels ====
-
+===== GIF =====
+{| cellspacing="0" cellpadding="2" border="1" class="wikitable" style="text-align: center; font-size:small;"
+! Command !! Emulator Support !! Values !! Value Type !! Notes !! Usage
+|-
+| --gif-path3-transfer-timeout-secs || {{Exclusive}} || || || ||
+|-
+|}
 ===== VIF =====
 
 <pre>The VIF decompresses vector data, uploads microprograms to the VUs, and sends graphical data to the GIF. Its commands are often used to fix freezing.</pre>
@@ -701,7 +752,7 @@ $ goes to the specified succeeding offsets. $0 will go 2 bytes forward and chang
 |-
 | --vif-ignore-invalid-cmd || {{Exclusive}} || 0, 1 || {{Binary}} || Ignore invalid vif commands. In some cases, setting it to 1 can fix games that freeze while showing the same frame. || --vif-ignore-invalid-cmd=1
 |-
-| --vif-thread-chunk-size || {{Exclusive}} || 0, 1024 || {{2 Bytes}} || Slows down both VIFS the lower it is, and speeds them up the higher it is. 1024 is the limit, with 112 being the default value.  ||  --vif-thread-chunk-size=100 
+| --vif-thread-chunk-size || {{Exclusive}} || 0, 1024 || {{2 Bytes}} || Slows down both VIFS the lower it is(?) 1024 is the limit, with 112 being the default value.  ||  --vif-thread-chunk-size=100 
 |-
 | --detect-idle-vif || {{Universal}} || 0, 1 || {{Binary}} || Enabled by default. Unknown function || --detect-idle-vif=0
 |-style="background-color:#ff8080"
@@ -770,7 +821,7 @@ $ goes to the specified succeeding offsets. $0 will go 2 bytes forward and chang
 |- 
 | --gs-flush-ad-xyz || {{Exclusive}} ||  always, safe, safeZwrite, off, 0 || {{string}} || Force a primitive flush when a framebuffer is also an input texture. This fixes some processing effects, but it can sometimes be heavy on the GS in terms of performance. GTA: SA, and Jak 3 use this command. || --gs-flush-ad-xyz=safe
 |-
-| --gs-force-bilinear || {{Universal}} || 0, 1 || {{binary}} || Forces bilinear filtering, can fix ghosting problems in some cases, and corrects positioning between pixels. Recommended for most games except the ones using 2D images, as it could incorrectly structure pixels' positions. || --gs-force-bilinear=1
+| --gs-force-bilinear || {{Universal}} || 0, 1 || {{binary}} || Forces bilinear filtering, can fix ghosting problems, and corrects positioning between pixels, such as in Pac-Man World Rally. Recommended for most games except the ones using 2D images, as it could incorrectly structure pixels' positions. || --gs-force-bilinear=1
 |-
 |-style="background-color:#D7EF54"
 |  || || Gs settings / Behaviour || || ||
@@ -785,7 +836,7 @@ $ goes to the specified succeeding offsets. $0 will go 2 bytes forward and chang
 |- 
 | --gs-progressive || {{Universal}} || 0, 1 || {{binary}} || Enables progressive scan. Can fix graphical glitches/double screen issues.  ||
 |- 
-| --gs-vert-precision || {{Exclusive}} || 8, 16|| {{1 Byte}} || This option allows the user to choose between 8-bit and 16-bit precision for the vertex calculations in 3D graphics rendering. It reduces the likelihood of visual distortions such as jagged edges, improper alignment of polygons, or model "warping." The emu expects the values of 8 or 16, any other values are not permitted. It is set at 16 by default. || --gs-vert-precision=8
+| --gs-vert-precision || {{Exclusive}} || 8, 16|| {{1 Byte}} || This option allows the user to choose between 8-bit and 16-bit precision for the vertex calculations in 3D graphics rendering. It reduces the likelihood of visual distortions such as jagged edges, improper alignment of, or missing polygons, and model 'warping' when set to 8. The emu expects the values of 8 or 16, any other values are not permitted. It is set at 16 by default. || --gs-vert-precision=8
 |-
 | --gs-skip-dirty-flush-on-mipmap || {{Universal}} || 0, 1 || {{binary}} ||  Skip flushing textures marked as dirty from cache when enabled. It does, however, require mipmap to be enabled first. || --gs-skip-dirty-flush-on-mipmap=1
 |- 
@@ -838,6 +889,21 @@ $ goes to the specified succeeding offsets. $0 will go 2 bytes forward and chang
 |-
 | --safe-area-min || {{Exclusive}} ||   area/float || {{float}} || An overscan setting, (range 0.9 to 1.0) any other values outside of that range will be rejected by the emulator || --safe-area-min=0.9
 |-
+| --gs-async-memcpy || {{Exclusive}} ||  || || ||
+|-
+| --gs-int-force-field-0 || {{Exclusive}} ||  || || ||
+|-
+| --gs-reduce-fan-precision || {{Exclusive}} ||  || || ||
+|-
+| --gs-h2l-clamp-height || {{Exclusive}} ||  || || ||
+|-
+| --gs-disable-addr-mask || {{Exclusive}} ||  || || ||
+|-
+| --gs-crop-scanout-w || {{Exclusive}} ||  || || ||
+|-
+| --gs-crop-scanout-h || {{Exclusive}} ||  || || ||
+|-
+| --gs-vsync-mode || {{Exclusive}} || 0 (vsync), 1 (vsync_multi), 2 (VRR) || || ||
 |-style="background-color:#FEA15C"
 |  || || Other || || ||
 |-
@@ -904,6 +970,9 @@ $ goes to the specified succeeding offsets. $0 will go 2 bytes forward and chang
 | --switch-disc-reset || {{Exclusive}} ||  1 = Enables resetting the game upon disc swap,<br>0 = Disables resetting the game upon disc swap|| {{Binary}} || 0 Can be used to prevent resetting the game when switching multiple discs. Useful for games like Samurai Warriors 2 that include an import data feature. Sadly this command isn't supported by many emulators, but jakv2 is confirmed to support it || --switch-disc-reset=1
 |-
 | --cdvd-determinism || {{Exclusive}} || || || || Unknown
+|-
+| -cdvd-sector-far-seek-ms || {{Exclusive}} || || || || 
+|-
 |-style="background-color:#46a4e8"
 |  || || Timing || || ||
 |-
@@ -1017,11 +1086,7 @@ $ goes to the specified succeeding offsets. $0 will go 2 bytes forward and chang
 |-
 | {{cellcolors|#0b9fb3|#000000}}vuClampMode: 2 ||{{cellcolors|#03fcb1|#000000}}<br>--vu1-no-clamping=0<br>--vu0-no-clamping=0<br>--cop2-no-clamping=0  || Works similar.
 |-
-| {{cellcolors|#0b9fb3|#000000}}vuClampMode: 3  || {{cellcolors|#03fcb1|#000000}}<br>--vu1-no-clamping=1<br>--vu0-no-clamping=1<br>--cop2-no-clamping=1<br>--vu-to-double=1 || Works similar.
-|-
 | {{cellcolors|#0b9fb3|#000000}}eeClampMode: 2 || {{cellcolors|#03fcb1|#000000}}--fpu-to-double=0<br>--fpu-no-clamping=0<br> || Works similar.
-|-
-| {{cellcolors|#0b9fb3|#000000}}eeClampMode: 3  || {{cellcolors|#03fcb1|#000000}}--fpu-to-double=1<br>--fpu-no-clamping=1<br> || Works similar.
 |-
 | {{cellcolors|#0b9fb3|#000000}}eeRoundMode: || {{cellcolors|#03fcb1|#000000}}--fpu-accurate-muldiv=1<br>--fpu-accurate-addsub=1 ||
 |-
@@ -1029,13 +1094,13 @@ $ goes to the specified succeeding offsets. $0 will go 2 bytes forward and chang
 |-
 | {{cellcolors|#0b9fb3|#000000}}vu1RoundMode: || {{cellcolors|#03fcb1|#000000}}--vu1-accurate-addsub-range=<br>--vu1-mul0fix-range=||
 |-
-| {{cellcolors|#0b9fb3|#000000}}eeCycleRate: || {{cellcolors|#03fcb1|#000000}}--ee-cycle-scalar= || '''"Potential" equivalent values: PCSX2 - PS4''':<br>300% --> 0.333<br>180% --> 0.555<br>130% -->0.769<br>'''100% --> 1.0'''<br>75% --> 1.333<br>60% --> 1.666<br>50% --> 2
+| {{cellcolors|#0b9fb3|#000000}}eeCycleRate: || {{cellcolors|#03fcb1|#000000}}--ee-cycle-scalar= || '''"Potential" equivalent values: PCSX2 - PS4''':<br>300% --> Unavailable<br>180% --> 0.2<br>130% -->0.7<br>'''100% --> 1.0'''<br>75% --> 1.333<br>60% --> 1.666<br>50% --> 2
 |-
 | {{cellcolors|#0b9fb3|#000000}}FpuNegDivHack<br>FpuMulHack || {{cellcolors|#03fcb1|#000000}}--fpu-accurate-muldiv=1 || 
 |-
 | {{cellcolors|#0b9fb3|#000000}}cpuCLUTRender: 1 || {{cellcolors|#03fcb1|#000000}}--gs-uv-shift-pointsampling=1 ||
 |-
-| {{cellcolors|#0b9fb3|#000000}}MTVUSpeedHack: 0 || {{cellcolors|#03fcb1|#000000}}--vu1=jit-sync || Some games will also require --vu1-mpg-cycles= to be between "6000 - 19000"
+| {{cellcolors|#0b9fb3|#000000}}MTVU: 0 || {{cellcolors|#03fcb1|#000000}}--vu1=jit-sync || Some games will also require --vu1-mpg-cycles= to be between "6000 - 19000"
 |-
 | {{cellcolors|#0b9fb3|#000000}}mergeSprite<br>alignSprite || {{cellcolors|#03fcb1|#000000}}--gs-kernel-cl-up="up2x2simple" || Note: works similarly but not the equivalent
 |-
@@ -1066,10 +1131,12 @@ $ goes to the specified succeeding offsets. $0 will go 2 bytes forward and chang
 --vu-xgkick-delay=0
 --gs-use-mipmap=1
 --gs-kernel-cl="mipmap"
+--gs-kernel-cl="mipmap2x2"
 --gs-use-clut-merge=1
 --verbose-cdvd-reads=1
 --vif1-instant-xfer=0
 --vu0-no-clamping=0
+--cop2-no-clamping=0
 --vu1-no-clamping=0
 </pre>
 
@@ -1272,7 +1339,7 @@ emuObj.AddVsyncHook(CheckInputs) <to trigger check at every vsync></pre></div>
 |-style="background-color:#c6ecd9"
 |  ||  || GS related ||
 |-
-| CountFrameOnPS2  || || emuObj.CountFrameOnPS2() || updates FRAPS/Actual FPS reading in olympus
+| CountFrameOnPS2  || {{exclusive}} || emuObj.CountFrameOnPS2() || updates FRAPS/Actual FPS reading in olympus
 |-
 | SetGsTitleFix  || || emuObj.SetGsTitleFix() ||  [[PS2_Emulation#SetGsTitleFix|More info]]
 |-
@@ -1280,7 +1347,7 @@ emuObj.AddVsyncHook(CheckInputs) <to trigger check at every vsync></pre></div>
 |-
 |SetDisplayAspectNormal  || || emuObj.SetDisplayAspectNormal() || Force display area to 4:3.
 |-
-|ForceRefreshRate  || || emuObj.ForceRefreshRate(<hz>) || emuObj.ForceRefreshRate(50) correct values are 0, 50, 60 where 0 = default. 
+|ForceRefreshRate  || {{exclusive}} || emuObj.ForceRefreshRate(<hz>) || emuObj.ForceRefreshRate(50) correct values are 0, 50, 60 where 0 = default. 
 |-
 |LoadFsShader  || || emuObj.LoadFsShader(<slot?>, "<path>") || <div align="left"><pre>Shaders must be loaded right after GS has been initialized. 
 Example:
@@ -2696,7 +2763,7 @@ Same goes for command 0x11 (--vu0-accurate-addsub-range can be used).
 |-
 | M-Bit support is broken || '''Every game that uses M-Bit'''. Totally Spies! Totally Party, Mike Tyson Heavyweight Boxing, My Street, Crash Twinsanity, Marvel Nemesis, Panzer Elite Action - Fields of Glory, Super Monkey Ball Adventure, most Eko Software games, and many more. [https://github.com/PCSX2/pcsx2/pull/3593] || Lua patches to the EE memory || While emulator respect m-bit, way that VU0 work on it make it broken most of times (check "VU0 is not running in sync with EE core" issue).
 |-
-| Multitap doesn't support all games || Urban reign, Digimon Rumble Arena 2, others || Lua patches || Emulator expect PS4 to be able to use 8 controllers (well, who doesn't? Even PS1 can do it...). That cause all kind of mess with controller detection when game expect multitap in second port.
+| Multitap doesn't support all games || Urban reign, Digimon Rumble Arena 2, Digimon World 4, others || Lua patches || Emulator expect PS4 to be able to use 8 controllers (well, who doesn't? Even PS1 can do it...). That cause all kind of mess with controller detection when game expect multitap in second port.
 |-
 | DMA writes when busy signal is engaged || Ratchet and Clank games, Metal gear solid 2, others || None yet || AKA eetiminghack
 |-
@@ -2728,7 +2795,7 @@ Same goes for command 0x11 (--vu0-accurate-addsub-range can be used).
 |-
 | IOP-CDVD desync || Genji - Dawn of the Samurai, Wild Arms 4, Wild Arms 5, Official Releases such as War of the Monsters and Kinetica, unofficial releases such as every Ratchet game, God of War, as well as others.  || LUA patches as seen in official releases. Setting iopcyclescalar to 0.38 yielded the best results, but still wrong. ||  The least significant effect would be a restarting music track. The most significant would be a game freezing at a single image with looping audio.
 |-
-| The default IOP clock speed is 16x faster than it should be. || || ||
+| IPU runs slower than the EE, causing a freeze or a crash on an FMV || Bee Movie, Tomb Raider Angel of Darkness ||  ||
 |-
 |}
 
@@ -4088,9 +4155,12 @@ function Queue:isEmpty()
 end
 </pre>
 
+= Digital Manuals =
+
+See [[PS2 Classics Manuals]].
+
 = Links =
 
-* [https://archive.org/details/sony-playstation-2-manuals-scea Archive of official manuals of PS2 Classic for PS4 games hosted on Amazon AWS (2022-09-21)]
 * [https://psi-rockin.github.io/ps2tek/ PS2 Hardware Documentation]
 * [https://pastebin.com/yf802Up3 Graphics Synthetizer title fix guide]
 * [https://www.romhacking.net/utilities/692/ PS2DIS, a very helpful tool for debugging executables]
@@ -4098,6 +4168,7 @@ end
 * [https://github.com/florinsdistortedvision/ps2-classics-emus Most base emulators for PS2 Classics released on PS4 by florinsdistortedvision]
 * [https://github.com/Zcor3x/Playstation-2-Classics-PS4 Most base emulators for PS2 Classics released on PS4 by Zcor3x]
 * [https://blog.eu.playstation.com/2018/05/01/12-ps2-classics-hit-ps-now-this-month-heres-why-should-play-them/]
+* [https://www.psx-place.com/threads/few-notes-about-ps2-emulator-on-ps4.14907/ Remarks by kozarovv to wikify]
 
 {{Reverse Engineering}}
 <noinclude>
