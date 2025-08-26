@@ -1,0 +1,10 @@
+Button press patch
+patch=1,EE,001C1540,word,00000000
+one hit kill
+patch=1,EE,000FFA00,word,3C1B017E
+patch=1,EE,000FFA04,word,377B3510
+patch=1,EE,000FFA08,word,13620006
+patch=1,EE,000FFA0C,word,C4400004
+patch=1,EE,000FFA10,word,46000001
+patch=1,EE,000FFA24,word,080BC782
+patch=1,EE,002F1E00,word,0803FE80
