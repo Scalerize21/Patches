@@ -27,6 +27,8 @@ patch=1,EE,000FFA28,word,00673821
 patch=1,EE,000FFA2C,word,A487004A
 patch=1,EE,000FFA30,word,03E00008
 
+//Reincarnation every 2 games
+patch=1,EE,00228190,word,28A50002
 
 
 //mods. Note to self:(this should probably be moved)
