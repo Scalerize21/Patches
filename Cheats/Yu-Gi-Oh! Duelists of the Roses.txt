@@ -29,5 +29,32 @@ patch=1,EE,000FFA30,word,03E00008
 
 
 
-//Future
+//mods. Note to self:(this should probably be moved)
 Music address: 0010AF5C
+8 = Vs Yorkists 
+9 = Vs Lancastrians
+28 = vs cpu
+Random music 8,9,28
+patch=1,EE,0010AF58,word,0803FE80
+patch=1,EE,000FF9B4,word,3C031000
+patch=1,EE,000FF9B8,word,34631800
+patch=1,EE,000FF9BC,word,8C7B0000
+patch=1,EE,000FF9C0,word,24030008
+patch=1,EE,000FF9C4,word,13600017
+patch=1,EE,000FF9C8,word,277BFFFF
+patch=1,EE,000FF9CC,word,24030009
+patch=1,EE,000FF9D0,word,13600014
+patch=1,EE,000FF9D4,word,277BFFFF
+patch=1,EE,000FF9D8,word,24030028
+patch=1,EE,000FF9DC,word,13600011
+patch=1,EE,000FF9E0,word,277BFFFF
+patch=1,EE,000FF9E4,word,1000FFF6
+patch=1,EE,000FFA00,word,241B0008
+patch=1,EE,000FFA04,word,1363FFEB
+patch=1,EE,000FFA0C,word,241B0009
+patch=1,EE,000FFA10,word,1363FFE8
+patch=1,EE,000FFA18,word,241B0028
+patch=1,EE,000FFA1C,word,1363FFE5
+patch=1,EE,000FFA24,word,08042C4A
+patch=1,EE,000FFA28,word,AC8301DC
+
