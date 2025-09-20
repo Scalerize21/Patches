@@ -26,3 +26,8 @@ patch=1,EE,000FFA10,word,00E73821
 patch=1,EE,000FFA28,word,00673821
 patch=1,EE,000FFA2C,word,A487004A
 patch=1,EE,000FFA30,word,03E00008
+
+
+
+//Future
+Music address: 0010AF5C
