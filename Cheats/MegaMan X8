@@ -1,2 +1,2 @@
 Retry chips never decrease
-00503354,00000000
+patch=1,EE,00503354,word,00000000
