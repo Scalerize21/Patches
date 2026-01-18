@@ -1,8 +1,9 @@
 SCUS-97265
 
-No police
+- No police
 patch=1,EE,01400D0C,word,A080002D
-Double Health
+
+- Double Health
 patch=1,EE,007EE578,word,0803FE80
 patch=1,EE,007EE57C,word,00000000
 patch=1,EE,000FFA00,word,3C14BF80
@@ -10,5 +11,16 @@ patch=1,EE,000FFA04,word,44940000
 patch=1,EE,000FFA08,word,46000007
 patch=1,EE,000FFA0C,word,081FB95F
 
-No police (deprecated)
-patch=1,EE,013FF1FC,word,10000079
+- Triple plane health
+patch=1,EE,000FFAF4,word,40400000
+patch=1,EE,000FFB00,word,3C1B000F
+patch=1,EE,000FFB04,word,377BFB00
+patch=1,EE,000FFB08,word,E760FFFC
+patch=1,EE,000FFB0C,word,C760FFF4
+patch=1,EE,000FFB10,word,46000843
+patch=1,EE,000FFB14,word,C760FFFC
+patch=1,EE,000FFB18,word,46010001
+patch=1,EE,000FFB1C,word,E780019C
+patch=1,EE,000FFB20,word,084EEC22
+patch=1,EE,013BB084,word,0803FEC0
+patch=1,EE,013BB088,word,00000000
