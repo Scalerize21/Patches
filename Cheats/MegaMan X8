@@ -1,6 +1,13 @@
 Retry chips never decrease
 patch=1,EE,00503354,word,00000000
 
+Triple money
+patch=1,EE,001AF390,word,0803FEC0
+patch=1,EE,000FFB00,word,00A52821
+patch=1,EE,000FFB04,word,00A52821
+patch=1,EE,000FFB08,word,00852021
+patch=1,EE,000FFB0C,word,0806BCE5
+
 Triple health (enemies and allies)
 patch=1,EE,0016A1FC,word,0803FE80
 patch=1,EE,0016A200,word,00000000
