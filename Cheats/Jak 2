@@ -2,3 +2,10 @@ SCUS-97265
 
 No police
 patch=1,EE,013FF1FC,word,10000079
+Double Health
+patch=1,EE,007EE578,word,0803FE80
+patch=1,EE,007EE57C,word,00000000
+patch=1,EE,000FFA00,word,3C14BF80
+patch=1,EE,000FFA04,word,44940000
+patch=1,EE,000FFA08,word,46000007
+patch=1,EE,000FFA0C,word,081FB95F
