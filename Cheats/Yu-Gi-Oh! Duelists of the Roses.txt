@@ -2,6 +2,9 @@ SLUS-20515
 //View enemy deck
 patch=1,EE,001D9474,word,24050001
 
+// Graveyard slot machine always provides special card.
+patch=1,EE,00351214,word,00000001
+
 //Deck leader has all abilities
 patch=1,EE,001DF83C,word,E4A20008
 patch=1,EE,001DF840,word,E4A2000C
