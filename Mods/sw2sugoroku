@@ -1,4 +1,4 @@
---no exist (fixed)
+--no exit (fixed)
 patch=1,EE,00103C78,word,10000009
 
 --No Player 3:
