@@ -18,6 +18,8 @@ patch=1,EE,00480128,word,00000002
 patch=1,EE,01F6C852,extended,02
 #Movesets and Animations
 patch=1,EE,01F6C853,extended,02
+#Move freely across map
+0017A75C 0x0
 
 
 Replace last 2 numbers of "00000002" with the character you like.
