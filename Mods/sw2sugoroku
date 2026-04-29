@@ -23,9 +23,8 @@ patch=1,EE,000FFA04,word,14900002
 patch=1,EE,000FFA0C,word,24100012 --change 12 to whatever other value
 patch=1,EE,000FFA10,word,08060F90
 
-
---No random player spot selection
-patch=1,EE,0031A598,word,00000000
+--Players move across map freely
+patch=1,EE,00621E88,word,A080602B
 
 --Load merge menus
 patch=1,EE,00397E80,word,00000001
@@ -113,10 +112,12 @@ patch=1,EE,000FFA08,word,44820000
 patch=1,EE,000FFA0C,word,08060708
 patch=1,EE,00181C1C,word,0803FE80
 
-//2 x
+//2 x sugoroku battles
 patch=1,EE,00181DB8,word,3C033F19
 patch=1,EE,00181DC0,word,3463999A
 
 //2 y
 patch=1,EE,00181DBC,word,3C023EB3
 patch=1,EE,00181DC4,word,34423333
+
+
