@@ -1,4 +1,8 @@
 Fifa Street 2 - SLUS-21369
+v3
+//Corrupted flags and shirts fix
+patch=1,EE,00331B64,word,00000000
+patch=1,EE,00337760,word,00000000
 
 v2
 //Corrupted flags and shirts fix
