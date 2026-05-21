@@ -18,6 +18,9 @@ patch=1,EE,000FFA0C,word,00431023
 patch=1,EE,000FFA10,word,AE42002C
 patch=1,EE,000FFA14,word,0805A880
 
+//armor
+zero and axl
+patch=1,EE,0064C4D0,extended,f
 Unlocked characters
 Alia
 patch=1,EE,0064C630,extended,f
