@@ -17,3 +17,11 @@ patch=1,EE,000FFA08,word,00001812
 patch=1,EE,000FFA0C,word,00431023
 patch=1,EE,000FFA10,word,AE42002C
 patch=1,EE,000FFA14,word,0805A880
+
+Unlocked characters
+Alia
+patch=1,EE,0064C630,extended,f
+Pallet
+patch=1,EE,0064C632,extended,f
+Layer
+patch=1,EE,0064C631,extended,f
