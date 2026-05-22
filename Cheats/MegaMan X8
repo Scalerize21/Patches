@@ -8,15 +8,24 @@ patch=1,EE,000FFB04,word,00A52821
 patch=1,EE,000FFB08,word,00852021
 patch=1,EE,000FFB0C,word,0806BCE5
 
-Triple health (enemies and allies)
+Triple health
+patch=1,EE,000FFA00,word,3C1B0064
+patch=1,EE,000FFA04,word,377BE120
+patch=1,EE,000FFA08,word,13720007
+patch=1,EE,000FFA10,word,377BE330
+patch=1,EE,000FFA14,word,13720004
+patch=1,EE,000FFA1C,word,00431023
+patch=1,EE,000FFA20,word,0805A880
+patch=1,EE,000FFA24,word,AE42002C
+patch=1,EE,000FFA28,word,241B0003
+patch=1,EE,000FFA2C,word,007B001A
+patch=1,EE,000FFA30,word,00001812
+patch=1,EE,000FFA34,word,00431023
+patch=1,EE,000FFA38,word,AE42002C
+patch=1,EE,000FFA3C,word,0805A880
 patch=1,EE,0016A1FC,word,0803FE80
 patch=1,EE,0016A200,word,00000000
-patch=1,EE,000FFA00,word,241B0003
-patch=1,EE,000FFA04,word,007B001A
-patch=1,EE,000FFA08,word,00001812
-patch=1,EE,000FFA0C,word,00431023
-patch=1,EE,000FFA10,word,AE42002C
-patch=1,EE,000FFA14,word,0805A880
+
 
 //armor
 zero and axl
