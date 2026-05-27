@@ -6,7 +6,6 @@ patch=1,EE,00631278,word,24020062
 patch=1,EE,001CB64C,word,24050062
 patch=1,EE,00258044,word,24120062
 patch=1,EE,001AEBF8,word,24030062
-patch=1,EE,00625794,word,24020062
 
 --No Player 3:
 patch=1,EE,64972C,extended,1
