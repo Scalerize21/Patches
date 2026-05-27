@@ -3,6 +3,7 @@ patch=1,EE,00103C78,word,10000009
 
 --All players lvl 99
 patch=1,EE,00631278,word,24020062
+patch=1,EE,001CB64C,word,24050062
 
 --No Player 3:
 patch=1,EE,64972C,extended,1
