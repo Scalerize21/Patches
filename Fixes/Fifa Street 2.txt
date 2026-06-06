@@ -5,9 +5,9 @@ patch=1,EE,00331B64,word,00000000
 patch=1,EE,00337760,word,00000000
 
 performance patch
-patch=1,EE,000FFA00,word,27BDFE30
-patch=1,EE,000FFA04,word,241B1000
-patch=1,EE,000FFA08,word,277BFFFF
-patch=1,EE,000FFA0C,word,1760FFFE
-patch=1,EE,000FFA14,word,0810B5CD
-patch=1,EE,0042D730,word,0803FE80
+patch=1,EE,00324AB8,word,10400003
+patch=1,EE,00324AC8,word,8E23012C
+patch=1,EE,00324ACC,word,24020002 //1= 60 fps 2 = 30 fps 3 = 15 fps
+patch=1,EE,00324AD0,word,1443FFFD
+patch=1,EE,00324AD8,word,10000102
+
